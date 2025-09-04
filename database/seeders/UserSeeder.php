@@ -57,6 +57,14 @@ class UserSeeder extends Seeder
             'password' => Hash::make('parent123'),
         ]);
 
+        // Assign roles to users
+        $superAdmin->assignRole('super_admin');
+        $admin->assignRole('admin');
+        $principal->assignRole('principal');
+        $teacher->assignRole('teacher');
+        $student->assignRole('student');
+        $parent->assignRole('parent');
+
         $this->command->info('Users created successfully!');
         $this->command->info('Super Admin: admin@eduvaultpro.com / admin123');
         $this->command->info('School Admin: schooladmin@eduvaultpro.com / admin123');

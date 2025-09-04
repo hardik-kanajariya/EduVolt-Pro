@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class,
             UserSeeder::class,
+            SchoolSeeder::class,
         ]);
 
         $this->command->info('Database seeding completed successfully!');

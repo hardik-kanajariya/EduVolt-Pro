@@ -36,7 +36,7 @@ class LibraryFineFactory extends Factory
 
     public function paid(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => 'paid',
             'paid_at' => $this->faker->dateTimeBetween($attributes['fine_date'], 'now'),
             'paid_by' => User::factory(),
@@ -45,7 +45,7 @@ class LibraryFineFactory extends Factory
 
     public function waived(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => 'waived',
             'waived_at' => $this->faker->dateTimeBetween($attributes['fine_date'], 'now'),
             'waived_by' => User::factory(),
@@ -55,7 +55,7 @@ class LibraryFineFactory extends Factory
 
     public function overdue(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'reason' => 'Overdue return',
             'amount' => $this->faker->randomFloat(2, 5, 25),
         ]);

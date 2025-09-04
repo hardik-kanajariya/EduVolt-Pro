@@ -18,7 +18,7 @@ class BookCategoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->admin = User::factory()->create();
         $this->school = School::factory()->create();
     }
@@ -41,7 +41,7 @@ class BookCategoryTest extends TestCase
     public function test_name_is_required()
     {
         $this->expectException(\Illuminate\Database\QueryException::class);
-        
+
         BookCategory::create([
             'description' => 'Test description',
             'school_id' => $this->school->id,
@@ -51,7 +51,7 @@ class BookCategoryTest extends TestCase
     public function test_school_id_is_required()
     {
         $this->expectException(\Illuminate\Database\QueryException::class);
-        
+
         BookCategory::create([
             'name' => 'Test Category',
             'description' => 'Test description',
@@ -134,7 +134,7 @@ class BookCategoryTest extends TestCase
 
         $categoryId = $category->id;
         $category->delete();
-        
+
         $category = BookCategory::withTrashed()->find($categoryId);
         $category->restore();
 

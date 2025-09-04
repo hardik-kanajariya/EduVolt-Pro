@@ -25,10 +25,10 @@ class LibraryFineTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->admin = User::factory()->create();
         $this->school = School::factory()->create();
-        
+
         $this->student = Student::factory()->create([
             'school_id' => $this->school->id
         ]);

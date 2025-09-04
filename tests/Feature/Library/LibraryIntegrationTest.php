@@ -27,10 +27,10 @@ class LibraryIntegrationTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->admin = User::factory()->create();
         $this->school = School::factory()->create();
-        
+
         $this->student = Student::factory()->create([
             'school_id' => $this->school->id
         ]);
@@ -102,7 +102,7 @@ class LibraryIntegrationTest extends TestCase
 
         // Check fine was created
         $fine = LibraryFine::where('book_issue_id', $issue->id)->first();
-        
+
         $this->assertNotNull($fine);
         $this->assertEquals($this->student->id, $fine->student_id);
         $this->assertEquals('unpaid', $fine->status);
@@ -162,10 +162,10 @@ class LibraryIntegrationTest extends TestCase
         ]);
 
         $originalDueDate = $issue->due_date;
-        
+
         // Renew book
         $renewed = $issue->renewBook();
-        
+
         $this->assertTrue($renewed);
         $this->assertEquals(1, $issue->fresh()->renewal_count);
         $this->assertTrue($issue->fresh()->due_date->gt($originalDueDate));
@@ -184,7 +184,7 @@ class LibraryIntegrationTest extends TestCase
 
         // Try to renew
         $renewed = $issue->renewBook();
-        
+
         $this->assertFalse($renewed);
         $this->assertEquals(3, $issue->fresh()->renewal_count);
     }
@@ -253,7 +253,7 @@ class LibraryIntegrationTest extends TestCase
     {
         // Create some test data
         $student2 = Student::factory()->create(['school_id' => $this->school->id]);
-        
+
         // Issue some books
         BookIssue::create([
             'library_book_id' => $this->book->id,

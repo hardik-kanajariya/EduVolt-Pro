@@ -20,7 +20,7 @@ class LibraryBookTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->admin = User::factory()->create();
         $this->school = School::factory()->create();
         $this->category = BookCategory::factory()->create([
@@ -70,7 +70,7 @@ class LibraryBookTest extends TestCase
         ]);
 
         $this->assertTrue($book->isAvailable());
-        
+
         $book->update(['available_copies' => 0]);
         $this->assertFalse($book->fresh()->isAvailable());
     }

@@ -25,10 +25,10 @@ class BookIssueTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->admin = User::factory()->create();
         $this->school = School::factory()->create();
-        
+
         $this->student = Student::factory()->create([
             'school_id' => $this->school->id
         ]);
@@ -70,7 +70,7 @@ class BookIssueTest extends TestCase
         ]);
 
         $expectedDueDate = $issue->issued_at->copy()->addDays(14);
-        
+
         $this->assertEquals(
             $expectedDueDate->format('Y-m-d'),
             $issue->due_date->format('Y-m-d')

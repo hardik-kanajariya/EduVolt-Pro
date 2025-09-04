@@ -27,7 +27,12 @@ class BookCategoryFactory extends Factory
             ]),
             'description' => $this->faker->sentence(),
             'color' => $this->faker->randomElement([
-                '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'
+                '#3B82F6',
+                '#10B981',
+                '#F59E0B',
+                '#EF4444',
+                '#8B5CF6',
+                '#EC4899'
             ]),
             'sort_order' => $this->faker->numberBetween(1, 100),
             'is_active' => true,
@@ -37,7 +42,7 @@ class BookCategoryFactory extends Factory
 
     public function inactive(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'is_active' => false,
         ]);
     }

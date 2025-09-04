@@ -16,7 +16,7 @@ class BookReservationFactory extends Factory
     public function definition(): array
     {
         $reservedAt = $this->faker->dateTimeBetween('-7 days', 'now');
-        
+
         return [
             'library_book_id' => LibraryBook::factory(),
             'student_id' => Student::factory(),
@@ -32,7 +32,7 @@ class BookReservationFactory extends Factory
 
     public function fulfilled(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => 'fulfilled',
             'fulfilled_at' => $this->faker->dateTimeBetween($attributes['reserved_at'], 'now'),
             'fulfilled_by' => User::factory(),
@@ -41,7 +41,7 @@ class BookReservationFactory extends Factory
 
     public function expired(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => 'expired',
             'expires_at' => $this->faker->dateTimeBetween('-3 days', '-1 day'),
         ]);
@@ -49,7 +49,7 @@ class BookReservationFactory extends Factory
 
     public function cancelled(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'status' => 'cancelled',
         ]);
     }

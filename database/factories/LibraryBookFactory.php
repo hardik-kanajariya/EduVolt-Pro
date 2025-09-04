@@ -34,14 +34,14 @@ class LibraryBookFactory extends Factory
 
     public function unavailable(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'available_copies' => 0,
         ]);
     }
 
     public function singleCopy(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'total_copies' => 1,
             'available_copies' => 1,
         ]);

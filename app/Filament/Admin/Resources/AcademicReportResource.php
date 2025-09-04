@@ -9,11 +9,11 @@ use App\Models\AcademicReport;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class AcademicReportResource extends Resource
 {
     protected static ?string $model = AcademicReport::class;
+    protected static ?string $navigationGroup = 'Academic & Report';
 
     public static function form(Schema $schema): Schema
     {

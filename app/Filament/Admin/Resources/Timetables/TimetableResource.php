@@ -8,17 +8,19 @@ use App\Filament\Admin\Resources\Timetables\Pages\ListTimetables;
 use App\Filament\Admin\Resources\Timetables\Schemas\TimetableForm;
 use App\Filament\Admin\Resources\Timetables\Tables\TimetablesTable;
 use App\Models\Timetable;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class TimetableResource extends Resource
 {
     protected static ?string $model = Timetable::class;
 
-    
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-table-cells';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Schedule Management';
 
     public static function form(Schema $schema): Schema
     {

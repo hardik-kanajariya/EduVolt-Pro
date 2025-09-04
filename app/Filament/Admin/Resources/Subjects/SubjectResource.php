@@ -16,12 +16,16 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
+use BackedEnum;
 
 class SubjectResource extends Resource
 {
     protected static ?string $model = Subject::class;
 
-    // Navigation will be configured in service provider
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-book-open';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Academic Structure';
 
     protected static ?string $recordTitleAttribute = 'name';
 

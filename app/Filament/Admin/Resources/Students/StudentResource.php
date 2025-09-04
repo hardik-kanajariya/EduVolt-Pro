@@ -14,10 +14,16 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
+use BackedEnum;
 
 class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
+
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Student & Attendance';
 
     protected static ?string $recordTitleAttribute = 'admission_number';
 

@@ -8,15 +8,19 @@ use App\Filament\Admin\Resources\Exams\Pages\ListExams;
 use App\Filament\Admin\Resources\Exams\Schemas\ExamForm;
 use App\Filament\Admin\Resources\Exams\Tables\ExamsTable;
 use App\Models\Exam;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class ExamResource extends Resource
 {
     protected static ?string $model = Exam::class;
+
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Examination System';
 
     public static function form(Schema $schema): Schema
     {

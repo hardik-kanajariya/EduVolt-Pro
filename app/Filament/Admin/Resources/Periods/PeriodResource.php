@@ -8,17 +8,19 @@ use App\Filament\Admin\Resources\Periods\Pages\ListPeriods;
 use App\Filament\Admin\Resources\Periods\Schemas\PeriodForm;
 use App\Filament\Admin\Resources\Periods\Tables\PeriodsTable;
 use App\Models\Period;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class PeriodResource extends Resource
 {
     protected static ?string $model = Period::class;
 
-    
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Schedule Management';
 
     public static function form(Schema $schema): Schema
     {

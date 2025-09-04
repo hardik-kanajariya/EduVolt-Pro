@@ -8,17 +8,19 @@ use App\Filament\Admin\Resources\ExamSubjects\Pages\ListExamSubjects;
 use App\Filament\Admin\Resources\ExamSubjects\Schemas\ExamSubjectForm;
 use App\Filament\Admin\Resources\ExamSubjects\Tables\ExamSubjectsTable;
 use App\Models\ExamSubject;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class ExamSubjectResource extends Resource
 {
     protected static ?string $model = ExamSubject::class;
 
-    
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-squares-plus';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Examination System';
 
     protected static ?int $navigationSort = 5;
 

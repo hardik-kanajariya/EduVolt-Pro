@@ -8,17 +8,19 @@ use App\Filament\Admin\Resources\LibraryFines\Pages\ListLibraryFines;
 use App\Filament\Admin\Resources\LibraryFines\Schemas\LibraryFineForm;
 use App\Filament\Admin\Resources\LibraryFines\Tables\LibraryFinesTable;
 use App\Models\LibraryFine;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class LibraryFineResource extends Resource
 {
     protected static ?string $model = LibraryFine::class;
 
-    
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-exclamation-triangle';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Library Management';
 
     public static function form(Schema $schema): Schema
     {

@@ -8,17 +8,19 @@ use App\Filament\Admin\Resources\BookIssues\Pages\ListBookIssues;
 use App\Filament\Admin\Resources\BookIssues\Schemas\BookIssueForm;
 use App\Filament\Admin\Resources\BookIssues\Tables\BookIssuesTable;
 use App\Models\BookIssue;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class BookIssueResource extends Resource
 {
     protected static ?string $model = BookIssue::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-right-circle';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-hand-raised';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Library Management';
 
     protected static ?string $modelLabel = 'Book Issue';
 

@@ -8,10 +8,10 @@ use App\Filament\Admin\Resources\Staff\Pages\ListStaff;
 use App\Filament\Admin\Resources\Staff\Schemas\StaffForm;
 use App\Filament\Admin\Resources\Staff\Tables\StaffTable;
 use App\Models\Staff;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -19,6 +19,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class StaffResource extends Resource
 {
     protected static ?string $model = Staff::class;
+
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Academic Structure';
 
     protected static ?string $recordTitleAttribute = 'employee_id';
 

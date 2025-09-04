@@ -8,15 +8,18 @@ use App\Filament\Admin\Resources\Attendances\Pages\ListAttendances;
 use App\Filament\Admin\Resources\Attendances\Schemas\AttendanceForm;
 use App\Filament\Admin\Resources\Attendances\Tables\AttendancesTable;
 use App\Models\Attendance;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
+use BackedEnum;
 
 class AttendanceResource extends Resource
 {
     protected static ?string $model = Attendance::class;
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-check-circle';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Student & Attendance';
 
     public static function form(Schema $schema): Schema
     {

@@ -9,10 +9,10 @@ use App\Filament\Admin\Resources\SchoolClasses\Pages\ViewSchoolClass;
 use App\Filament\Admin\Resources\SchoolClasses\Schemas\SchoolClassForm;
 use App\Filament\Admin\Resources\SchoolClasses\Tables\SchoolClassesTable;
 use App\Models\SchoolClass;
+use UnitEnum;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -20,6 +20,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class SchoolClassResource extends Resource
 {
     protected static ?string $model = SchoolClass::class;
+
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-academic-cap';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Academic Structure';
 
     protected static ?string $recordTitleAttribute = 'name';
 

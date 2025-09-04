@@ -8,17 +8,19 @@ use App\Filament\Admin\Resources\BookCategories\Pages\ListBookCategories;
 use App\Filament\Admin\Resources\BookCategories\Schemas\BookCategoryForm;
 use App\Filament\Admin\Resources\BookCategories\Tables\BookCategoriesTable;
 use App\Models\BookCategory;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
+use BackedEnum;
 
 class BookCategoryResource extends Resource
 {
     protected static ?string $model = BookCategory::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-folder';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Library Management';
 
     protected static ?string $modelLabel = 'Book Category';
 

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->json('emergency_contacts')->nullable();
             $table->enum('status', ['active', 'inactive', 'transferred', 'graduated'])->default('active');
             $table->timestamps();
-            
+
             $table->index(['admission_number']);
             $table->index(['school_id', 'class_id']);
             $table->index(['user_id']);

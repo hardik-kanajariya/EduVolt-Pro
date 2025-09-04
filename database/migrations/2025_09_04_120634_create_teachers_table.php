@@ -25,7 +25,7 @@ return new class extends Migration
             $table->json('certifications')->nullable();
             $table->enum('status', ['active', 'inactive', 'terminated'])->default('active');
             $table->timestamps();
-            
+
             $table->index(['employee_id']);
             $table->index(['school_id', 'status']);
             $table->index(['user_id']);

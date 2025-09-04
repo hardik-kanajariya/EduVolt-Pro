@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('teacher_id');
             $table->unsignedBigInteger('subject_id');
             $table->timestamps();
-            
+
             $table->unique(['teacher_id', 'subject_id']);
             $table->index(['teacher_id']);
             $table->index(['subject_id']);

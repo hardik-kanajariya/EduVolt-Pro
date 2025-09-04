@@ -96,7 +96,7 @@ class Phase2SystemTest extends TestCase
         $this->seed();
 
         $user = User::first();
-        
+
         // Test that HasRoles trait methods are available
         $this->assertTrue(method_exists($user, 'assignRole'));
         $this->assertTrue(method_exists($user, 'hasRole'));

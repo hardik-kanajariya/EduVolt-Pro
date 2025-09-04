@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('capacity')->default(30);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
-            
+
             $table->unique(['school_id', 'academic_year_id', 'name', 'section'], 'classes_unique_constraint');
         });
     }

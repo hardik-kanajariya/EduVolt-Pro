@@ -24,7 +24,7 @@ return new class extends Migration
             $table->json('responsibilities')->nullable();
             $table->enum('status', ['active', 'inactive', 'terminated'])->default('active');
             $table->timestamps();
-            
+
             $table->index(['employee_id']);
             $table->index(['school_id', 'department']);
             $table->index(['user_id']);

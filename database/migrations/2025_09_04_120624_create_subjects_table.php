@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('credits')->default(1);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
-            
+
             $table->index(['school_id', 'type']);
         });
     }

@@ -41,23 +41,23 @@ class AttendanceStats extends BaseWidget
             $query->whereMonth('date', now()->month)
                 ->whereYear('date', now()->year);
         })
-        ->withCount([
-            'attendance as total_days' => function ($query) {
-                $query->whereMonth('date', now()->month)
-                    ->whereYear('date', now()->year);
-            },
-            'attendance as present_days' => function ($query) {
-                $query->whereMonth('date', now()->month)
-                    ->whereYear('date', now()->year)
-                    ->where('status', 'present');
-            }
-        ])
-        ->get()
-        ->filter(function ($student) {
-            return $student->total_days > 0 && 
-                   (($student->present_days / $student->total_days) * 100) < 75;
-        })
-        ->count();
+            ->withCount([
+                'attendance as total_days' => function ($query) {
+                    $query->whereMonth('date', now()->month)
+                        ->whereYear('date', now()->year);
+                },
+                'attendance as present_days' => function ($query) {
+                    $query->whereMonth('date', now()->month)
+                        ->whereYear('date', now()->year)
+                        ->where('status', 'present');
+                }
+            ])
+            ->get()
+            ->filter(function ($student) {
+                return $student->total_days > 0 &&
+                    (($student->present_days / $student->total_days) * 100) < 75;
+            })
+            ->count();
 
         return [
             Stat::make('Today\'s Attendance', "{$todayPresent}/{$todayTotal}")

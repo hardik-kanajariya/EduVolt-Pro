@@ -3,28 +3,28 @@
         <!-- Header Section -->
         <div class="bg-white rounded-lg shadow p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Mark Attendance</h2>
-            
+
             <!-- Class and Date Selection -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Select Class</label>
-                    <select wire:model.live="selectedClass" wire:change="loadStudents" 
+                    <select wire:model.live="selectedClass" wire:change="loadStudents"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         <option value="">Choose a class...</option>
                         @foreach($this->getClassOptions() as $id => $name)
-                            <option value="{{ $id }}">{{ $name }}</option>
+                        <option value="{{ $id }}">{{ $name }}</option>
                         @endforeach
                     </select>
                 </div>
-                
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Date</label>
                     <input type="date" wire:model.live="selectedDate" wire:change="loadStudents"
                         class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 </div>
-                
+
                 <div class="flex items-end">
-                    <button wire:click="markAttendance" 
+                    <button wire:click="markAttendance"
                         class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                         Mark Attendance
                     </button>
@@ -38,7 +38,7 @@
             <div class="px-6 py-4 border-b border-gray-200">
                 <h3 class="text-lg font-medium text-gray-900">Students ({{ $students->count() }})</h3>
             </div>
-            
+
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -86,7 +86,7 @@
                                 </select>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <input type="text" 
+                                <input type="text"
                                     wire:model="attendanceData.{{ $student->id }}.remarks"
                                     wire:blur="updateAttendanceRemarks({{ $student->id }}, $event.target.value)"
                                     placeholder="Add remarks..."

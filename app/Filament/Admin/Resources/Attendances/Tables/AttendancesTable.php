@@ -27,13 +27,13 @@ class AttendancesTable
 
                 TextColumn::make('student.first_name')
                     ->label('Student Name')
-                    ->formatStateUsing(fn ($record) => $record->student ? "{$record->student->first_name} {$record->student->last_name}" : 'N/A')
+                    ->formatStateUsing(fn($record) => $record->student ? "{$record->student->first_name} {$record->student->last_name}" : 'N/A')
                     ->searchable(['first_name', 'last_name'])
                     ->sortable(),
 
                 TextColumn::make('schoolClass.name')
                     ->label('Class')
-                    ->formatStateUsing(fn ($record) => $record->schoolClass ? "{$record->schoolClass->name} - {$record->schoolClass->section}" : 'N/A')
+                    ->formatStateUsing(fn($record) => $record->schoolClass ? "{$record->schoolClass->name} - {$record->schoolClass->section}" : 'N/A')
                     ->sortable(),
 
                 TextColumn::make('date')
@@ -68,7 +68,7 @@ class AttendancesTable
 
                 TextColumn::make('session.session_type')
                     ->label('Session')
-                    ->formatStateUsing(fn ($state) => $state ? ucfirst($state) : 'N/A')
+                    ->formatStateUsing(fn($state) => $state ? ucfirst($state) : 'N/A')
                     ->toggleable(),
 
                 TextColumn::make('markedBy.name')
@@ -99,7 +99,7 @@ class AttendancesTable
                 SelectFilter::make('class_id')
                     ->label('Class')
                     ->relationship('schoolClass', 'name')
-                    ->getOptionLabelFromRecordUsing(fn (SchoolClass $record): string => "{$record->name} - {$record->section}"),
+                    ->getOptionLabelFromRecordUsing(fn(SchoolClass $record): string => "{$record->name} - {$record->section}"),
 
                 Filter::make('date_range')
                     ->form([
@@ -112,11 +112,11 @@ class AttendancesTable
                         return $query
                             ->when(
                                 $data['from_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
                             )
                             ->when(
                                 $data['to_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
                             );
                     }),
             ])

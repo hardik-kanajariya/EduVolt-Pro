@@ -22,7 +22,7 @@ class AttendanceForm
                 Select::make('student_id')
                     ->label('Student')
                     ->relationship('student', 'first_name')
-                    ->getOptionLabelFromRecordUsing(fn (Student $record): string => "{$record->first_name} {$record->last_name} ({$record->admission_number})")
+                    ->getOptionLabelFromRecordUsing(fn(Student $record): string => "{$record->first_name} {$record->last_name} ({$record->admission_number})")
                     ->searchable(['first_name', 'last_name', 'admission_number'])
                     ->preload()
                     ->required(),
@@ -30,7 +30,7 @@ class AttendanceForm
                 Select::make('class_id')
                     ->label('Class')
                     ->relationship('schoolClass', 'name')
-                    ->getOptionLabelFromRecordUsing(fn (SchoolClass $record): string => "{$record->name} - {$record->section}")
+                    ->getOptionLabelFromRecordUsing(fn(SchoolClass $record): string => "{$record->name} - {$record->section}")
                     ->searchable()
                     ->preload()
                     ->required(),
@@ -54,7 +54,7 @@ class AttendanceForm
                 Select::make('session_id')
                     ->label('Session')
                     ->relationship('session', 'session_type')
-                    ->getOptionLabelFromRecordUsing(fn (AttendanceSession $record): string => ucfirst($record->session_type) . " Session")
+                    ->getOptionLabelFromRecordUsing(fn(AttendanceSession $record): string => ucfirst($record->session_type) . " Session")
                     ->searchable()
                     ->preload()
                     ->nullable(),

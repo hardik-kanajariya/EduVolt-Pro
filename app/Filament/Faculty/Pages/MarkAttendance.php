@@ -97,7 +97,7 @@ class MarkAttendance extends Page
     {
         $teacher = Auth::user()->teacher;
         if (!$teacher) return [];
-        
+
         return SchoolClass::whereHas('subjects.teachers', function ($query) use ($teacher) {
             $query->where('teacher_id', $teacher->id);
         })->pluck('name', 'id')->toArray();

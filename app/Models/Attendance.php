@@ -80,14 +80,14 @@ class Attendance extends Model
         $totalDays = Attendance::where('student_id', $this->student_id)
             ->whereMonth('date', now()->month)
             ->count();
-        
+
         if ($totalDays === 0) return 0;
-        
+
         $presentDays = Attendance::where('student_id', $this->student_id)
             ->whereMonth('date', now()->month)
             ->where('status', 'present')
             ->count();
-        
+
         return round(($presentDays / $totalDays) * 100, 2);
     }
 }

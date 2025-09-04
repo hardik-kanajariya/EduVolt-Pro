@@ -9,12 +9,17 @@ use App\Models\AcademicReport;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use UnitEnum;
+use BackedEnum;
 
 class AcademicReportResource extends Resource
 {
 
 
     protected static ?string $model = AcademicReport::class;
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-chart-bar';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Academic & Report';
 
     public static function form(Schema $schema): Schema
     {

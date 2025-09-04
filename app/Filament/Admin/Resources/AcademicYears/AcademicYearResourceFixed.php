@@ -9,25 +9,19 @@ use App\Filament\Admin\Resources\AcademicYears\Pages\ViewAcademicYear;
 use App\Filament\Admin\Resources\AcademicYears\Schemas\AcademicYearForm;
 use App\Filament\Admin\Resources\AcademicYears\Tables\AcademicYearsTable;
 use App\Models\AcademicYear;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use UnitEnum;
-use BackedEnum;
 
 class AcademicYearResource extends Resource
 {
     protected static ?string $model = AcademicYear::class;
 
     protected static ?string $recordTitleAttribute = 'name';
-
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-calendar-days';
-
-    protected static string | UnitEnum | null $navigationGroup = 'Academic & Report';
-
-    protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema
     {

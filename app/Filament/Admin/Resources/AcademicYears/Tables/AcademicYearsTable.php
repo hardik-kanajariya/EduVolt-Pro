@@ -26,7 +26,7 @@ class AcademicYearsTable
                     ->label('🏫 School')
                     ->searchable()
                     ->sortable()
-                    ->description(fn ($record) => $record->school?->address ?? 'No address')
+                    ->description(fn($record) => $record->school?->address ?? 'No address')
                     ->wrap(),
 
                 TextColumn::make('name')
@@ -36,10 +36,11 @@ class AcademicYearsTable
                     ->weight('medium')
                     ->copyable()
                     ->copyMessage('Academic year name copied!')
-                    ->description(fn ($record) => 
-                        $record->start_date && $record->end_date 
-                        ? $record->start_date->format('M j, Y') . ' - ' . $record->end_date->format('M j, Y')
-                        : 'Duration not set'
+                    ->description(
+                        fn($record) =>
+                        $record->start_date && $record->end_date
+                            ? $record->start_date->format('M j, Y') . ' - ' . $record->end_date->format('M j, Y')
+                            : 'Duration not set'
                     ),
 
                 TextColumn::make('duration')
@@ -53,7 +54,7 @@ class AcademicYearsTable
                         return 'Not set';
                     })
                     ->badge()
-                    ->color(fn ($state) => $state === 'Not set' ? 'danger' : 'info')
+                    ->color(fn($state) => $state === 'Not set' ? 'danger' : 'info')
                     ->sortable(false),
 
                 TextColumn::make('progress')
@@ -80,7 +81,7 @@ class AcademicYearsTable
 
                 BadgeColumn::make('is_current')
                     ->label('⭐ Current')
-                    ->formatStateUsing(fn ($state) => $state ? 'Current Year' : 'Not Current')
+                    ->formatStateUsing(fn($state) => $state ? 'Current Year' : 'Not Current')
                     ->colors([
                         'success' => true,
                         'gray' => false,
@@ -92,7 +93,7 @@ class AcademicYearsTable
 
                 BadgeColumn::make('status')
                     ->label('📊 Status')
-                    ->formatStateUsing(fn ($state) => match ($state) {
+                    ->formatStateUsing(fn($state) => match ($state) {
                         'active' => '🟢 Active',
                         'inactive' => '🔴 Inactive',
                         'draft' => '🟡 Draft',
@@ -115,7 +116,7 @@ class AcademicYearsTable
 
                 TextColumn::make('active_classes_count')
                     ->label('✅ Active Classes')
-                    ->getStateUsing(fn ($record) => $record->classes()->where('status', 'active')->count())
+                    ->getStateUsing(fn($record) => $record->classes()->where('status', 'active')->count())
                     ->badge()
                     ->color('success'),
 
@@ -135,7 +136,7 @@ class AcademicYearsTable
             ])
             ->filters([
                 TrashedFilter::make(),
-                
+
                 SelectFilter::make('status')
                     ->label('📊 Status')
                     ->options([
@@ -171,7 +172,7 @@ class AcademicYearsTable
                             [$startYear, $endYear] = explode('-', $data['value']);
                             $query->where(function ($q) use ($startYear, $endYear) {
                                 $q->whereBetween('start_date', ["{$startYear}-01-01", "{$endYear}-12-31"])
-                                  ->orWhereBetween('end_date', ["{$startYear}-01-01", "{$endYear}-12-31"]);
+                                    ->orWhereBetween('end_date', ["{$startYear}-01-01", "{$endYear}-12-31"]);
                             });
                         }
                     }),
@@ -188,7 +189,7 @@ class AcademicYearsTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
                         ->icon('heroicon-o-trash'),
-                    
+
                     BulkAction::make('activate')
                         ->label('🟢 Activate')
                         ->icon('heroicon-o-check-circle')

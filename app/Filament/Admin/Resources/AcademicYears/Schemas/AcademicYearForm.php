@@ -78,13 +78,13 @@ class AcademicYearForm
                     ->content(function ($get): string {
                         $startDate = $get('start_date');
                         $endDate = $get('end_date');
-                        
+
                         if ($startDate && $endDate) {
                             $start = Carbon::parse($startDate);
                             $end = Carbon::parse($endDate);
                             $diffInDays = $start->diffInDays($end) + 1;
                             $diffInMonths = $start->diffInMonths($end);
-                            
+
                             return "<div class='p-4 bg-blue-50 rounded-lg border border-blue-200'>" .
                                 "<div class='grid grid-cols-2 gap-4'>" .
                                 "<div class='text-center'>" .
@@ -98,7 +98,7 @@ class AcademicYearForm
                                 "</div>" .
                                 "</div>";
                         }
-                        
+
                         return "<div class='p-4 bg-gray-50 rounded-lg border border-gray-200 text-center'>" .
                             "<div class='text-sm text-gray-500'>📅 Select start and end dates to see duration</div>" .
                             "</div>";
@@ -137,7 +137,7 @@ class AcademicYearForm
                     ->content(function ($get): string {
                         $status = $get('status');
                         $isCurrent = $get('is_current');
-                        
+
                         $statusInfo = match ($status) {
                             'active' => ['This academic year is currently operational and accepting enrollments', 'bg-green-50 border-green-200 text-green-800'],
                             'inactive' => ['This academic year is not in use and not accepting enrollments', 'bg-red-50 border-red-200 text-red-800'],
@@ -145,9 +145,9 @@ class AcademicYearForm
                             'completed' => ['This academic year has ended and is archived', 'bg-gray-50 border-gray-200 text-gray-800'],
                             default => ['Status not defined', 'bg-gray-50 border-gray-200 text-gray-500']
                         };
-                        
+
                         $currentBadge = $isCurrent ? '<div class="mt-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">⭐ Current Academic Year</div>' : '';
-                        
+
                         return "<div class='p-4 rounded-lg border {$statusInfo[1]}'>" .
                             "<div class='text-sm font-medium mb-1'>Status Details:</div>" .
                             "<div class='text-sm'>{$statusInfo[0]}</div>" .

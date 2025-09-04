@@ -38,15 +38,15 @@ class ViewAcademicYear extends ViewRecord
     public function form(Schema $schema): Schema
     {
         $record = $this->getRecord();
-        
+
         // Calculate statistics
         $totalClasses = $record->classes()->count();
         $activeClasses = $record->classes()->where('status', 'active')->count();
         $totalStudents = $record->classes()->withCount('students')->get()->sum('students_count');
-        $duration = $record->start_date && $record->end_date 
+        $duration = $record->start_date && $record->end_date
             ? $record->start_date->diffInDays($record->end_date) + 1 . ' days'
             : 'Not specified';
-        $progress = $record->start_date && $record->end_date 
+        $progress = $record->start_date && $record->end_date
             ? min(100, max(0, now()->diffInDays($record->start_date) / $record->start_date->diffInDays($record->end_date) * 100))
             : 0;
 
@@ -68,8 +68,8 @@ class ViewAcademicYear extends ViewRecord
                             default => '⚪'
                         };
 
-                        $currentBadge = $record->is_current 
-                            ? '<span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">⭐ Current Academic Year</span>' 
+                        $currentBadge = $record->is_current
+                            ? '<span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">⭐ Current Academic Year</span>'
                             : '';
 
                         return '<div class="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">' .
@@ -131,7 +131,7 @@ class ViewAcademicYear extends ViewRecord
                     ->label('📏 Duration Statistics')
                     ->content(function () use ($duration, $progress): string {
                         $progressColor = $progress > 75 ? 'bg-green-500' : ($progress > 50 ? 'bg-yellow-500' : 'bg-blue-500');
-                        
+
                         return '<div class="space-y-4">' .
                             '<div class="flex justify-between items-center">' .
                             '<span class="text-sm font-medium text-gray-600">Total Duration:</span>' .
@@ -153,7 +153,7 @@ class ViewAcademicYear extends ViewRecord
                     ->label('📚 Class Statistics')
                     ->content(function () use ($totalClasses, $activeClasses, $totalStudents): string {
                         $utilization = $totalClasses > 0 ? round(($activeClasses / $totalClasses) * 100, 1) : 0;
-                        
+
                         return '<div class="grid grid-cols-2 gap-4">' .
                             '<div class="bg-blue-50 p-3 rounded-lg">' .
                             '<span class="block text-lg font-bold text-blue-600">' . $totalClasses . '</span>' .
@@ -177,11 +177,11 @@ class ViewAcademicYear extends ViewRecord
                 // Record Tracking
                 Placeholder::make('created_at')
                     ->label('📅 Created At')
-                    ->content(fn () => $record->created_at ? $record->created_at->format('F j, Y \a\t g:i A') : 'Not available'),
+                    ->content(fn() => $record->created_at ? $record->created_at->format('F j, Y \a\t g:i A') : 'Not available'),
 
                 Placeholder::make('updated_at')
                     ->label('🔄 Last Updated')
-                    ->content(fn () => $record->updated_at ? $record->updated_at->format('F j, Y \a\t g:i A') : 'Not available'),
+                    ->content(fn() => $record->updated_at ? $record->updated_at->format('F j, Y \a\t g:i A') : 'Not available'),
             ])
             ->columns(3);
     }

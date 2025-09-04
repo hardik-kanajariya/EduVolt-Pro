@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Assignment extends Model
 {
@@ -87,10 +88,12 @@ class Assignment extends Model
     // Accessors
     public function getDueAtAttribute()
     {
-        if ($this->due_time) {
-            return $this->due_date->format('Y-m-d') . ' ' . $this->due_time->format('H:i:s');
+        $dueDate = $this->attributes['due_date'];
+        
+        if ($this->attributes['due_time']) {
+            return $dueDate . ' ' . $this->attributes['due_time'];
         }
-        return $this->due_date->format('Y-m-d') . ' 23:59:59';
+        return $dueDate . ' 23:59:59';
     }
 
     public function getIsOverdueAttribute()

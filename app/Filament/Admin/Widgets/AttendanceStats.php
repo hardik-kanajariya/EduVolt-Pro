@@ -13,14 +13,13 @@ class AttendanceStats extends BaseWidget
     protected function getStats(): array
     {
         $today = now()->format('Y-m-d');
-        $thisMonth = now()->format('Y-m');
 
         // Today's attendance
-        $todayPresent = Attendance::whereDate('date', $today)
+        $todayPresent = Attendance::where('date', $today)
             ->where('status', 'present')
             ->count();
 
-        $todayTotal = Attendance::whereDate('date', $today)->count();
+        $todayTotal = Attendance::where('date', $today)->count();
         $todayPercentage = $todayTotal > 0 ? round(($todayPresent / $todayTotal) * 100, 1) : 0;
 
         // This month's average attendance

@@ -7,7 +7,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -41,20 +40,23 @@ class AttendancesTable
                     ->date('M d, Y')
                     ->sortable(),
 
-                BadgeColumn::make('status')
+                TextColumn::make('status')
                     ->label('Status')
-                    ->colors([
-                        'success' => 'present',
-                        'danger' => 'absent',
-                        'warning' => 'late',
-                        'info' => 'excused',
-                    ])
-                    ->icons([
-                        'heroicon-o-check-circle' => 'present',
-                        'heroicon-o-x-circle' => 'absent',
-                        'heroicon-o-clock' => 'late',
-                        'heroicon-o-exclamation-circle' => 'excused',
-                    ]),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'present' => 'success',
+                        'absent' => 'danger',
+                        'late' => 'warning',
+                        'excused' => 'info',
+                        default => 'gray',
+                    })
+                    ->icon(fn (string $state): string => match ($state) {
+                        'present' => 'heroicon-o-check-circle',
+                        'absent' => 'heroicon-o-x-circle',
+                        'late' => 'heroicon-o-clock',
+                        'excused' => 'heroicon-o-exclamation-circle',
+                        default => 'heroicon-o-question-mark-circle',
+                    }),
 
                 TextColumn::make('in_time')
                     ->label('In Time')

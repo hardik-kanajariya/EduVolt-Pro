@@ -67,6 +67,16 @@ class Student extends Model
         return $this->hasMany(StudentProgress::class);
     }
 
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function assignmentSubmissions()
+    {
+        return $this->hasMany(AssignmentSubmission::class);
+    }
+
     // Scopes
     public function scopeActive($query)
     {
@@ -96,5 +106,18 @@ class Student extends Model
 
         $presentDays = $this->attendances()->where('status', 'present')->count();
         return round(($presentDays / $totalDays) * 100, 2);
+    }
+
+    public function getFirstNameAttribute()
+    {
+        $name = $this->user->name ?? '';
+        return explode(' ', $name)[0] ?? '';
+    }
+
+    public function getLastNameAttribute()
+    {
+        $name = $this->user->name ?? '';
+        $nameParts = explode(' ', $name);
+        return count($nameParts) > 1 ? implode(' ', array_slice($nameParts, 1)) : '';
     }
 }

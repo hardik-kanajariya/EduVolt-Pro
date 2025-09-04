@@ -1,6 +1,25 @@
 @extends('reports.layout')
 
 @section('content')
+<style>
+    .attendance-status {
+        padding: 2px 8px;
+        border-radius: 3px;
+        font-size: 12px;
+    }
+    .attendance-status-present {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .attendance-status-late {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    .attendance-status-absent {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+</style>
 <div class="section">
     <h2 class="section-title">Attendance Overview</h2>
     <div class="stats-grid">
@@ -38,7 +57,7 @@
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Student Name</th>
+                <th>Student</th>
                 <th>Class</th>
                 <th>Subject</th>
                 <th>Status</th>
@@ -54,13 +73,7 @@
                 <td>{{ $record->schoolClass->name }}</td>
                 <td>{{ $record->subject->name }}</td>
                 <td>
-                    <span style="
-                                    background-color: {{ $record->status === 'present' ? '#d4edda' : ($record->status === 'late' ? '#fff3cd' : '#f8d7da') }};
-                                    color: {{ $record->status === 'present' ? '#155724' : ($record->status === 'late' ? '#856404' : '#721c24') }};
-                                    padding: 2px 8px;
-                                    border-radius: 3px;
-                                    font-size: 12px;
-                                ">
+                    <span class="attendance-status attendance-status-{{ $record->status }}">
                         {{ ucfirst($record->status) }}
                     </span>
                 </td>

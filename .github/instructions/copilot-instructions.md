@@ -452,3 +452,12 @@ do not try to run thus command `php artisan tinker` actually do not test anythin
 run the test often to make sure all are passing and not any failures if failing then check why?, if its the issue with what you made chanegs or need to update that test case with new development. 
 
 do not run commands for testing untill I explicitly told you. Do focus only on development activity. rest I will manage. 
+
+Do not remove any file unless I explicitly told you to do so. 
+
+you should not run the cmd commands to create migration, model or resource etc. just create those files in respective folders with proper naming conventions and proper code manually. 
+
+we are using filament v4 so do not use any code or function or anything from filament v3. analyze the filament docs if you are not sure about anything.  
+https://filamentphp.com/docs/4.x/introduction/overview
+
+the dev.md file is containes only higher level requirements, a list of features only, we have to identify and analyze each in depth and create proper system. we should go beyond the expectations. 

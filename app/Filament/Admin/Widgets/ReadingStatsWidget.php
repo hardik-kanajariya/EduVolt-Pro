@@ -54,11 +54,4 @@ class ReadingStatsWidget extends BaseWidget
                 ->color('warning'),
         ];
     }
-}espace App\Filament\Admin\Widgets;
-
-use Filament\Widgets\Widget;
-
-class ReadingStatsWidget extends Widget
-{
-    protected string $view = 'filament.admin.widgets.reading-stats-widget';
 }

@@ -92,11 +92,4 @@ class PopularBooksWidget extends ChartWidget
             ],
         ];
     }
-}espace App\Filament\Admin\Widgets;
-
-use Filament\Widgets\Widget;
-
-class PopularBooksWidget extends Widget
-{
-    protected string $view = 'filament.admin.widgets.popular-books-widget';
 }

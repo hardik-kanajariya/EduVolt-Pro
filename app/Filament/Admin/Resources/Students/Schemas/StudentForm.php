@@ -24,7 +24,7 @@ class StudentForm
                     ->preload()
                     ->required()
                     ->columnSpan(2),
-                    
+
                 Select::make('school_id')
                     ->label('School')
                     ->relationship('school', 'name')
@@ -32,7 +32,7 @@ class StudentForm
                     ->preload()
                     ->required()
                     ->columnSpan(1),
-                    
+
                 Select::make('class_id')
                     ->label('Class')
                     ->relationship('schoolClass', 'name')
@@ -40,25 +40,25 @@ class StudentForm
                     ->preload()
                     ->required()
                     ->columnSpan(1),
-                    
+
                 TextInput::make('admission_number')
                     ->label('Admission Number')
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(50)
                     ->columnSpan(1),
-                    
+
                 TextInput::make('roll_number')
                     ->label('Roll Number')
                     ->maxLength(20)
                     ->columnSpan(1),
-                    
+
                 DatePicker::make('admission_date')
                     ->label('Admission Date')
                     ->required()
                     ->native(false)
                     ->columnSpan(1),
-                    
+
                 Select::make('status')
                     ->label('Status')
                     ->options([
@@ -70,36 +70,36 @@ class StudentForm
                     ->default('active')
                     ->required()
                     ->columnSpan(1),
-                    
+
                 TextInput::make('parent_name')
                     ->label('Parent/Guardian Name')
                     ->required()
                     ->maxLength(255)
                     ->columnSpan(2),
-                    
+
                 TextInput::make('parent_phone')
                     ->label('Parent Phone')
                     ->tel()
                     ->required()
                     ->maxLength(20)
                     ->columnSpan(1),
-                    
+
                 TextInput::make('parent_email')
                     ->label('Parent Email')
                     ->email()
                     ->maxLength(255)
                     ->columnSpan(1),
-                    
+
                 Textarea::make('medical_info')
                     ->label('Medical Information')
                     ->rows(3)
                     ->columnSpanFull(),
-                    
+
                 TextInput::make('transport_route')
                     ->label('Transport Route')
                     ->maxLength(255)
                     ->columnSpan(1),
-                    
+
                 Textarea::make('emergency_contacts')
                     ->label('Emergency Contacts')
                     ->rows(3)

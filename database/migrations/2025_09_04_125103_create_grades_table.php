@@ -11,18 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('grades', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('subject_id')->constrained()->onDelete('cascade');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
-            $table->date('date');
-            $table->enum('status', ['present', 'absent', 'late', 'excused'])->default('present');
+            $table->string('exam_type'); // 'quiz', 'midterm', 'final', 'assignment'
+            $table->string('exam_name');
+            $table->decimal('obtained_marks', 5, 2);
+            $table->decimal('total_marks', 5, 2);
+            $table->decimal('percentage', 5, 2);
+            $table->char('grade', 2)->nullable(); // A+, A, B+, etc.
             $table->text('remarks')->nullable();
-            $table->foreignId('marked_by')->constrained('users')->onDelete('cascade');
+            $table->date('exam_date');
             $table->timestamps();
-
-            $table->unique(['student_id', 'date']);
-            $table->index(['class_id', 'date']);
+            
+            $table->index(['student_id', 'exam_date']);
         });
     }
 
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('grades');
     }
 };

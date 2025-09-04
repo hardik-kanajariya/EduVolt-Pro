@@ -22,50 +22,50 @@ class StudentsTable
                     ->label('Admission No.')
                     ->searchable()
                     ->sortable(),
-                    
+
                 TextColumn::make('user.name')
                     ->label('Student Name')
                     ->searchable()
                     ->sortable(),
-                    
+
                 TextColumn::make('schoolClass.name')
                     ->label('Class')
                     ->sortable(),
-                    
+
                 TextColumn::make('roll_number')
                     ->label('Roll No.')
                     ->searchable(),
-                    
+
                 TextColumn::make('parent_name')
                     ->label('Parent/Guardian')
                     ->searchable(),
-                    
+
                 TextColumn::make('parent_phone')
                     ->label('Parent Phone')
                     ->searchable(),
-                    
+
                 TextColumn::make('admission_date')
                     ->label('Admission Date')
                     ->date()
                     ->sortable(),
-                    
+
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'danger',
                         'transferred' => 'warning',
                         'graduated' => 'info',
                         default => 'gray',
                     }),
-                    
+
                 TextColumn::make('created_at')
                     ->label('Created')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                    
+
                 TextColumn::make('updated_at')
                     ->label('Updated')
                     ->dateTime()

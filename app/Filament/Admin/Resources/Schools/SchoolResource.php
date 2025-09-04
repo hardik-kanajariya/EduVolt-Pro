@@ -18,7 +18,8 @@ class SchoolResource extends Resource
 {
     protected static ?string $model = School::class;
 
-    protected static ?string $recordTitleAttribute = 'name';    public static function form(Schema $schema): Schema
+    protected static ?string $recordTitleAttribute = 'name';
+    public static function form(Schema $schema): Schema
     {
         return SchoolForm::configure($schema);
     }

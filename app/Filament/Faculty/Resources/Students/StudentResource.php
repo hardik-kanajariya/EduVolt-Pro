@@ -16,9 +16,9 @@ class StudentResource extends Resource
     protected static ?string $model = Student::class;
 
     protected static ?string $recordTitleAttribute = 'first_name';
-    
+
     protected static ?string $label = 'My Students';
-    
+
     protected static ?string $pluralLabel = 'My Students';
 
     public static function table(Table $table): Table
@@ -50,7 +50,7 @@ class StudentResource extends Resource
                 ->flatten()
                 ->pluck('id')
                 ->unique();
-                
+
             $query->whereIn('class_id', $teacherClasses);
         }
 

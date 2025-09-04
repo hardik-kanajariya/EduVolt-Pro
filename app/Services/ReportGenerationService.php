@@ -37,30 +37,29 @@ class ReportGenerationService
     {
         try {
             $report->markAsGenerating();
-            
+
             $data = $this->collectReportData($report);
             $filePath = $this->exportReport($report, $data);
             $summaryData = $this->generateSummaryData($report, $data);
-            
+
             $report->markAsCompleted($filePath, $summaryData);
-            
+
             Log::info('Report generated successfully', [
                 'report_id' => $report->id,
                 'type' => $report->report_type,
                 'file_path' => $filePath,
             ]);
-            
+
             return true;
-            
         } catch (\Exception $e) {
             $report->markAsFailed($e->getMessage());
-            
+
             Log::error('Report generation failed', [
                 'report_id' => $report->id,
                 'type' => $report->report_type,
                 'error' => $e->getMessage(),
             ]);
-            
+
             return false;
         }
     }
@@ -91,23 +90,23 @@ class ReportGenerationService
     protected function collectStudentProgressData(AcademicReport $report): array
     {
         $query = StudentProgress::query();
-        
+
         if ($report->student_id) {
             $query->where('student_id', $report->student_id);
         }
-        
+
         if ($report->academic_year_id) {
             $query->where('academic_year_id', $report->academic_year_id);
         }
-        
+
         if ($report->class_id) {
             $query->where('class_id', $report->class_id);
         }
-        
+
         if ($report->subject_id) {
             $query->where('subject_id', $report->subject_id);
         }
-        
+
         if ($report->term) {
             $query->where('term', $report->term);
         }
@@ -140,11 +139,11 @@ class ReportGenerationService
     protected function collectClassPerformanceData(AcademicReport $report): array
     {
         $classes = SchoolClass::query();
-        
+
         if ($report->class_id) {
             $classes->where('id', $report->class_id);
         }
-        
+
         if ($report->academic_year_id) {
             // Filter by academic year through student progress
             $classes->whereHas('students.progress', function ($query) use ($report) {
@@ -154,11 +153,11 @@ class ReportGenerationService
 
         $classData = $classes->with(['students', 'subjects'])->get()->map(function ($class) use ($report) {
             $progressQuery = StudentProgress::where('class_id', $class->id);
-            
+
             if ($report->academic_year_id) {
                 $progressQuery->where('academic_year_id', $report->academic_year_id);
             }
-            
+
             if ($report->term) {
                 $progressQuery->where('term', $report->term);
             }
@@ -185,23 +184,23 @@ class ReportGenerationService
     protected function collectAttendanceData(AcademicReport $report): array
     {
         $query = Attendance::query();
-        
+
         if ($report->student_id) {
             $query->where('student_id', $report->student_id);
         }
-        
+
         if ($report->class_id) {
             $query->where('class_id', $report->class_id);
         }
-        
+
         if ($report->subject_id) {
             $query->where('subject_id', $report->subject_id);
         }
-        
+
         if ($report->date_from) {
             $query->where('date', '>=', $report->date_from);
         }
-        
+
         if ($report->date_to) {
             $query->where('date', '<=', $report->date_to);
         }
@@ -228,19 +227,19 @@ class ReportGenerationService
     protected function collectAssignmentData(AcademicReport $report): array
     {
         $query = Assignment::query();
-        
+
         if ($report->class_id) {
             $query->where('class_id', $report->class_id);
         }
-        
+
         if ($report->subject_id) {
             $query->where('subject_id', $report->subject_id);
         }
-        
+
         if ($report->date_from) {
             $query->where('due_date', '>=', $report->date_from);
         }
-        
+
         if ($report->date_to) {
             $query->where('due_date', '<=', $report->date_to);
         }
@@ -272,19 +271,19 @@ class ReportGenerationService
     protected function collectExamData(AcademicReport $report): array
     {
         $query = Exam::query();
-        
+
         if ($report->class_id) {
             $query->where('class_id', $report->class_id);
         }
-        
+
         if ($report->subject_id) {
             $query->where('subject_id', $report->subject_id);
         }
-        
+
         if ($report->date_from) {
             $query->where('exam_date', '>=', $report->date_from);
         }
-        
+
         if ($report->date_to) {
             $query->where('exam_date', '<=', $report->date_to);
         }
@@ -315,7 +314,7 @@ class ReportGenerationService
     protected function exportReport(AcademicReport $report, array $data): string
     {
         $filename = $this->generateFilename($report);
-        
+
         return match ($report->file_format) {
             AcademicReport::FORMAT_PDF => $this->exportToPdf($report, $data, $filename),
             AcademicReport::FORMAT_EXCEL => $this->exportToExcel($report, $data, $filename),
@@ -332,16 +331,16 @@ class ReportGenerationService
     protected function exportToPdf(AcademicReport $report, array $data, string $filename): string
     {
         $view = "reports.{$report->report_type}";
-        
+
         $pdf = Pdf::loadView($view, [
             'report' => $report,
             'data' => $data,
             'generated_at' => now(),
         ]);
-        
+
         $filePath = "reports/{$filename}.pdf";
         Storage::put($filePath, $pdf->output());
-        
+
         return $filePath;
     }
 
@@ -351,10 +350,10 @@ class ReportGenerationService
     protected function exportToExcel(AcademicReport $report, array $data, string $filename): string
     {
         $exportClass = $this->getExcelExportClass($report->report_type);
-        
+
         $filePath = "reports/{$filename}.xlsx";
         Excel::store(new $exportClass($data), $filePath);
-        
+
         return $filePath;
     }
 
@@ -364,20 +363,20 @@ class ReportGenerationService
     protected function exportToCsv(AcademicReport $report, array $data, string $filename): string
     {
         $csvData = $this->convertToCsvData($report, $data);
-        
+
         $filePath = "reports/{$filename}.csv";
         $output = fopen('php://temp', 'w');
-        
+
         foreach ($csvData as $row) {
             fputcsv($output, $row);
         }
-        
+
         rewind($output);
         $csvContent = stream_get_contents($output);
         fclose($output);
-        
+
         Storage::put($filePath, $csvContent);
-        
+
         return $filePath;
     }
 
@@ -387,17 +386,17 @@ class ReportGenerationService
     protected function exportToHtml(AcademicReport $report, array $data, string $filename): string
     {
         $view = "reports.{$report->report_type}";
-        
+
         $html = view($view, [
             'report' => $report,
             'data' => $data,
             'generated_at' => now(),
             'format' => 'html',
         ])->render();
-        
+
         $filePath = "reports/{$filename}.html";
         Storage::put($filePath, $html);
-        
+
         return $filePath;
     }
 
@@ -411,10 +410,10 @@ class ReportGenerationService
             'data' => $data,
             'generated_at' => now()->toISOString(),
         ];
-        
+
         $filePath = "reports/{$filename}.json";
         Storage::put($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
-        
+
         return $filePath;
     }
 
@@ -425,21 +424,21 @@ class ReportGenerationService
     {
         $timestamp = now()->format('Y-m-d_H-i-s');
         $type = str_replace('_', '-', $report->report_type);
-        
+
         $parts = [$type, $timestamp];
-        
+
         if ($report->student_id) {
             $parts[] = "student-{$report->student_id}";
         }
-        
+
         if ($report->class_id) {
             $parts[] = "class-{$report->class_id}";
         }
-        
+
         if ($report->subject_id) {
             $parts[] = "subject-{$report->subject_id}";
         }
-        
+
         return implode('_', $parts);
     }
 
@@ -486,7 +485,7 @@ class ReportGenerationService
             $count = $progressRecords->filter(function ($record) use ($range) {
                 return $record->overall_grade >= $range[0] && $record->overall_grade <= $range[1];
             })->count();
-            
+
             $distribution[$grade] = [
                 'count' => $count,
                 'percentage' => $progressRecords->count() > 0 ? ($count / $progressRecords->count()) * 100 : 0,
@@ -514,7 +513,7 @@ class ReportGenerationService
         })->map(function ($records, $date) {
             $total = $records->count();
             $present = $records->where('status', 'present')->count();
-            
+
             return [
                 'date' => $date,
                 'total' => $total,
@@ -531,7 +530,7 @@ class ReportGenerationService
             $present = $records->where('status', 'present')->count();
             $absent = $records->where('status', 'absent')->count();
             $late = $records->where('status', 'late')->count();
-            
+
             return [
                 'student' => $records->first()->student,
                 'total_classes' => $total,
@@ -552,9 +551,9 @@ class ReportGenerationService
     protected function collectBehavioralData(AcademicReport $report): array
     {
         $query = StudentProgress::query();
-        
+
         $this->applyCommonFilters($query, $report);
-        
+
         $progressRecords = $query->with(['student', 'academicYear', 'schoolClass', 'subject'])->get();
 
         return [
@@ -597,7 +596,7 @@ class ReportGenerationService
     {
         $studentData = $this->collectStudentProgressData($report);
         $attendanceData = $this->collectAttendanceData($report);
-        
+
         return [
             'student_overview' => $studentData,
             'attendance_summary' => $attendanceData,
@@ -639,11 +638,11 @@ class ReportGenerationService
     protected function getSubjectPerformanceByClass(int $classId, AcademicReport $report): array
     {
         $query = StudentProgress::where('class_id', $classId);
-        
+
         if ($report->academic_year_id) {
             $query->where('academic_year_id', $report->academic_year_id);
         }
-        
+
         if ($report->term) {
             $query->where('term', $report->term);
         }
@@ -670,7 +669,7 @@ class ReportGenerationService
     {
         $totalStudents = $classData->sum(fn($class) => $class['statistics']['total_students']);
         $totalClasses = $classData->count();
-        
+
         return [
             'total_classes' => $totalClasses,
             'total_students' => $totalStudents,
@@ -688,7 +687,7 @@ class ReportGenerationService
     {
         $expectedSubmissions = $assignment->schoolClass->students()->count();
         $actualSubmissions = $assignment->submissions()->count();
-        
+
         return $expectedSubmissions > 0 ? ($actualSubmissions / $expectedSubmissions) * 100 : 0;
     }
 
@@ -698,7 +697,7 @@ class ReportGenerationService
     protected function calculateAssignmentGradeStatistics(Assignment $assignment): array
     {
         $submissions = $assignment->submissions()->whereNotNull('grade')->get();
-        
+
         if ($submissions->isEmpty()) {
             return [
                 'average' => 0,
@@ -710,7 +709,7 @@ class ReportGenerationService
         }
 
         $grades = $submissions->pluck('grade')->sort();
-        
+
         return [
             'average' => $grades->avg(),
             'median' => $grades->median(),
@@ -727,7 +726,7 @@ class ReportGenerationService
     {
         $totalStudents = $exams->sum(fn($exam) => $exam->examMarks->count());
         $passedStudents = $exams->sum(fn($exam) => $exam->examMarks->where('marks', '>=', 50)->count());
-        
+
         return $totalStudents > 0 ? ($passedStudents / $totalStudents) * 100 : 0;
     }
 
@@ -737,7 +736,7 @@ class ReportGenerationService
     protected function calculateExamStatistics(Exam $exam): array
     {
         $marks = $exam->examMarks->pluck('marks');
-        
+
         if ($marks->isEmpty()) {
             return [
                 'average' => 0,
@@ -812,7 +811,7 @@ class ReportGenerationService
     protected function convertToCsvData(AcademicReport $report, array $data): array
     {
         $csvData = [];
-        
+
         // Add headers based on report type
         switch ($report->report_type) {
             case AcademicReport::TYPE_STUDENT_PROGRESS:
@@ -829,7 +828,7 @@ class ReportGenerationService
                     ];
                 }
                 break;
-                
+
             case AcademicReport::TYPE_ATTENDANCE_SUMMARY:
                 $csvData[] = ['Date', 'Student', 'Subject', 'Class', 'Status'];
                 foreach ($data['attendance_records'] as $record) {
@@ -842,12 +841,12 @@ class ReportGenerationService
                     ];
                 }
                 break;
-                
+
             default:
                 $csvData[] = ['Report Type', 'Generated At', 'Summary'];
                 $csvData[] = [$report->report_type, now()->format('Y-m-d H:i:s'), json_encode($data['summary'] ?? [])];
         }
-        
+
         return $csvData;
     }
 
@@ -859,19 +858,19 @@ class ReportGenerationService
         if ($report->student_id) {
             $query->where('student_id', $report->student_id);
         }
-        
+
         if ($report->academic_year_id) {
             $query->where('academic_year_id', $report->academic_year_id);
         }
-        
+
         if ($report->class_id) {
             $query->where('class_id', $report->class_id);
         }
-        
+
         if ($report->subject_id) {
             $query->where('subject_id', $report->subject_id);
         }
-        
+
         if ($report->term) {
             $query->where('term', $report->term);
         }
@@ -883,11 +882,11 @@ class ReportGenerationService
     protected function getUpcomingAssignments(AcademicReport $report): array
     {
         $query = Assignment::where('due_date', '>', now());
-        
+
         if ($report->class_id) {
             $query->where('class_id', $report->class_id);
         }
-        
+
         return $query->with(['subject', 'schoolClass'])
             ->orderBy('due_date')
             ->limit(10)
@@ -899,11 +898,11 @@ class ReportGenerationService
     {
         $query = Exam::where('exam_date', '<=', now())
             ->where('exam_date', '>=', now()->subDays(30));
-            
+
         if ($report->class_id) {
             $query->where('class_id', $report->class_id);
         }
-        
+
         return $query->with(['subject', 'examMarks'])
             ->orderBy('exam_date', 'desc')
             ->limit(5)
@@ -914,9 +913,9 @@ class ReportGenerationService
     protected function getTeacherComments(AcademicReport $report): array
     {
         $query = StudentProgress::whereNotNull('teacher_comments');
-        
+
         $this->applyCommonFilters($query, $report);
-        
+
         return $query->with(['student', 'subject'])
             ->orderBy('updated_at', 'desc')
             ->limit(10)

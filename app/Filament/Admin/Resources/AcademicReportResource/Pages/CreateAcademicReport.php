@@ -14,7 +14,7 @@ class CreateAcademicReport extends CreateRecord
     {
         $data['created_by'] = Auth::id();
         $data['status'] = 'pending';
-        
+
         // Parse recipients from textarea to array
         if (!empty($data['recipients'])) {
             $recipients = array_filter(array_map('trim', explode("\n", $data['recipients'])));

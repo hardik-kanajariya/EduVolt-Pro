@@ -19,11 +19,11 @@ class ClassPerformanceExport implements FromArray, WithHeadings, WithStyles
     public function array(): array
     {
         $exportData = [];
-        
+
         foreach ($this->data['classes'] as $classData) {
             $class = $classData['class'];
             $stats = $classData['statistics'];
-            
+
             $exportData[] = [
                 $class->name,
                 $stats['total_students'],

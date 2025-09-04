@@ -19,7 +19,7 @@ class StudentProgressExport implements FromArray, WithHeadings, WithStyles
     public function array(): array
     {
         $exportData = [];
-        
+
         foreach ($this->data['progress_records'] as $record) {
             $exportData[] = [
                 $record->student->name,

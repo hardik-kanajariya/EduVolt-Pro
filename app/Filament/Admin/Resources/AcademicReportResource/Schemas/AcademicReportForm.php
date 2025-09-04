@@ -105,12 +105,12 @@ class AcademicReportForm
                         'quarterly' => 'Quarterly',
                         'annually' => 'Annually',
                     ])
-                    ->visible(fn ($get) => $get('is_scheduled'))
+                    ->visible(fn($get) => $get('is_scheduled'))
                     ->columnSpan(1),
 
                 DateTimePicker::make('scheduled_at')
                     ->label('Next Generation Date')
-                    ->visible(fn ($get) => $get('is_scheduled'))
+                    ->visible(fn($get) => $get('is_scheduled'))
                     ->columnSpan(1),
 
                 Textarea::make('recipients')

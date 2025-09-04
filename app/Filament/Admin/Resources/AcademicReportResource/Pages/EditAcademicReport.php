@@ -26,7 +26,7 @@ class EditAcademicReport extends EditRecord
     protected function mutateFormDataBeforeSave(array $data): array
     {
         $data['updated_by'] = Auth::id();
-        
+
         // Parse recipients from textarea to array
         if (!empty($data['recipients'])) {
             $recipients = array_filter(array_map('trim', explode("\n", $data['recipients'])));

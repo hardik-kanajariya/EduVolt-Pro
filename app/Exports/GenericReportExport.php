@@ -23,7 +23,7 @@ class GenericReportExport implements FromArray, WithHeadings, WithStyles
         if (isset($this->data['report_data']) && is_array($this->data['report_data'])) {
             return $this->data['report_data'];
         }
-        
+
         // If the data structure is different, try to flatten it
         $exportData = [];
         foreach ($this->data as $key => $value) {
@@ -39,7 +39,7 @@ class GenericReportExport implements FromArray, WithHeadings, WithStyles
                 }
             }
         }
-        
+
         return $exportData;
     }
 
@@ -48,7 +48,7 @@ class GenericReportExport implements FromArray, WithHeadings, WithStyles
         if (!empty($this->headers)) {
             return $this->headers;
         }
-        
+
         return [
             'Data',
         ];

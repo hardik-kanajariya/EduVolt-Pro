@@ -203,11 +203,11 @@ class AcademicReport extends Model
 
         $bytes = filesize(storage_path('app/' . $this->file_path));
         $units = ['B', 'KB', 'MB', 'GB'];
-        
+
         for ($i = 0; $bytes > 1024 && $i < count($units) - 1; $i++) {
             $bytes /= 1024;
         }
-        
+
         return round($bytes, 2) . ' ' . $units[$i];
     }
 
@@ -216,7 +216,7 @@ class AcademicReport extends Model
         if (!$this->file_path || $this->status !== self::STATUS_COMPLETED) {
             return null;
         }
-        
+
         return route('reports.download', ['report' => $this->id]);
     }
 

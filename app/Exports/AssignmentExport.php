@@ -19,7 +19,7 @@ class AssignmentExport implements FromArray, WithHeadings, WithStyles
     public function array(): array
     {
         $exportData = [];
-        
+
         foreach ($this->data['assignments'] as $assignment) {
             $exportData[] = [
                 $assignment->title,

@@ -19,7 +19,7 @@ class AttendanceExport implements FromArray, WithHeadings, WithStyles
     public function array(): array
     {
         $exportData = [];
-        
+
         foreach ($this->data['attendance_records'] as $record) {
             $exportData[] = [
                 $record->date->format('Y-m-d'),

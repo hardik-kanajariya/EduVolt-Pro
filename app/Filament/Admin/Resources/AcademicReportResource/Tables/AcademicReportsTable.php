@@ -21,7 +21,7 @@ class AcademicReportsTable
                     ->sortable(),
 
                 BadgeColumn::make('report_type')
-                    ->formatStateUsing(fn (string $state): string => ucwords(str_replace('_', ' ', $state)))
+                    ->formatStateUsing(fn(string $state): string => ucwords(str_replace('_', ' ', $state)))
                     ->colors([
                         'primary' => 'student_progress',
                         'success' => 'class_performance',
@@ -58,7 +58,8 @@ class AcademicReportsTable
                     ->sortable(),
 
                 TextColumn::make('file_size')
-                    ->formatStateUsing(fn (?string $state): string => 
+                    ->formatStateUsing(
+                        fn(?string $state): string =>
                         $state ? number_format($state / 1024, 2) . ' KB' : 'N/A'
                     ),
             ])
@@ -95,7 +96,7 @@ class AcademicReportsTable
                     ]),
 
                 Filter::make('scheduled_reports')
-                    ->query(fn (Builder $query): Builder => $query->where('is_scheduled', true))
+                    ->query(fn(Builder $query): Builder => $query->where('is_scheduled', true))
                     ->label('Scheduled Reports'),
             ]);
     }

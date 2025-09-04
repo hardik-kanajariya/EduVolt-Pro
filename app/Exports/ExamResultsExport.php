@@ -19,7 +19,7 @@ class ExamResultsExport implements FromArray, WithHeadings, WithStyles
     public function array(): array
     {
         $exportData = [];
-        
+
         foreach ($this->data['exam_results'] as $result) {
             $exportData[] = [
                 $result->student->name,

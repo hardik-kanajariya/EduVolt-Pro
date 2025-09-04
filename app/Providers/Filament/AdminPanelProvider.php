@@ -28,8 +28,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
+            ->profile(isSimple: false)
             ->brandName('EduVault Pro - Admin')
-            ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('2rem')
             ->colors([
                 'primary' => Color::Blue,
@@ -42,8 +43,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\Filament\Admin\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
         // Create additional test users for different roles
         $admin = User::create([
             'name' => 'School Administrator',
-            'email' => 'schooladmin@eduvaultpro.com', 
+            'email' => 'schooladmin@eduvaultpro.com',
             'email_verified_at' => now(),
             'password' => Hash::make('admin123'),
         ]);
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
         $principal = User::create([
             'name' => 'Principal',
             'email' => 'principal@eduvaultpro.com',
-            'email_verified_at' => now(), 
+            'email_verified_at' => now(),
             'password' => Hash::make('principal123'),
         ]);
 

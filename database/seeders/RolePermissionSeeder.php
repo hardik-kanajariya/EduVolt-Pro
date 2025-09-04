@@ -20,14 +20,14 @@ class RolePermissionSeeder extends Seeder
         $permissions = [
             // User Management Permissions
             'view_users',
-            'create_users', 
+            'create_users',
             'edit_users',
             'delete_users',
 
             // Student Management Permissions
             'view_students',
             'create_students',
-            'edit_students', 
+            'edit_students',
             'delete_students',
             'promote_students',
             'transfer_students',
@@ -99,7 +99,7 @@ class RolePermissionSeeder extends Seeder
         }
 
         // Create Roles and assign permissions
-        
+
         // Super Admin - Has all permissions
         $superAdmin = Role::create(['name' => 'super_admin']);
         $superAdmin->givePermissionTo(Permission::all());
@@ -107,64 +107,123 @@ class RolePermissionSeeder extends Seeder
         // Admin - School administration permissions
         $admin = Role::create(['name' => 'admin']);
         $admin->givePermissionTo([
-            'view_users', 'create_users', 'edit_users',
-            'view_students', 'create_students', 'edit_students', 'promote_students', 'transfer_students',
-            'view_teachers', 'create_teachers', 'edit_teachers', 'assign_subjects',
-            'view_classes', 'create_classes', 'edit_classes', 'manage_class_sections',
-            'view_attendance', 'view_attendance_reports',
-            'view_fees', 'collect_fees', 'manage_fee_structure', 'view_fee_reports', 'issue_receipts',
-            'view_exams', 'create_exams', 'edit_exams', 'manage_marks', 'publish_results',
-            'view_library', 'manage_books', 'issue_books', 'return_books', 'manage_library_inventory',
-            'view_academic_progress', 'manage_timetable', 'generate_reports',
-            'send_notifications', 'manage_announcements', 'send_emails', 'manage_events',
-            'manage_school_settings', 'manage_academic_years',
+            'view_users',
+            'create_users',
+            'edit_users',
+            'view_students',
+            'create_students',
+            'edit_students',
+            'promote_students',
+            'transfer_students',
+            'view_teachers',
+            'create_teachers',
+            'edit_teachers',
+            'assign_subjects',
+            'view_classes',
+            'create_classes',
+            'edit_classes',
+            'manage_class_sections',
+            'view_attendance',
+            'view_attendance_reports',
+            'view_fees',
+            'collect_fees',
+            'manage_fee_structure',
+            'view_fee_reports',
+            'issue_receipts',
+            'view_exams',
+            'create_exams',
+            'edit_exams',
+            'manage_marks',
+            'publish_results',
+            'view_library',
+            'manage_books',
+            'issue_books',
+            'return_books',
+            'manage_library_inventory',
+            'view_academic_progress',
+            'manage_timetable',
+            'generate_reports',
+            'send_notifications',
+            'manage_announcements',
+            'send_emails',
+            'manage_events',
+            'manage_school_settings',
+            'manage_academic_years',
         ]);
 
         // Principal - Academic oversight permissions
         $principal = Role::create(['name' => 'principal']);
         $principal->givePermissionTo([
-            'view_users', 'view_students', 'view_teachers',
-            'view_classes', 'view_attendance', 'view_attendance_reports',
-            'view_fees', 'view_fee_reports',
-            'view_exams', 'manage_marks', 'publish_results',
-            'view_library', 'view_academic_progress', 'generate_reports',
-            'send_notifications', 'manage_announcements', 'send_emails', 'manage_events',
+            'view_users',
+            'view_students',
+            'view_teachers',
+            'view_classes',
+            'view_attendance',
+            'view_attendance_reports',
+            'view_fees',
+            'view_fee_reports',
+            'view_exams',
+            'manage_marks',
+            'publish_results',
+            'view_library',
+            'view_academic_progress',
+            'generate_reports',
+            'send_notifications',
+            'manage_announcements',
+            'send_emails',
+            'manage_events',
         ]);
 
         // Teacher - Teaching staff permissions
         $teacher = Role::create(['name' => 'teacher']);
         $teacher->givePermissionTo([
-            'view_students', 'view_classes',
-            'view_attendance', 'mark_attendance', 'edit_attendance',
-            'view_exams', 'manage_marks',
-            'view_academic_progress', 'manage_assignments',
+            'view_students',
+            'view_classes',
+            'view_attendance',
+            'mark_attendance',
+            'edit_attendance',
+            'view_exams',
+            'manage_marks',
+            'view_academic_progress',
+            'manage_assignments',
             'send_notifications',
         ]);
 
         // Accountant - Financial management permissions
         $accountant = Role::create(['name' => 'accountant']);
         $accountant->givePermissionTo([
-            'view_students', 'view_fees', 'collect_fees', 'manage_fee_structure', 
-            'view_fee_reports', 'issue_receipts',
+            'view_students',
+            'view_fees',
+            'collect_fees',
+            'manage_fee_structure',
+            'view_fee_reports',
+            'issue_receipts',
         ]);
 
         // Librarian - Library management permissions
         $librarian = Role::create(['name' => 'librarian']);
         $librarian->givePermissionTo([
-            'view_students', 'view_library', 'manage_books', 'issue_books', 
-            'return_books', 'manage_library_inventory',
+            'view_students',
+            'view_library',
+            'manage_books',
+            'issue_books',
+            'return_books',
+            'manage_library_inventory',
         ]);
 
         // Student - Student access permissions
         $student = Role::create(['name' => 'student']);
         $student->givePermissionTo([
-            'view_attendance', 'view_academic_progress',
+            'view_attendance',
+            'view_academic_progress',
         ]);
 
         // Parent - Parent portal permissions
         $parent = Role::create(['name' => 'parent']);
         $parent->givePermissionTo([
-            'view_attendance', 'view_academic_progress', 'view_fees',
+            'view_attendance',
+            'view_academic_progress',
+            'view_fees',
         ]);
 
         $this->command->info('Roles and permissions created successfully!');

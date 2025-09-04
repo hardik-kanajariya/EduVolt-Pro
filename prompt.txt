@@ -1,1 +1,75 @@
-Can you look in to this Faculty resources, here the resources are not properly handled with the given database schema, they lack form handling, and tables are not properly configured for best what we would like in our industry standard application, go with one by one application and check all the resources with its database tables dolumns configured in migrations, and models, check for any column mismatch, default vlaue not exists for any column, forms are not proper, we need to give best UX to our users so that they can use our system happily. do not remove any file upon curruption, change made should be carefully do chance to get file curreptions, all should be follow latest filament v4 version schemas and syntax and structure. you can refere a #file:DEV.md this file to get the higher level requirements basic idea about, so you will get more context on what should be done with the functionality, any missing functionality, we are not just limited to this dev.md we have to make this application far beyond the dev roadmap to give industry leading School management system. and we can do this. implement relation managers, wizard based forms where we can, implemente infolists for view pages. there are many custom pages created, which actuall the view files are empty or with minimal infos, and also the custom pages file are not loading the css properly. they just rendering pure html skelaton. 
+You are working on a **School Management System** built with **Laravel + Filament v4**.
+Your task is to **audit and upgrade all Admin-related resources** (and other connected resources) to meet **industry-standard quality**. Follow these exact instructions:
+
+1. **Schema & Migrations**
+
+   * Review database migrations for all Admin-related tables.
+   * Ensure columns match correctly with models.
+   * Add missing default values where required.
+   * Fix any column mismatches, improper datatypes, or missing constraints.
+
+2. **Models**
+
+   * Check that all relationships are defined (e.g., `hasMany`, `belongsTo`, `belongsToMany`).
+   * Implement eager loading where needed.
+   * Apply latest Filament v4 conventions.
+
+3. **Forms (Filament Resources)**
+
+   * Redesign forms with **world-class UX**:
+
+     * Use **wizard-based forms** where multi-step input makes sense.
+     * Apply **validation rules** and **default values**.
+     * Ensure forms are intuitive and follow **Filament v4 form schema best practices**.
+
+4. **Tables**
+
+   * Configure advanced tables with:
+
+     * Search, filters, bulk actions, column toggling, export/import options.
+     * Proper column alignment, labels, and formatting.
+
+5. **View Pages**
+
+   * Implement **Infolists** for detailed record views.
+   * Remove placeholder/minimal HTML — replace with proper Filament components.
+   * Ensure consistent styling with Filament’s theming system (fix CSS loading issues).
+
+6. **Resources Improvements**
+
+   * Implement **relation managers** where applicable.
+   * Group navigation properly with meaningful categories. I had already implemeted for resources, remaining for custom resources pages only.
+   * Ensure **role & permission seeding** is configured:
+
+     * Admin = full access
+     * Other roles = restricted access
+
+7. **Custom resources view Pages**
+
+   * Fix all custom pages (currently just raw HTML skeletons).
+   * Ensure they use proper **Filament layouts** and load **CSS/JS assets correctly**.
+
+8. **Code Safety**
+
+   * Do not delete files, even if corrupted.
+   * Make **minimal, safe edits** to avoid corruption.
+   * If corruption is detected, stop and notify (manual fix will be done).
+
+9. **Icon Handling**
+
+   * From now on, **do not use Unicode icons**.
+
+10. **Beyond DEV.md**
+
+* Use `DEV.md` for top-level requirements but don’t limit yourself to it.
+* Expand functionality to deliver an **industry-leading School Management System**.
+
+---
+
+### 🎯 Expected Output
+
+* Fully upgraded Admin-related resources (and related ones) with **Filament v4 best practices**.
+* Modern UX/UI, advanced forms, tables, and relation handling.
+* Proper navigation structure, role-based access, and custom pages fixed.
+* No Unicode icons — only library-based icons.
+* Safe, non-destructive edits.

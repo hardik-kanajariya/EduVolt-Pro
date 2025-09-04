@@ -162,8 +162,40 @@ class LibrarySeeder extends Seeder
             }
         }
 
+        // Create sample book issues only if students exist
+        $students = Student::take(3)->get();
+        if ($students->count() > 0) {
+            $books = LibraryBook::where('school_id', $school->id)->take(3)->get();
+            
+            foreach ($books as $index => $book) {
+                if (isset($students[$index])) {
+                    BookIssue::firstOrCreate(
+                        [
+                            'book_id' => $book->id,
+                            'student_id' => $students[$index]->id,
+                            'status' => 'issued'
+                        ],
+                        [
+                            'school_id' => $school->id,
+                            'issued_by' => 1, // Admin user
+                            'issue_date' => now()->subDays(rand(1, 10)),
+                            'due_date' => now()->addDays(rand(5, 20)),
+                            'condition_at_issue' => 'excellent',
+                            'status' => 'issued',
+                        ]
+                    );
+                }
+            }
+            
+            // Update book copy counts
+            foreach ($books as $book) {
+                $book->updateCopyCounts();
+            }
+        }
+
         $this->command->info('Library data seeded successfully!');
         $this->command->info('Created ' . BookCategory::count() . ' book categories');
         $this->command->info('Created ' . LibraryBook::count() . ' library books');
+        $this->command->info('Created ' . BookIssue::count() . ' book issues');
     }
 }

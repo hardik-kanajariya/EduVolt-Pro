@@ -20,7 +20,11 @@ class LibraryBookResource extends Resource
 {
     protected static ?string $model = LibraryBook::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-book-open';
+    
+    protected static ?string $modelLabel = 'Library Book';
+    
+    protected static ?string $pluralModelLabel = 'Library Books';
 
     public static function form(Schema $schema): Schema
     {

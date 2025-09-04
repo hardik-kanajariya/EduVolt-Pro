@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\Teachers;
 use App\Filament\Admin\Resources\Teachers\Pages\CreateTeacher;
 use App\Filament\Admin\Resources\Teachers\Pages\EditTeacher;
 use App\Filament\Admin\Resources\Teachers\Pages\ListTeachers;
+use App\Filament\Admin\Resources\Teachers\Pages\ViewTeacher;
 use App\Filament\Admin\Resources\Teachers\Schemas\TeacherForm;
 use App\Filament\Admin\Resources\Teachers\Tables\TeachersTable;
 use App\Models\Teacher;
@@ -42,6 +43,7 @@ class TeacherResource extends Resource
         return [
             'index' => ListTeachers::route('/'),
             'create' => CreateTeacher::route('/create'),
+            'view' => ViewTeacher::route('/{record}'),
             'edit' => EditTeacher::route('/{record}/edit'),
         ];
     }
@@ -52,5 +54,15 @@ class TeacherResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'active')->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
     }
 }

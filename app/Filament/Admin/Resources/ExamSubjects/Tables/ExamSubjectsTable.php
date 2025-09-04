@@ -91,19 +91,19 @@ class ExamSubjectsTable
                     ->relationship('subject', 'name'),
 
                 Filter::make('active')
-                    ->query(fn (Builder $query): Builder => $query->where('is_active', true))
+                    ->query(fn(Builder $query): Builder => $query->where('is_active', true))
                     ->toggle(),
 
                 Filter::make('completed')
-                    ->query(fn (Builder $query): Builder => $query->where('is_completed', true))
+                    ->query(fn(Builder $query): Builder => $query->where('is_completed', true))
                     ->toggle(),
 
                 Filter::make('today')
-                    ->query(fn (Builder $query): Builder => $query->today())
+                    ->query(fn(Builder $query): Builder => $query->today())
                     ->toggle(),
 
                 Filter::make('upcoming')
-                    ->query(fn (Builder $query): Builder => $query->upcoming())
+                    ->query(fn(Builder $query): Builder => $query->upcoming())
                     ->toggle(),
             ])
             ->recordActions([
@@ -113,7 +113,7 @@ class ExamSubjectsTable
                     ->action(function ($record) {
                         $record->markAsCompleted();
                     })
-                    ->visible(fn ($record) => !$record->is_completed && $record->canStartExam()),
+                    ->visible(fn($record) => !$record->is_completed && $record->canStartExam()),
 
                 Action::make('activate')
                     ->icon('heroicon-o-play')
@@ -121,7 +121,7 @@ class ExamSubjectsTable
                     ->action(function ($record) {
                         $record->update(['is_active' => true]);
                     })
-                    ->visible(fn ($record) => !$record->is_active),
+                    ->visible(fn($record) => !$record->is_active),
 
                 Action::make('deactivate')
                     ->icon('heroicon-o-pause')
@@ -129,7 +129,7 @@ class ExamSubjectsTable
                     ->action(function ($record) {
                         $record->update(['is_active' => false]);
                     })
-                    ->visible(fn ($record) => $record->is_active),
+                    ->visible(fn($record) => $record->is_active),
 
                 EditAction::make(),
                 DeleteAction::make(),

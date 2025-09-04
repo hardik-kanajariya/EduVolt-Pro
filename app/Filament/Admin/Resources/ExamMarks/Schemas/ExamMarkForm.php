@@ -58,7 +58,7 @@ class ExamMarkForm
                             $set('total_marks', $theory + $practical);
                         }
                     })
-                    ->disabled(fn ($get) => $get('is_absent')),
+                    ->disabled(fn($get) => $get('is_absent')),
 
                 TextInput::make('practical_marks')
                     ->numeric()
@@ -71,7 +71,7 @@ class ExamMarkForm
                             $set('total_marks', $theory + $practical);
                         }
                     })
-                    ->disabled(fn ($get) => $get('is_absent')),
+                    ->disabled(fn($get) => $get('is_absent')),
 
                 TextInput::make('total_marks')
                     ->numeric()

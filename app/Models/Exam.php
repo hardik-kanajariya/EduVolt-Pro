@@ -68,7 +68,7 @@ class Exam extends Model
     public function scopeOngoing($query)
     {
         return $query->where('start_date', '<=', now())
-                    ->where('end_date', '>=', now());
+            ->where('end_date', '>=', now());
     }
 
     public function scopeCompleted($query)

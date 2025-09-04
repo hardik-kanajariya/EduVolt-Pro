@@ -43,14 +43,14 @@ class AttendancesTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'present' => 'success',
                         'absent' => 'danger',
                         'late' => 'warning',
                         'excused' => 'info',
                         default => 'gray',
                     })
-                    ->icon(fn (string $state): string => match ($state) {
+                    ->icon(fn(string $state): string => match ($state) {
                         'present' => 'heroicon-o-check-circle',
                         'absent' => 'heroicon-o-x-circle',
                         'late' => 'heroicon-o-clock',

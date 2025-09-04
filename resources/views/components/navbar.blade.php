@@ -4,7 +4,7 @@
             <!-- Logo -->
             <div class="flex items-center">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                    <img src="{{ asset('images/logo.png') }}" alt="EduVault Pro" class="h-10 w-auto">
+                    <!-- <img src="{{ asset('images/logo.png') }}" alt="EduVault Pro" class="h-10 w-auto"> -->
                     <span class="text-2xl font-bold font-heading text-primary-600">EduVault Pro</span>
                 </a>
             </div>

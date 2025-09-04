@@ -56,7 +56,7 @@ class ExamMarksTable
 
                 TextColumn::make('grade')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'A+', 'A' => 'success',
                         'B+', 'B' => 'primary',
                         'C+', 'C' => 'warning',
@@ -71,7 +71,7 @@ class ExamMarksTable
 
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'Pass' => 'success',
                         'Fail' => 'danger',
                         'Absent' => 'gray',
@@ -119,23 +119,23 @@ class ExamMarksTable
                     ]),
 
                 Filter::make('verified')
-                    ->query(fn (Builder $query): Builder => $query->verified())
+                    ->query(fn(Builder $query): Builder => $query->verified())
                     ->toggle(),
 
                 Filter::make('unverified')
-                    ->query(fn (Builder $query): Builder => $query->unverified())
+                    ->query(fn(Builder $query): Builder => $query->unverified())
                     ->toggle(),
 
                 Filter::make('absent')
-                    ->query(fn (Builder $query): Builder => $query->absent())
+                    ->query(fn(Builder $query): Builder => $query->absent())
                     ->toggle(),
 
                 Filter::make('passed')
-                    ->query(fn (Builder $query): Builder => $query->passed())
+                    ->query(fn(Builder $query): Builder => $query->passed())
                     ->toggle(),
 
                 Filter::make('failed')
-                    ->query(fn (Builder $query): Builder => $query->failed())
+                    ->query(fn(Builder $query): Builder => $query->failed())
                     ->toggle(),
             ])
             ->recordActions([
@@ -145,7 +145,7 @@ class ExamMarksTable
                     ->action(function ($record) {
                         $record->verify(Auth::id(), 'Verified via admin panel');
                     })
-                    ->visible(fn ($record) => !$record->is_verified),
+                    ->visible(fn($record) => !$record->is_verified),
 
                 Action::make('unverify')
                     ->icon('heroicon-o-x-circle')
@@ -153,7 +153,7 @@ class ExamMarksTable
                     ->action(function ($record) {
                         $record->unverify('Unverified via admin panel');
                     })
-                    ->visible(fn ($record) => $record->is_verified),
+                    ->visible(fn($record) => $record->is_verified),
 
                 EditAction::make(),
                 DeleteAction::make(),

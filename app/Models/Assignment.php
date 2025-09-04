@@ -89,7 +89,7 @@ class Assignment extends Model
     public function getDueAtAttribute()
     {
         $dueDate = $this->attributes['due_date'];
-        
+
         if ($this->attributes['due_time']) {
             return $dueDate . ' ' . $this->attributes['due_time'];
         }

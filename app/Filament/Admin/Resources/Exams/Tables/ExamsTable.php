@@ -27,7 +27,7 @@ class ExamsTable
 
                 TextColumn::make('type')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'final' => 'danger',
                         'midterm' => 'warning',
                         'unit_test' => 'info',
@@ -60,7 +60,7 @@ class ExamsTable
 
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'draft' => 'gray',
                         'scheduled' => 'info',
                         'ongoing' => 'warning',
@@ -103,15 +103,15 @@ class ExamsTable
                     ->relationship('academicYear', 'name'),
 
                 Filter::make('published')
-                    ->query(fn (Builder $query): Builder => $query->where('is_published', true))
+                    ->query(fn(Builder $query): Builder => $query->where('is_published', true))
                     ->toggle(),
 
                 Filter::make('upcoming')
-                    ->query(fn (Builder $query): Builder => $query->upcoming())
+                    ->query(fn(Builder $query): Builder => $query->upcoming())
                     ->toggle(),
 
                 Filter::make('ongoing')
-                    ->query(fn (Builder $query): Builder => $query->ongoing())
+                    ->query(fn(Builder $query): Builder => $query->ongoing())
                     ->toggle(),
             ])
             ->recordActions([
@@ -124,7 +124,7 @@ class ExamsTable
                             'published_at' => now(),
                         ]);
                     })
-                    ->visible(fn ($record) => !$record->is_published),
+                    ->visible(fn($record) => !$record->is_published),
 
                 Action::make('unpublish')
                     ->icon('heroicon-o-eye-slash')
@@ -135,7 +135,7 @@ class ExamsTable
                             'published_at' => null,
                         ]);
                     })
-                    ->visible(fn ($record) => $record->is_published),
+                    ->visible(fn($record) => $record->is_published),
 
                 EditAction::make(),
                 DeleteAction::make(),

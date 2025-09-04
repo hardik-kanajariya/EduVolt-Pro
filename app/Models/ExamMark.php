@@ -81,14 +81,14 @@ class ExamMark extends Model
     {
         $passing = $passingMarks ?? 40;
         return $query->where('total_marks', '>=', $passing)
-                    ->where('is_absent', false);
+            ->where('is_absent', false);
     }
 
     public function scopeFailed($query, $passingMarks = null)
     {
         $passing = $passingMarks ?? 40;
         return $query->where('total_marks', '<', $passing)
-                    ->where('is_absent', false);
+            ->where('is_absent', false);
     }
 
     public function scopeByGrade($query, $grade)
@@ -102,7 +102,7 @@ class ExamMark extends Model
         if ($this->is_absent || !$this->examSubject) {
             return 0;
         }
-        
+
         $maxMarks = $this->examSubject->max_marks;
         return $maxMarks > 0 ? round(($this->total_marks / $maxMarks) * 100, 2) : 0;
     }
@@ -112,20 +112,20 @@ class ExamMark extends Model
         if ($this->is_absent) {
             return 'Absent';
         }
-        
+
         if (!$this->is_verified) {
             return 'Pending Verification';
         }
-        
-        $passingMarks = $this->examSubject->exam->passing_marks ?? 
-                       ($this->examSubject->max_marks * 0.4);
-        
+
+        $passingMarks = $this->examSubject->exam->passing_marks ??
+            ($this->examSubject->max_marks * 0.4);
+
         return $this->total_marks >= $passingMarks ? 'Pass' : 'Fail';
     }
 
     public function getGradeColorAttribute()
     {
-        return match($this->grade) {
+        return match ($this->grade) {
             'A+', 'A' => 'success',
             'B+', 'B' => 'primary',
             'C+', 'C' => 'warning',
@@ -139,10 +139,10 @@ class ExamMark extends Model
         if ($this->is_absent) {
             return false;
         }
-        
-        $passingMarks = $this->examSubject->exam->passing_marks ?? 
-                       ($this->examSubject->max_marks * 0.4);
-        
+
+        $passingMarks = $this->examSubject->exam->passing_marks ??
+            ($this->examSubject->max_marks * 0.4);
+
         return $this->total_marks >= $passingMarks;
     }
 
@@ -157,17 +157,17 @@ class ExamMark extends Model
         if ($this->is_absent) {
             return 0;
         }
-        
+
         $total = 0;
-        
+
         if ($this->theory_marks !== null) {
             $total += $this->theory_marks;
         }
-        
+
         if ($this->practical_marks !== null) {
             $total += $this->practical_marks;
         }
-        
+
         return $total;
     }
 
@@ -176,11 +176,11 @@ class ExamMark extends Model
         if ($this->is_absent) {
             return 'AB'; // Absent
         }
-        
+
         if (!$this->examSubject || !$this->examSubject->exam) {
             return 'F';
         }
-        
+
         return $this->examSubject->exam->calculateGrade($this->total_marks);
     }
 
@@ -221,13 +221,13 @@ class ExamMark extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::saving(function ($examMark) {
             if (!$examMark->is_absent) {
                 $examMark->total_marks = $examMark->calculateTotalMarks();
                 $examMark->grade = $examMark->calculateGrade();
             }
-            
+
             if (!$examMark->entered_at) {
                 $examMark->entered_at = now();
             }

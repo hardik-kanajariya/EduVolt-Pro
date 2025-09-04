@@ -115,8 +115,8 @@ class ExamSubject extends Model
 
     public function getFormattedTimeAttribute()
     {
-        return Carbon::parse($this->start_time)->format('h:i A') . ' - ' . 
-               Carbon::parse($this->end_time)->format('h:i A');
+        return Carbon::parse($this->start_time)->format('h:i A') . ' - ' .
+            Carbon::parse($this->end_time)->format('h:i A');
     }
 
     public function getStudentsCountAttribute()
@@ -133,7 +133,7 @@ class ExamSubject extends Model
     {
         $total = $this->students_count;
         $completed = $this->marks_entered_count;
-        
+
         return $total > 0 ? round(($completed / $total) * 100, 2) : 0;
     }
 
@@ -150,9 +150,9 @@ class ExamSubject extends Model
 
     public function canStartExam()
     {
-        return $this->is_active && 
-               $this->exam_date <= today() && 
-               !$this->is_completed;
+        return $this->is_active &&
+            $this->exam_date <= today() &&
+            !$this->is_completed;
     }
 
     public function markAsCompleted()
@@ -163,49 +163,49 @@ class ExamSubject extends Model
     public function getAverageMarks()
     {
         return $this->examMarks()
-                    ->whereNotNull('total_marks')
-                    ->avg('total_marks') ?? 0;
+            ->whereNotNull('total_marks')
+            ->avg('total_marks') ?? 0;
     }
 
     public function getHighestMarks()
     {
         return $this->examMarks()
-                    ->whereNotNull('total_marks')
-                    ->max('total_marks') ?? 0;
+            ->whereNotNull('total_marks')
+            ->max('total_marks') ?? 0;
     }
 
     public function getLowestMarks()
     {
         return $this->examMarks()
-                    ->whereNotNull('total_marks')
-                    ->min('total_marks') ?? 0;
+            ->whereNotNull('total_marks')
+            ->min('total_marks') ?? 0;
     }
 
     public function getPassedStudentsCount()
     {
         $passingMarks = $this->exam->passing_marks ?? ($this->max_marks * 0.4);
-        
+
         return $this->examMarks()
-                    ->whereNotNull('total_marks')
-                    ->where('total_marks', '>=', $passingMarks)
-                    ->count();
+            ->whereNotNull('total_marks')
+            ->where('total_marks', '>=', $passingMarks)
+            ->count();
     }
 
     public function getFailedStudentsCount()
     {
         $passingMarks = $this->exam->passing_marks ?? ($this->max_marks * 0.4);
-        
+
         return $this->examMarks()
-                    ->whereNotNull('total_marks')
-                    ->where('total_marks', '<', $passingMarks)
-                    ->count();
+            ->whereNotNull('total_marks')
+            ->where('total_marks', '<', $passingMarks)
+            ->count();
     }
 
     public function getPassPercentage()
     {
         $total = $this->marks_entered_count;
         $passed = $this->getPassedStudentsCount();
-        
+
         return $total > 0 ? round(($passed / $total) * 100, 2) : 0;
     }
 }

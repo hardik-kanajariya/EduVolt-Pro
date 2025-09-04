@@ -39,8 +39,8 @@ class ViewSchoolClass extends ViewRecord
                         $studentCount = $record->students?->count() ?? 0;
                         $capacity = $record->capacity ?? 0;
                         $occupancy = $capacity > 0 ? round(($studentCount / $capacity) * 100) : 0;
-                        
-                        $gradeLevel = match($record->grade_level) {
+
+                        $gradeLevel = match ($record->grade_level) {
                             'kindergarten' => '🎨 Kindergarten',
                             'primary' => '📚 Primary',
                             'middle' => '📖 Middle',
@@ -48,8 +48,8 @@ class ViewSchoolClass extends ViewRecord
                             'higher_secondary' => '🏆 Higher Secondary',
                             default => '📘 ' . ucfirst($record->grade_level ?? 'General')
                         };
-                        
-                        $stream = match($record->stream) {
+
+                        $stream = match ($record->stream) {
                             'general' => '📘 General',
                             'science' => '🔬 Science',
                             'commerce' => '💼 Commerce',
@@ -58,27 +58,26 @@ class ViewSchoolClass extends ViewRecord
                             'special' => '⭐ Special',
                             default => '📘 ' . ucfirst($record->stream ?? 'General')
                         };
-                        
+
                         return '<div class="text-center p-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-200">' .
-                               '<div class="w-24 h-24 rounded-full mx-auto mb-4 bg-indigo-100 flex items-center justify-center text-indigo-600 text-3xl font-bold">🎓</div>' .
-                               '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . $displayName . '</h2>' .
-                               '<p class="text-indigo-600 font-medium mb-2">' . $record->school?->name . '</p>' .
-                               '<p class="text-gray-600 mb-4">' . $gradeLevel . ' • ' . $stream . '</p>' .
-                               '<div class="flex justify-center space-x-4 mb-4">' .
-                               '<span class="px-3 py-1 rounded-full text-sm font-medium ' .
-                               ($record->status === 'active' ? 'bg-green-100 text-green-800' : 
-                                ($record->status === 'inactive' ? 'bg-red-100 text-red-800' :
-                                 'bg-yellow-100 text-yellow-800')) . '">' .
-                               match($record->status) {
-                                   'active' => '✅ Active',
-                                   'inactive' => '❌ Inactive',
-                                   'completed' => '🎯 Completed',
-                                   'suspended' => '⏸️ Suspended',
-                                   default => ucfirst($record->status)
-                               } . '</span>' .
-                               '</div>' .
-                               '<div class="text-2xl font-bold text-indigo-600">' . $studentCount . '/' . $capacity . ' Students (' . $occupancy . '%)</div>' .
-                               '</div>';
+                            '<div class="w-24 h-24 rounded-full mx-auto mb-4 bg-indigo-100 flex items-center justify-center text-indigo-600 text-3xl font-bold">🎓</div>' .
+                            '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . $displayName . '</h2>' .
+                            '<p class="text-indigo-600 font-medium mb-2">' . $record->school?->name . '</p>' .
+                            '<p class="text-gray-600 mb-4">' . $gradeLevel . ' • ' . $stream . '</p>' .
+                            '<div class="flex justify-center space-x-4 mb-4">' .
+                            '<span class="px-3 py-1 rounded-full text-sm font-medium ' .
+                            ($record->status === 'active' ? 'bg-green-100 text-green-800' : ($record->status === 'inactive' ? 'bg-red-100 text-red-800' :
+                                    'bg-yellow-100 text-yellow-800')) . '">' .
+                            match ($record->status) {
+                                'active' => '✅ Active',
+                                'inactive' => '❌ Inactive',
+                                'completed' => '🎯 Completed',
+                                'suspended' => '⏸️ Suspended',
+                                default => ucfirst($record->status)
+                            } . '</span>' .
+                            '</div>' .
+                            '<div class="text-2xl font-bold text-indigo-600">' . $studentCount . '/' . $capacity . ' Students (' . $occupancy . '%)</div>' .
+                            '</div>';
                     })
                     ->columnSpanFull(),
 
@@ -127,7 +126,7 @@ class ViewSchoolClass extends ViewRecord
                     ->label('Grade Level')
                     ->disabled()
                     ->dehydrated(false)
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'kindergarten' => '🎨 Kindergarten',
                         'primary' => '📚 Primary (1-5)',
                         'middle' => '📖 Middle (6-8)',
@@ -141,7 +140,7 @@ class ViewSchoolClass extends ViewRecord
                     ->label('Stream/Track')
                     ->disabled()
                     ->dehydrated(false)
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'general' => '📘 General',
                         'science' => '🔬 Science',
                         'commerce' => '💼 Commerce',
@@ -224,7 +223,7 @@ class ViewSchoolClass extends ViewRecord
                         TextInput::make('subject_type')
                             ->label('Subject Type')
                             ->disabled()
-                            ->formatStateUsing(fn (?string $state): string => match ($state) {
+                            ->formatStateUsing(fn(?string $state): string => match ($state) {
                                 'core' => 'Core Subject',
                                 'elective' => 'Elective',
                                 'extra_curricular' => 'Extra-curricular',
@@ -248,7 +247,7 @@ class ViewSchoolClass extends ViewRecord
                         TextInput::make('day')
                             ->label('Day')
                             ->disabled()
-                            ->formatStateUsing(fn (?string $state): string => ucfirst($state ?? ''))
+                            ->formatStateUsing(fn(?string $state): string => ucfirst($state ?? ''))
                             ->columnSpan(1),
 
                         TextInput::make('start_time')
@@ -300,12 +299,12 @@ class ViewSchoolClass extends ViewRecord
 
                 Placeholder::make('created_at')
                     ->label('Record Created')
-                    ->content(fn ($record): string => $record?->created_at?->format('F j, Y g:i A') . ' (' . $record?->created_at?->diffForHumans() . ')')
+                    ->content(fn($record): string => $record?->created_at?->format('F j, Y g:i A') . ' (' . $record?->created_at?->diffForHumans() . ')')
                     ->columnSpan(1),
 
                 Placeholder::make('updated_at')
                     ->label('Last Updated')
-                    ->content(fn ($record): string => $record?->updated_at?->format('F j, Y g:i A') . ' (' . $record?->updated_at?->diffForHumans() . ')')
+                    ->content(fn($record): string => $record?->updated_at?->format('F j, Y g:i A') . ' (' . $record?->updated_at?->diffForHumans() . ')')
                     ->columnSpan(1),
 
                 Placeholder::make('class_stats')
@@ -315,13 +314,13 @@ class ViewSchoolClass extends ViewRecord
                         $capacity = $record->capacity ?? 0;
                         $subjectCount = $record->subjects?->count() ?? 0;
                         $timetableSlots = is_array($record->timetable_slots) ? count($record->timetable_slots) : 0;
-                        
+
                         return '<div class="grid grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg">' .
-                               '<div class="text-center"><div class="text-2xl font-bold text-blue-600">' . $studentCount . '</div><div class="text-sm text-gray-600">Students Enrolled</div></div>' .
-                               '<div class="text-center"><div class="text-2xl font-bold text-green-600">' . $capacity . '</div><div class="text-sm text-gray-600">Total Capacity</div></div>' .
-                               '<div class="text-center"><div class="text-2xl font-bold text-purple-600">' . $subjectCount . '</div><div class="text-sm text-gray-600">Subjects</div></div>' .
-                               '<div class="text-center"><div class="text-2xl font-bold text-orange-600">' . $timetableSlots . '</div><div class="text-sm text-gray-600">Timetable Slots</div></div>' .
-                               '</div>';
+                            '<div class="text-center"><div class="text-2xl font-bold text-blue-600">' . $studentCount . '</div><div class="text-sm text-gray-600">Students Enrolled</div></div>' .
+                            '<div class="text-center"><div class="text-2xl font-bold text-green-600">' . $capacity . '</div><div class="text-sm text-gray-600">Total Capacity</div></div>' .
+                            '<div class="text-center"><div class="text-2xl font-bold text-purple-600">' . $subjectCount . '</div><div class="text-sm text-gray-600">Subjects</div></div>' .
+                            '<div class="text-center"><div class="text-2xl font-bold text-orange-600">' . $timetableSlots . '</div><div class="text-sm text-gray-600">Timetable Slots</div></div>' .
+                            '</div>';
                     })
                     ->columnSpanFull(),
             ])

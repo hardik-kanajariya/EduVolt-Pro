@@ -39,7 +39,7 @@ class ViewSchool extends ViewRecord
                 TextEntry::make('type')
                     ->label('School Type')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'public' => 'success',
                         'private' => 'info',
                         'charter' => 'warning',
@@ -48,7 +48,7 @@ class ViewSchool extends ViewRecord
                         'religious' => 'danger',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'public' => '🏛️ Public School',
                         'private' => '🏫 Private School',
                         'charter' => '📜 Charter School',
@@ -72,7 +72,7 @@ class ViewSchool extends ViewRecord
 
                 TextEntry::make('website')
                     ->label('Website')
-                    ->url(fn ($record) => $record->website)
+                    ->url(fn($record) => $record->website)
                     ->openUrlInNewTab(),
 
                 TextEntry::make('established_date')
@@ -89,7 +89,7 @@ class ViewSchool extends ViewRecord
                         'suspended' => 'danger',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'active' => '✅ Active',
                         'inactive' => '❌ Inactive',
                         'pending' => '⏳ Pending',
@@ -101,19 +101,19 @@ class ViewSchool extends ViewRecord
                     ->label('Total Students')
                     ->badge()
                     ->color('success')
-                    ->getStateUsing(fn ($record) => $record->students()->count()),
+                    ->getStateUsing(fn($record) => $record->students()->count()),
 
                 TextEntry::make('teachers_count')
                     ->label('Total Teachers')
                     ->badge()
                     ->color('info')
-                    ->getStateUsing(fn ($record) => $record->teachers()->count()),
+                    ->getStateUsing(fn($record) => $record->teachers()->count()),
 
                 TextEntry::make('classes_count')
                     ->label('Total Classes')
                     ->badge()
                     ->color('warning')
-                    ->getStateUsing(fn ($record) => $record->classes()->count()),
+                    ->getStateUsing(fn($record) => $record->classes()->count()),
 
                 TextEntry::make('created_at')
                     ->label('Created')
@@ -133,9 +133,9 @@ class ViewSchool extends ViewRecord
                 ->label('Visit Website')
                 ->icon('heroicon-o-globe-alt')
                 ->color('primary')
-                ->url(fn ($record) => $record->website)
+                ->url(fn($record) => $record->website)
                 ->openUrlInNewTab()
-                ->visible(fn ($record) => filled($record->website)),
+                ->visible(fn($record) => filled($record->website)),
 
             EditAction::make()
                 ->icon('heroicon-o-pencil'),

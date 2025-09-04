@@ -56,7 +56,7 @@ class TeacherForm
                     ->placeholder('e.g., EMP2025001, TCH001')
                     ->helperText('🆔 Unique employee identifier')
                     ->live()
-                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                     ->columnSpan(1),
 
                 TextInput::make('qualification')
@@ -261,23 +261,23 @@ class TeacherForm
 
                 Placeholder::make('created_at')
                     ->label('Record Created')
-                    ->content(fn ($record): string => $record?->created_at?->format('M j, Y g:i A') ?? 'Not yet created')
+                    ->content(fn($record): string => $record?->created_at?->format('M j, Y g:i A') ?? 'Not yet created')
                     ->columnSpan(1),
 
                 Placeholder::make('updated_at')
                     ->label('Last Updated')
-                    ->content(fn ($record): string => $record?->updated_at?->format('M j, Y g:i A') ?? 'Not yet updated')
+                    ->content(fn($record): string => $record?->updated_at?->format('M j, Y g:i A') ?? 'Not yet updated')
                     ->columnSpan(1),
 
                 Placeholder::make('teacher_stats')
                     ->label('Quick Statistics')
                     ->content(function ($record): string {
                         if (!$record) return 'Stats will be available after creation';
-                        
+
                         $experience = $record->experience_years ?? 0;
                         $tenure = $record->join_date ? \Carbon\Carbon::parse($record->join_date)->diffInYears(now()) : 0;
                         $subjects = $record->subjects?->count() ?? 0;
-                        
+
                         return "📚 Experience: {$experience} years | 🏫 Tenure: {$tenure} years | 📖 Subjects: {$subjects}";
                     })
                     ->columnSpan(1),

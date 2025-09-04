@@ -97,7 +97,7 @@ class StudentsTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'active' => '✅ Active',
                         'inactive' => '❌ Inactive',
                         'transferred' => '↗️ Transferred',
@@ -159,7 +159,7 @@ class StudentsTable
             ])
             ->filters([
                 TrashedFilter::make(),
-                
+
                 SelectFilter::make('status')
                     ->label('Status')
                     ->options([
@@ -186,17 +186,17 @@ class StudentsTable
 
                 Filter::make('has_transport')
                     ->label('Has Transport')
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('transport_route'))
+                    ->query(fn(Builder $query): Builder => $query->whereNotNull('transport_route'))
                     ->toggle(),
 
                 Filter::make('has_medical_info')
                     ->label('Has Medical Info')
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('medical_info'))
+                    ->query(fn(Builder $query): Builder => $query->whereNotNull('medical_info'))
                     ->toggle(),
 
                 Filter::make('recent_admissions')
                     ->label('Recent Admissions (30 days)')
-                    ->query(fn (Builder $query): Builder => $query->where('admission_date', '>=', now()->subDays(30)))
+                    ->query(fn(Builder $query): Builder => $query->where('admission_date', '>=', now()->subDays(30)))
                     ->toggle(),
 
                 Filter::make('admission_date')
@@ -212,11 +212,11 @@ class StudentsTable
                         return $query
                             ->when(
                                 $data['admitted_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('admission_date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('admission_date', '>=', $date),
                             )
                             ->when(
                                 $data['admitted_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('admission_date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('admission_date', '<=', $date),
                             );
                     }),
             ])

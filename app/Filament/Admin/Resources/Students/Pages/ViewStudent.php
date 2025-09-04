@@ -37,28 +37,26 @@ class ViewStudent extends ViewRecord
                 Placeholder::make('student_profile_header')
                     ->label('')
                     ->content(function ($record): string {
-                        $avatar = $record->avatar 
+                        $avatar = $record->avatar
                             ? '<img src="' . asset('storage/' . $record->avatar) . '" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-blue-200">'
-                            : '<div class="w-24 h-24 rounded-full mx-auto mb-4 bg-blue-100 flex items-center justify-center text-blue-600 text-2xl font-bold">' . 
-                              substr($record->user?->name ?? 'S', 0, 1) . '</div>';
-                        
+                            : '<div class="w-24 h-24 rounded-full mx-auto mb-4 bg-blue-100 flex items-center justify-center text-blue-600 text-2xl font-bold">' .
+                            substr($record->user?->name ?? 'S', 0, 1) . '</div>';
+
                         return '<div class="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">' .
-                               $avatar .
-                               '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . ($record->user?->name ?? 'Student') . '</h2>' .
-                               '<p class="text-blue-600 font-medium">' . $record->admission_number . '</p>' .
-                               '<div class="mt-4 flex justify-center">' .
-                               '<span class="px-3 py-1 rounded-full text-sm font-medium ' .
-                               ($record->status === 'active' ? 'bg-green-100 text-green-800' : 
-                                ($record->status === 'inactive' ? 'bg-red-100 text-red-800' :
-                                 ($record->status === 'transferred' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'))) . '">' .
-                               match($record->status) {
-                                   'active' => '✅ Active',
-                                   'inactive' => '❌ Inactive', 
-                                   'transferred' => '↗️ Transferred',
-                                   'graduated' => '🎓 Graduated',
-                                   'suspended' => '⚠️ Suspended',
-                                   default => ucfirst($record->status)
-                               } . '</span></div></div>';
+                            $avatar .
+                            '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . ($record->user?->name ?? 'Student') . '</h2>' .
+                            '<p class="text-blue-600 font-medium">' . $record->admission_number . '</p>' .
+                            '<div class="mt-4 flex justify-center">' .
+                            '<span class="px-3 py-1 rounded-full text-sm font-medium ' .
+                            ($record->status === 'active' ? 'bg-green-100 text-green-800' : ($record->status === 'inactive' ? 'bg-red-100 text-red-800' : ($record->status === 'transferred' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'))) . '">' .
+                            match ($record->status) {
+                                'active' => '✅ Active',
+                                'inactive' => '❌ Inactive',
+                                'transferred' => '↗️ Transferred',
+                                'graduated' => '🎓 Graduated',
+                                'suspended' => '⚠️ Suspended',
+                                default => ucfirst($record->status)
+                            } . '</span></div></div>';
                     })
                     ->columnSpanFull(),
 
@@ -136,7 +134,7 @@ class ViewStudent extends ViewRecord
                     ->label('Gender')
                     ->disabled()
                     ->dehydrated(false)
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'male' => '👨 Male',
                         'female' => '👩 Female',
                         'other' => '🚻 Other',
@@ -215,12 +213,12 @@ class ViewStudent extends ViewRecord
 
                 Placeholder::make('created_at')
                     ->label('Record Created')
-                    ->content(fn ($record): string => $record?->created_at?->format('F j, Y g:i A') . ' (' . $record?->created_at?->diffForHumans() . ')')
+                    ->content(fn($record): string => $record?->created_at?->format('F j, Y g:i A') . ' (' . $record?->created_at?->diffForHumans() . ')')
                     ->columnSpan(1),
 
                 Placeholder::make('updated_at')
                     ->label('Last Updated')
-                    ->content(fn ($record): string => $record?->updated_at?->format('F j, Y g:i A') . ' (' . $record?->updated_at?->diffForHumans() . ')')
+                    ->content(fn($record): string => $record?->updated_at?->format('F j, Y g:i A') . ' (' . $record?->updated_at?->diffForHumans() . ')')
                     ->columnSpan(1),
 
                 Placeholder::make('student_stats')
@@ -229,12 +227,12 @@ class ViewStudent extends ViewRecord
                         $age = $record->date_of_birth ? \Carbon\Carbon::parse($record->date_of_birth)->age : 'N/A';
                         $emergencyContacts = is_array($record->emergency_contacts) ? count($record->emergency_contacts) : 0;
                         $hasMedical = !empty($record->medical_info) ? 'Yes' : 'No';
-                        
+
                         return '<div class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">' .
-                               '<div class="text-center"><div class="text-2xl font-bold text-blue-600">' . $age . '</div><div class="text-sm text-gray-600">Age (years)</div></div>' .
-                               '<div class="text-center"><div class="text-2xl font-bold text-green-600">' . $emergencyContacts . '</div><div class="text-sm text-gray-600">Emergency Contacts</div></div>' .
-                               '<div class="text-center"><div class="text-2xl font-bold text-red-600">' . $hasMedical . '</div><div class="text-sm text-gray-600">Medical Info</div></div>' .
-                               '</div>';
+                            '<div class="text-center"><div class="text-2xl font-bold text-blue-600">' . $age . '</div><div class="text-sm text-gray-600">Age (years)</div></div>' .
+                            '<div class="text-center"><div class="text-2xl font-bold text-green-600">' . $emergencyContacts . '</div><div class="text-sm text-gray-600">Emergency Contacts</div></div>' .
+                            '<div class="text-center"><div class="text-2xl font-bold text-red-600">' . $hasMedical . '</div><div class="text-sm text-gray-600">Medical Info</div></div>' .
+                            '</div>';
                     })
                     ->columnSpanFull(),
             ])

@@ -62,7 +62,7 @@ class TeachersTable
                 TextColumn::make('designation')
                     ->label('Position')
                     ->badge()
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'teacher' => '👨‍🏫 Teacher',
                         'senior_teacher' => '👩‍🏫 Senior Teacher',
                         'head_teacher' => '🎯 Head Teacher',
@@ -72,7 +72,7 @@ class TeachersTable
                         'department_head' => '📚 Department Head',
                         default => ucfirst($state ?? 'Teacher'),
                     })
-                    ->color(fn (?string $state): string => match ($state) {
+                    ->color(fn(?string $state): string => match ($state) {
                         'principal', 'vice_principal' => 'danger',
                         'head_teacher', 'department_head' => 'warning',
                         'senior_teacher', 'coordinator' => 'info',
@@ -111,7 +111,7 @@ class TeachersTable
                 TextColumn::make('employment_type')
                     ->label('Employment')
                     ->badge()
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'full_time' => '🕘 Full Time',
                         'part_time' => '🕐 Part Time',
                         'contract' => '📋 Contract',
@@ -119,7 +119,7 @@ class TeachersTable
                         'visiting' => '👥 Visiting',
                         default => ucfirst($state ?? 'Full Time'),
                     })
-                    ->color(fn (?string $state): string => match ($state) {
+                    ->color(fn(?string $state): string => match ($state) {
                         'full_time' => 'success',
                         'part_time' => 'info',
                         'contract' => 'warning',
@@ -191,9 +191,10 @@ class TeachersTable
                     ->falseIcon('heroicon-o-academic-cap')
                     ->trueColor('success')
                     ->falseColor('gray')
-                    ->tooltip(fn($record): string => 
-                        is_array($record->certifications) 
-                            ? count($record->certifications) . ' certifications' 
+                    ->tooltip(
+                        fn($record): string =>
+                        is_array($record->certifications)
+                            ? count($record->certifications) . ' certifications'
                             : 'No certifications'
                     )
                     ->alignCenter(),
@@ -201,7 +202,7 @@ class TeachersTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'active' => '✅ Active',
                         'inactive' => '❌ Inactive',
                         'terminated' => '🚫 Terminated',
@@ -210,7 +211,7 @@ class TeachersTable
                         'on_leave' => '🏖️ On Leave',
                         default => ucfirst($state ?? 'Active'),
                     })
-                    ->color(fn (?string $state): string => match ($state) {
+                    ->color(fn(?string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'gray',
                         'terminated' => 'danger',
@@ -237,7 +238,7 @@ class TeachersTable
             ])
             ->filters([
                 TrashedFilter::make(),
-                
+
                 SelectFilter::make('status')
                     ->label('Employment Status')
                     ->options([
@@ -283,22 +284,22 @@ class TeachersTable
 
                 Filter::make('experienced')
                     ->label('Experienced (5+ years)')
-                    ->query(fn (Builder $query): Builder => $query->where('experience_years', '>=', 5))
+                    ->query(fn(Builder $query): Builder => $query->where('experience_years', '>=', 5))
                     ->toggle(),
 
                 Filter::make('senior_staff')
                     ->label('Senior Staff (10+ years)')
-                    ->query(fn (Builder $query): Builder => $query->where('experience_years', '>=', 10))
+                    ->query(fn(Builder $query): Builder => $query->where('experience_years', '>=', 10))
                     ->toggle(),
 
                 Filter::make('recent_joiners')
                     ->label('Recent Joiners (6 months)')
-                    ->query(fn (Builder $query): Builder => $query->where('join_date', '>=', now()->subMonths(6)))
+                    ->query(fn(Builder $query): Builder => $query->where('join_date', '>=', now()->subMonths(6)))
                     ->toggle(),
 
                 Filter::make('has_certifications')
                     ->label('Has Certifications')
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('certifications'))
+                    ->query(fn(Builder $query): Builder => $query->whereNotNull('certifications'))
                     ->toggle(),
 
                 Filter::make('join_date')
@@ -314,11 +315,11 @@ class TeachersTable
                         return $query
                             ->when(
                                 $data['joined_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('join_date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('join_date', '>=', $date),
                             )
                             ->when(
                                 $data['joined_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('join_date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('join_date', '<=', $date),
                             );
                     }),
             ])

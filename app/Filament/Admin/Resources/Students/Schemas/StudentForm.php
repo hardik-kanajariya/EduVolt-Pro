@@ -69,7 +69,7 @@ class StudentForm
                     ->placeholder('e.g., ADM2025001')
                     ->helperText('📝 Unique admission identifier')
                     ->live()
-                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                     ->columnSpan(1),
 
                 TextInput::make('roll_number')
@@ -93,7 +93,7 @@ class StudentForm
                     ->label('Student Status')
                     ->options([
                         'active' => '✅ Active',
-                        'inactive' => '❌ Inactive', 
+                        'inactive' => '❌ Inactive',
                         'transferred' => '↗️ Transferred',
                         'graduated' => '🎓 Graduated',
                         'suspended' => '⚠️ Suspended',
@@ -219,22 +219,22 @@ class StudentForm
 
                 Placeholder::make('created_at')
                     ->label('Record Created')
-                    ->content(fn ($record): string => $record?->created_at?->format('M j, Y g:i A') ?? 'Not yet created')
+                    ->content(fn($record): string => $record?->created_at?->format('M j, Y g:i A') ?? 'Not yet created')
                     ->columnSpan(1),
 
                 Placeholder::make('updated_at')
                     ->label('Last Updated')
-                    ->content(fn ($record): string => $record?->updated_at?->format('M j, Y g:i A') ?? 'Not yet updated')
+                    ->content(fn($record): string => $record?->updated_at?->format('M j, Y g:i A') ?? 'Not yet updated')
                     ->columnSpan(1),
 
                 Placeholder::make('stats')
                     ->label('Quick Stats')
                     ->content(function ($record): string {
                         if (!$record) return 'Stats will be available after creation';
-                        
+
                         $age = $record->date_of_birth ? \Carbon\Carbon::parse($record->date_of_birth)->age : 'N/A';
                         $attendance = '95%'; // This would come from actual attendance records
-                        
+
                         return "🎂 Age: {$age} | 📊 Attendance: {$attendance}";
                     })
                     ->columnSpan(1),

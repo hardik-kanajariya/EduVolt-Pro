@@ -49,7 +49,7 @@ class SchoolsTable
                 TextColumn::make('type')
                     ->label('Type')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'public' => 'success',
                         'private' => 'info',
                         'charter' => 'warning',
@@ -58,7 +58,7 @@ class SchoolsTable
                         'religious' => 'danger',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'public' => '🏛️ Public',
                         'private' => '🏫 Private',
                         'charter' => '📜 Charter',
@@ -117,7 +117,7 @@ class SchoolsTable
                         'suspended' => 'danger',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'active' => '✅ Active',
                         'inactive' => '❌ Inactive',
                         'pending' => '⏳ Pending',

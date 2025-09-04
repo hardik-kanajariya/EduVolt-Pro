@@ -152,8 +152,8 @@ class GradesRelationManager extends RelationManager
                             if ($numeric >= 70) return 'warning';
                             return 'danger';
                         }
-                        
-                        return match(strtoupper($state)) {
+
+                        return match (strtoupper($state)) {
                             'A+', 'A' => 'success',
                             'B+', 'B' => 'info',
                             'C+', 'C' => 'warning',
@@ -192,7 +192,7 @@ class GradesRelationManager extends RelationManager
                 TextColumn::make('grade_type')
                     ->label('Type')
                     ->badge()
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'assignment' => '📝 Assignment',
                         'quiz' => '❓ Quiz',
                         'midterm' => '📚 Midterm',
@@ -254,17 +254,17 @@ class GradesRelationManager extends RelationManager
 
                 Tables\Filters\Filter::make('high_grades')
                     ->label('High Grades (A/90%+)')
-                    ->query(fn (Builder $query): Builder => $query->where(function ($q) {
+                    ->query(fn(Builder $query): Builder => $query->where(function ($q) {
                         $q->where('grade', 'like', 'A%')
-                          ->orWhere('percentage', '>=', 90);
+                            ->orWhere('percentage', '>=', 90);
                     }))
                     ->toggle(),
 
                 Tables\Filters\Filter::make('needs_improvement')
                     ->label('Needs Improvement (C-/70%-)')
-                    ->query(fn (Builder $query): Builder => $query->where(function ($q) {
+                    ->query(fn(Builder $query): Builder => $query->where(function ($q) {
                         $q->whereIn('grade', ['C-', 'D+', 'D', 'D-', 'F'])
-                          ->orWhere('percentage', '<=', 70);
+                            ->orWhere('percentage', '<=', 70);
                     }))
                     ->toggle(),
             ])

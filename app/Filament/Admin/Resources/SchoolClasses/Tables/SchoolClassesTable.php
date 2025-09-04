@@ -53,7 +53,7 @@ class SchoolClassesTable
                 TextColumn::make('grade_level')
                     ->label('Level')
                     ->badge()
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'kindergarten' => '🎨 KG',
                         'primary' => '📚 Primary',
                         'middle' => '📖 Middle',
@@ -61,7 +61,7 @@ class SchoolClassesTable
                         'higher_secondary' => '🏆 Higher Sec',
                         default => ucfirst($state ?? 'General'),
                     })
-                    ->color(fn (?string $state): string => match ($state) {
+                    ->color(fn(?string $state): string => match ($state) {
                         'kindergarten' => 'pink',
                         'primary' => 'success',
                         'middle' => 'info',
@@ -73,7 +73,7 @@ class SchoolClassesTable
                 TextColumn::make('stream')
                     ->label('Stream')
                     ->badge()
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'general' => '📘 General',
                         'science' => '🔬 Science',
                         'commerce' => '💼 Commerce',
@@ -82,7 +82,7 @@ class SchoolClassesTable
                         'special' => '⭐ Special',
                         default => ucfirst($state ?? 'General'),
                     })
-                    ->color(fn (?string $state): string => match ($state) {
+                    ->color(fn(?string $state): string => match ($state) {
                         'science' => 'success',
                         'commerce' => 'info',
                         'arts' => 'purple',
@@ -132,7 +132,7 @@ class SchoolClassesTable
                         $studentCount = $record->students?->count() ?? 0;
                         $capacity = $record->capacity ?? 0;
                         if ($capacity === 0) return 'gray';
-                        
+
                         $percentage = ($studentCount / $capacity) * 100;
                         if ($percentage >= 95) return 'danger';
                         if ($percentage >= 80) return 'warning';
@@ -168,9 +168,10 @@ class SchoolClassesTable
                     ->falseIcon('heroicon-o-clock')
                     ->trueColor('success')
                     ->falseColor('gray')
-                    ->tooltip(fn($record): string => 
-                        is_array($record->timetable_slots) && count($record->timetable_slots) > 0 
-                            ? 'Timetable configured' 
+                    ->tooltip(
+                        fn($record): string =>
+                        is_array($record->timetable_slots) && count($record->timetable_slots) > 0
+                            ? 'Timetable configured'
                             : 'No timetable set'
                     )
                     ->alignCenter(),
@@ -178,14 +179,14 @@ class SchoolClassesTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    ->formatStateUsing(fn(?string $state): string => match ($state) {
                         'active' => '✅ Active',
                         'inactive' => '❌ Inactive',
                         'completed' => '🎯 Completed',
                         'suspended' => '⏸️ Suspended',
                         default => ucfirst($state ?? 'Active'),
                     })
-                    ->color(fn (?string $state): string => match ($state) {
+                    ->color(fn(?string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'gray',
                         'completed' => 'info',
@@ -210,7 +211,7 @@ class SchoolClassesTable
             ])
             ->filters([
                 TrashedFilter::make(),
-                
+
                 SelectFilter::make('status')
                     ->label('Class Status')
                     ->options([
@@ -259,7 +260,7 @@ class SchoolClassesTable
 
                 Filter::make('has_teacher')
                     ->label('Has Class Teacher')
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('class_teacher_id'))
+                    ->query(fn(Builder $query): Builder => $query->whereNotNull('class_teacher_id'))
                     ->toggle(),
 
                 Filter::make('full_capacity')
@@ -273,12 +274,12 @@ class SchoolClassesTable
 
                 Filter::make('needs_teacher')
                     ->label('Needs Teacher Assignment')
-                    ->query(fn (Builder $query): Builder => $query->whereNull('class_teacher_id'))
+                    ->query(fn(Builder $query): Builder => $query->whereNull('class_teacher_id'))
                     ->toggle(),
 
                 Filter::make('has_timetable')
                     ->label('Has Timetable')
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('timetable_slots'))
+                    ->query(fn(Builder $query): Builder => $query->whereNotNull('timetable_slots'))
                     ->toggle(),
             ])
             ->recordActions([

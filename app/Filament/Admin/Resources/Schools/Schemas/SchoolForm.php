@@ -40,7 +40,7 @@ class SchoolForm
                     ->placeholder('e.g., CHS001')
                     ->helperText('🔤 Auto-generated from school name or enter custom code')
                     ->live()
-                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                     ->columnSpan(1),
 
                 Textarea::make('address')
@@ -131,23 +131,23 @@ class SchoolForm
 
                 Placeholder::make('created_at')
                     ->label('Created At')
-                    ->content(fn ($record): string => $record?->created_at?->format('M j, Y g:i A') ?? 'Not yet created')
+                    ->content(fn($record): string => $record?->created_at?->format('M j, Y g:i A') ?? 'Not yet created')
                     ->columnSpan(1),
 
                 Placeholder::make('updated_at')
                     ->label('Last Updated')
-                    ->content(fn ($record): string => $record?->updated_at?->format('M j, Y g:i A') ?? 'Not yet updated')
+                    ->content(fn($record): string => $record?->updated_at?->format('M j, Y g:i A') ?? 'Not yet updated')
                     ->columnSpan(1),
 
                 Placeholder::make('stats')
                     ->label('Quick Stats')
                     ->content(function ($record): string {
                         if (!$record) return 'Stats will be available after creation';
-                        
+
                         $students = $record->students()->count();
                         $teachers = $record->teachers()->count();
                         $classes = $record->classes()->count();
-                        
+
                         return "👥 {$students} Students | 👨‍🏫 {$teachers} Teachers | 🏛️ {$classes} Classes";
                     })
                     ->columnSpan(1),

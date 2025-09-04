@@ -107,13 +107,13 @@ class StudentsRelationManager extends RelationManager
 
                 TextColumn::make('date_of_birth')
                     ->label('Age')
-                    ->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)->age . ' years')
+                    ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->age . ' years')
                     ->sortable(),
 
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'danger',
                         'graduated' => 'warning',

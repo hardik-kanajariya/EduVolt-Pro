@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\Schools;
 use App\Filament\Admin\Resources\Schools\Pages\CreateSchool;
 use App\Filament\Admin\Resources\Schools\Pages\EditSchool;
 use App\Filament\Admin\Resources\Schools\Pages\ListSchools;
+use App\Filament\Admin\Resources\Schools\Pages\ViewSchool;
 use App\Filament\Admin\Resources\Schools\Schemas\SchoolForm;
 use App\Filament\Admin\Resources\Schools\Tables\SchoolsTable;
 use App\Models\School;
@@ -19,6 +20,15 @@ class SchoolResource extends Resource
     protected static ?string $model = School::class;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $navigationLabel = 'Schools';
+
+    protected static ?string $modelLabel = 'School';
+
+    protected static ?string $pluralModelLabel = 'Schools';
+
+    protected static ?string $slug = 'schools';
+
     public static function form(Schema $schema): Schema
     {
         return SchoolForm::configure($schema);

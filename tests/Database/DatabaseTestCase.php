@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 abstract class DatabaseTestCase extends TestCase
 {
-    use RefreshDatabase, DatabaseMigrations;
+    use RefreshDatabase;
 
     /**
      * Indicates whether the database should be migrated.

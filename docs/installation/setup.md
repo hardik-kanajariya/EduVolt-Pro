@@ -81,9 +81,22 @@ mysql -u root -p -e "CREATE DATABASE eduvault_pro CHARACTER SET utf8mb4 COLLATE 
 # Run migrations
 php artisan migrate
 
-# Seed the database
+# Seed the database with default data
 php artisan db:seed
 ```
+
+**Default User Accounts Created:**
+- Super Admin: `admin@eduvaultpro.com` / `admin123`
+- School Admin: `schooladmin@eduvaultpro.com` / `admin123`
+- Principal: `principal@eduvaultpro.com` / `principal123`
+- Teacher: `teacher@eduvaultpro.com` / `teacher123`
+- Student: `student@eduvaultpro.com` / `student123`
+- Parent: `parent@eduvaultpro.com` / `parent123`
+
+**Roles & Permissions Created:**
+- 8 system roles with granular permissions
+- Role-based access control for all modules
+- 60+ permission sets for comprehensive security
 
 ### Step 6: Storage Setup
 ```bash

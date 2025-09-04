@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\SchoolClasses;
 use App\Filament\Admin\Resources\SchoolClasses\Pages\CreateSchoolClass;
 use App\Filament\Admin\Resources\SchoolClasses\Pages\EditSchoolClass;
 use App\Filament\Admin\Resources\SchoolClasses\Pages\ListSchoolClasses;
+use App\Filament\Admin\Resources\SchoolClasses\Pages\ViewSchoolClass;
 use App\Filament\Admin\Resources\SchoolClasses\Schemas\SchoolClassForm;
 use App\Filament\Admin\Resources\SchoolClasses\Tables\SchoolClassesTable;
 use App\Models\SchoolClass;
@@ -44,6 +45,7 @@ class SchoolClassResource extends Resource
         return [
             'index' => ListSchoolClasses::route('/'),
             'create' => CreateSchoolClass::route('/create'),
+            'view' => ViewSchoolClass::route('/{record}'),
             'edit' => EditSchoolClass::route('/{record}/edit'),
         ];
     }
@@ -54,5 +56,15 @@ class SchoolClassResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'active')->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
     }
 }

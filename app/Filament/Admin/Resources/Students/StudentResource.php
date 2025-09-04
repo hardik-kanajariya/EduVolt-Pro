@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\Students;
 use App\Filament\Admin\Resources\Students\Pages\CreateStudent;
 use App\Filament\Admin\Resources\Students\Pages\EditStudent;
 use App\Filament\Admin\Resources\Students\Pages\ListStudents;
+use App\Filament\Admin\Resources\Students\Pages\ViewStudent;
 use App\Filament\Admin\Resources\Students\Schemas\StudentForm;
 use App\Filament\Admin\Resources\Students\Tables\StudentsTable;
 use App\Models\Student;
@@ -33,7 +34,7 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            \App\Filament\Admin\Resources\Students\RelationManagers\GradesRelationManager::class,
         ];
     }
 
@@ -42,6 +43,7 @@ class StudentResource extends Resource
         return [
             'index' => ListStudents::route('/'),
             'create' => CreateStudent::route('/create'),
+            'view' => ViewStudent::route('/{record}'),
             'edit' => EditStudent::route('/{record}/edit'),
         ];
     }
@@ -52,5 +54,15 @@ class StudentResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'active')->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
     }
 }

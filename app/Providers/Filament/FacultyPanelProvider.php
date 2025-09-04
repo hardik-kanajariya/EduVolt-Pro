@@ -39,10 +39,7 @@ class FacultyPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Faculty/Widgets'), for: 'App\Filament\Faculty\Widgets')
-            ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
-            ])
+            ->widgets([ ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

@@ -39,10 +39,7 @@ class ParentPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Parent/Widgets'), for: 'App\Filament\Parent\Widgets')
-            ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
-            ])
+            ->widgets([ ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

@@ -32,7 +32,7 @@ class ViewStaff extends ViewRecord
     public function form(Schema $schema): Schema
     {
         $record = $this->getRecord();
-        
+
         // Calculate statistics
         $yearsOfService = $record->join_date ? $record->join_date->diffInYears(now()) : 0;
         $monthsOfService = $record->join_date ? $record->join_date->diffInMonths(now()) % 12 : 0;
@@ -44,10 +44,10 @@ class ViewStaff extends ViewRecord
                 Placeholder::make('staff_profile_header')
                     ->label('')
                     ->content(function () use ($record, $yearsOfService): string {
-                        $avatar = $record->user?->avatar 
+                        $avatar = $record->user?->avatar
                             ? '<img src="' . asset('storage/' . $record->user->avatar) . '" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg">'
-                            : '<div class="w-24 h-24 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg">' . 
-                              strtoupper(substr($record->user?->name ?? 'S', 0, 1)) . '</div>';
+                            : '<div class="w-24 h-24 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg">' .
+                            strtoupper(substr($record->user?->name ?? 'S', 0, 1)) . '</div>';
 
                         $statusColor = match ($record->status) {
                             'active' => 'bg-green-100 text-green-800',
@@ -164,7 +164,7 @@ class ViewStaff extends ViewRecord
                         if (empty($responsibilities)) {
                             return 'No responsibilities defined';
                         }
-                        return is_array($responsibilities) 
+                        return is_array($responsibilities)
                             ? implode("\n• ", array_merge([''], $responsibilities))
                             : $responsibilities;
                     })
@@ -194,11 +194,11 @@ class ViewStaff extends ViewRecord
                 // Record Tracking
                 Placeholder::make('created_at')
                     ->label('Created At')
-                    ->content(fn () => $record->created_at ? $record->created_at->format('F j, Y \a\t g:i A') : 'Not available'),
+                    ->content(fn() => $record->created_at ? $record->created_at->format('F j, Y \a\t g:i A') : 'Not available'),
 
                 Placeholder::make('updated_at')
                     ->label('Last Updated')
-                    ->content(fn () => $record->updated_at ? $record->updated_at->format('F j, Y \a\t g:i A') : 'Not available'),
+                    ->content(fn() => $record->updated_at ? $record->updated_at->format('F j, Y \a\t g:i A') : 'Not available'),
             ])
             ->columns(3);
     }

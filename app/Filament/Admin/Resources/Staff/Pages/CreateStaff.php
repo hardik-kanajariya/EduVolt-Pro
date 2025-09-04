@@ -35,12 +35,12 @@ class CreateStaff extends CreateRecord
             $lastStaff = \App\Models\Staff::whereYear('created_at', $year)
                 ->orderBy('created_at', 'desc')
                 ->first();
-            
+
             $nextNumber = 1;
             if ($lastStaff && preg_match('/EMP-\d{4}-(\d+)/', $lastStaff->employee_id, $matches)) {
                 $nextNumber = (int)$matches[1] + 1;
             }
-            
+
             $data['employee_id'] = "EMP-{$year}-" . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
         }
 
@@ -91,11 +91,11 @@ class CreateStaff extends CreateRecord
             $this->getCreateFormAction()
                 ->label('Create Staff Member')
                 ->icon('heroicon-m-plus-circle'),
-                
+
             $this->getCancelFormAction()
                 ->label('Cancel')
                 ->icon('heroicon-m-x-mark'),
-                
+
             Action::make('create_and_create_another')
                 ->label('Create & Create Another')
                 ->icon('heroicon-m-plus')

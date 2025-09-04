@@ -148,7 +148,7 @@ class StaffForm
                     ->prefix('$')
                     ->prefixIcon('heroicon-m-currency-dollar')
                     ->placeholder('Annual salary amount')
-                    ->visible(fn ($get) => in_array($get('employment_type'), ['full_time', 'part_time', 'contract']))
+                    ->visible(fn($get) => in_array($get('employment_type'), ['full_time', 'part_time', 'contract']))
                     ->columnSpan(2),
 
                 // Status & Settings
@@ -182,7 +182,7 @@ class StaffForm
                     ->addActionLabel('Add Responsibility')
                     ->reorderableWithButtons()
                     ->collapsible()
-                    ->itemLabel(fn (array $state): ?string => $state['responsibility'] ?? null)
+                    ->itemLabel(fn(array $state): ?string => $state['responsibility'] ?? null)
                     ->columnSpanFull(),
 
                 // Additional Information
@@ -208,7 +208,7 @@ class StaffForm
 
                         $yearsOfService = $joinDate ? \Carbon\Carbon::parse($joinDate)->diffInYears(now()) : 0;
                         $formattedSalary = $salary ? '$' . number_format($salary) : 'Not specified';
-                        $employmentTypeLabel = match($employmentType) {
+                        $employmentTypeLabel = match ($employmentType) {
                             'full_time' => 'Full Time',
                             'part_time' => 'Part Time',
                             'contract' => 'Contract',

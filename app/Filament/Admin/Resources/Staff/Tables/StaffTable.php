@@ -58,7 +58,7 @@ class StaffTable
                     ->searchable()
                     ->sortable()
                     ->badge()
-                    ->color(fn (string $state): string => match (strtolower($state)) {
+                    ->color(fn(string $state): string => match (strtolower($state)) {
                         'administration' => 'success',
                         'academic affairs' => 'info',
                         'it department' => 'warning',
@@ -79,7 +79,7 @@ class StaffTable
                 // Employment Details
                 BadgeColumn::make('employment_type')
                     ->label('Type')
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'full_time' => 'success',
                         'part_time' => 'warning',
                         'contract' => 'info',
@@ -88,7 +88,7 @@ class StaffTable
                         'volunteer' => 'secondary',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'full_time' => 'Full Time',
                         'part_time' => 'Part Time',
                         'contract' => 'Contract',
@@ -103,7 +103,8 @@ class StaffTable
                     ->date('M j, Y')
                     ->sortable()
                     ->icon('heroicon-m-calendar-days')
-                    ->description(fn ($record): string => 
+                    ->description(
+                        fn($record): string =>
                         \Carbon\Carbon::parse($record->join_date)->diffForHumans()
                     ),
 
@@ -112,11 +113,11 @@ class StaffTable
                     ->state(function ($record): string {
                         $years = \Carbon\Carbon::parse($record->join_date)->diffInYears(now());
                         $months = \Carbon\Carbon::parse($record->join_date)->diffInMonths(now()) % 12;
-                        
+
                         if ($years > 0) {
                             return $months > 0 ? "{$years}y {$months}m" : "{$years} years";
                         }
-                        
+
                         return $months > 0 ? "{$months} months" : "New";
                     })
                     ->badge()
@@ -141,7 +142,7 @@ class StaffTable
                 // Status Management
                 BadgeColumn::make('status')
                     ->label('Status')
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'warning',
                         'terminated' => 'danger',
@@ -149,7 +150,7 @@ class StaffTable
                         'resigned' => 'gray',
                         default => 'gray',
                     })
-                    ->icon(fn (string $state): string => match ($state) {
+                    ->icon(fn(string $state): string => match ($state) {
                         'active' => 'heroicon-m-check-circle',
                         'inactive' => 'heroicon-m-pause-circle',
                         'terminated' => 'heroicon-m-x-circle',
@@ -254,14 +255,14 @@ class StaffTable
                             $data['years'],
                             function (Builder $query, $years) {
                                 $now = now();
-                                return match($years) {
+                                return match ($years) {
                                     '0-1' => $query->whereDate('join_date', '>=', $now->copy()->subYear()),
                                     '1-2' => $query->whereDate('join_date', '>=', $now->copy()->subYears(2))
-                                                  ->whereDate('join_date', '<', $now->copy()->subYear()),
+                                        ->whereDate('join_date', '<', $now->copy()->subYear()),
                                     '2-5' => $query->whereDate('join_date', '>=', $now->copy()->subYears(5))
-                                                  ->whereDate('join_date', '<', $now->copy()->subYears(2)),
+                                        ->whereDate('join_date', '<', $now->copy()->subYears(2)),
                                     '5-10' => $query->whereDate('join_date', '>=', $now->copy()->subYears(10))
-                                                   ->whereDate('join_date', '<', $now->copy()->subYears(5)),
+                                        ->whereDate('join_date', '<', $now->copy()->subYears(5)),
                                     '10+' => $query->whereDate('join_date', '<', $now->copy()->subYears(10)),
                                     default => $query,
                                 };
@@ -283,11 +284,11 @@ class StaffTable
                         return $query
                             ->when(
                                 $data['join_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('join_date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('join_date', '>=', $date),
                             )
                             ->when(
                                 $data['join_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('join_date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('join_date', '<=', $date),
                             );
                     }),
 
@@ -318,7 +319,7 @@ class StaffTable
             ->poll('60s')
             ->deferLoading()
             ->recordUrl(
-                fn ($record): string => route('filament.admin.resources.staffs.view', $record)
+                fn($record): string => route('filament.admin.resources.staffs.view', $record)
             );
     }
 }

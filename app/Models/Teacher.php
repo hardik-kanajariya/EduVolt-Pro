@@ -47,6 +47,21 @@ class Teacher extends Model
         return $this->belongsToMany(Subject::class, 'teacher_subject');
     }
 
+    public function assignedClasses()
+    {
+        return $this->hasMany(SchoolClass::class, 'class_teacher_id');
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
+    }
+
+    public function attendanceRecords()
+    {
+        return $this->hasMany(Attendance::class, 'marked_by');
+    }
+
     // Scopes
     public function scopeActive($query)
     {
@@ -58,9 +73,23 @@ class Teacher extends Model
         return $query->where('employment_type', 'full_time');
     }
 
+    public function scopeBySubject($query, $subjectId)
+    {
+        return $query->whereHas('subjects', function ($q) use ($subjectId) {
+            $q->where('subjects.id', $subjectId);
+        });
+    }
+
     // Accessors
     public function getFullNameAttribute()
     {
         return $this->user->name ?? '';
+    }
+
+    public function getTotalStudentsAttribute()
+    {
+        return $this->assignedClasses->sum(function ($class) {
+            return $class->students()->count();
+        });
     }
 }

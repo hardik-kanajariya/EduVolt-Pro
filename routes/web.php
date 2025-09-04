@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 
 // Static Pages Routes
 Route::get('/', function () {
@@ -11,9 +12,8 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-Route::get('/contact', function () {
-    return view('pages.contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/features', function () {
     return view('pages.features');

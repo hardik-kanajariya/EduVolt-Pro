@@ -47,6 +47,26 @@ class Student extends Model
         return $this->belongsTo(SchoolClass::class, 'class_id');
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function assignments()
+    {
+        return $this->hasManyThrough(Assignment::class, SchoolClass::class, 'id', 'class_id', 'class_id');
+    }
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
+
+    public function progress()
+    {
+        return $this->hasMany(StudentProgress::class);
+    }
+
     // Scopes
     public function scopeActive($query)
     {
@@ -58,9 +78,23 @@ class Student extends Model
         return $query->where('class_id', $classId);
     }
 
+    public function scopeBySchool($query, $schoolId)
+    {
+        return $query->where('school_id', $schoolId);
+    }
+
     // Accessors
     public function getFullNameAttribute()
     {
         return $this->user->name ?? '';
+    }
+
+    public function getAttendancePercentageAttribute()
+    {
+        $totalDays = $this->attendances()->count();
+        if ($totalDays === 0) return 0;
+
+        $presentDays = $this->attendances()->where('status', 'present')->count();
+        return round(($presentDays / $totalDays) * 100, 2);
     }
 }

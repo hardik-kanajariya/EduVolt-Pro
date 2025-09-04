@@ -54,4 +54,44 @@ class User extends Authenticatable
             'status' => 'boolean',
         ];
     }
+
+    // Relationships
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
+
+    public function staff()
+    {
+        return $this->hasOne(Staff::class);
+    }
+
+    // Check if user is a student
+    public function isStudent(): bool
+    {
+        return $this->hasRole('student');
+    }
+
+    // Check if user is a teacher
+    public function isTeacher(): bool
+    {
+        return $this->hasRole('teacher');
+    }
+
+    // Check if user is a parent
+    public function isParent(): bool
+    {
+        return $this->hasRole('parent');
+    }
+
+    // Get children for parent users
+    public function children()
+    {
+        return $this->hasMany(Student::class, 'parent_email', 'email');
+    }
 }

@@ -18,6 +18,8 @@ class SchoolClass extends Model
         'name',
         'section',
         'capacity',
+        'room_number',
+        'class_teacher_id',
         'status',
     ];
 
@@ -37,6 +39,11 @@ class SchoolClass extends Model
         return $this->belongsTo(AcademicYear::class);
     }
 
+    public function classTeacher()
+    {
+        return $this->belongsTo(Teacher::class, 'class_teacher_id');
+    }
+
     public function students()
     {
         return $this->hasMany(Student::class, 'class_id');
@@ -44,7 +51,17 @@ class SchoolClass extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'class_subject');
+        return $this->belongsToMany(Subject::class, 'class_subject', 'class_id', 'subject_id');
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class, 'class_id');
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'class_id');
     }
 
     // Scopes
@@ -53,9 +70,24 @@ class SchoolClass extends Model
         return $query->where('status', 'active');
     }
 
+    public function scopeByAcademicYear($query, $yearId)
+    {
+        return $query->where('academic_year_id', $yearId);
+    }
+
     // Accessors
     public function getFullNameAttribute()
     {
         return $this->name . ' - ' . $this->section;
+    }
+
+    public function getStudentCountAttribute()
+    {
+        return $this->students()->count();
+    }
+
+    public function getAvailableCapacityAttribute()
+    {
+        return $this->capacity - $this->student_count;
     }
 }

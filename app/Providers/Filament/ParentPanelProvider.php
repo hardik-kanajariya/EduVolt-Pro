@@ -28,7 +28,6 @@ class ParentPanelProvider extends PanelProvider
             ->path('parent')
             ->login()
             ->brandName('EduVault Pro - Parent Portal')
-            ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('2rem')
             ->colors([
                 'primary' => Color::Orange,

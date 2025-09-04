@@ -28,7 +28,6 @@ class FacultyPanelProvider extends PanelProvider
             ->path('faculty')
             ->login()
             ->brandName('EduVault Pro - Faculty')
-            ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('2rem')
             ->colors([
                 'primary' => Color::Green,

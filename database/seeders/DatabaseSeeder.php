@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             UserSeeder::class,
             SchoolSeeder::class,
+            ComprehensiveTestDataSeeder::class,
         ]);
 
         $this->command->info('Database seeding completed successfully!');

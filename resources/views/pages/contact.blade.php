@@ -29,7 +29,63 @@
                         Fill out the form below and our team will get back to you within 24 hours.
                     </p>
 
-                    <form class="space-y-6" method="POST" action="{{ route('contact') }}">
+                    @if(session('success'))
+                        <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-red-800">{{ session('error') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-medium text-red-800">Please correct the following errors:</h3>
+                                    <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    <form class="space-y-6" method="POST" action="{{ route('contact.store') }}">
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -37,60 +93,86 @@
                                 <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">First Name
                                     *</label>
                                 <input type="text" id="first_name" name="first_name" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                                    value="{{ old('first_name') }}"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 @error('first_name') border-red-500 @enderror"
                                     placeholder="Enter your first name">
+                                @error('first_name')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
                                 <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">Last Name
                                     *</label>
-                                <input type="text" id="last_name" name="last_name" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                                <input type="text" id="last_name" name="last_name" required value="{{ old('last_name') }}"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 @error('last_name') border-red-500 @enderror"
                                     placeholder="Enter your last name">
+                                @error('last_name')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                            <input type="email" id="email" name="email" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                            <input type="email" id="email" name="email" required value="{{ old('email') }}"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 @error('email') border-red-500 @enderror"
                                 placeholder="Enter your email address">
+                            @error('email')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
                             <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                            <input type="tel" id="phone" name="phone"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                            <input type="tel" id="phone" name="phone" value="{{ old('phone') }}"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 @error('phone') border-red-500 @enderror"
                                 placeholder="Enter your phone number">
+                            @error('phone')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
                             <label for="school_name"
                                 class="block text-sm font-medium text-gray-700 mb-2">School/Organization Name</label>
-                            <input type="text" id="school_name" name="school_name"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                            <input type="text" id="school_name" name="school_name" value="{{ old('school_name') }}"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 @error('school_name') border-red-500 @enderror"
                                 placeholder="Enter your school or organization name">
+                            @error('school_name')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
                             <label for="inquiry_type" class="block text-sm font-medium text-gray-700 mb-2">Inquiry Type
                                 *</label>
                             <select id="inquiry_type" name="inquiry_type" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 @error('inquiry_type') border-red-500 @enderror">
                                 <option value="">Select inquiry type</option>
-                                <option value="product_demo">Product Demo</option>
-                                <option value="pricing">Pricing Information</option>
-                                <option value="technical_support">Technical Support</option>
-                                <option value="sales">Sales Inquiry</option>
-                                <option value="partnership">Partnership</option>
-                                <option value="other">Other</option>
+                                <option value="product_demo" {{ old('inquiry_type') == 'product_demo' ? 'selected' : '' }}>
+                                    Product Demo</option>
+                                <option value="pricing" {{ old('inquiry_type') == 'pricing' ? 'selected' : '' }}>Pricing
+                                    Information</option>
+                                <option value="technical_support" {{ old('inquiry_type') == 'technical_support' ? 'selected' : '' }}>Technical Support</option>
+                                <option value="sales" {{ old('inquiry_type') == 'sales' ? 'selected' : '' }}>Sales Inquiry
+                                </option>
+                                <option value="partnership" {{ old('inquiry_type') == 'partnership' ? 'selected' : '' }}>
+                                    Partnership</option>
+                                <option value="other" {{ old('inquiry_type') == 'other' ? 'selected' : '' }}>Other</option>
                             </select>
+                            @error('inquiry_type')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
                             <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
                             <textarea id="message" name="message" rows="5" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
-                                placeholder="Tell us about your requirements and how we can help you..."></textarea>
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 @error('message') border-red-500 @enderror"
+                                placeholder="Tell us about your requirements and how we can help you...">{{ old('message') }}</textarea>
+                            @error('message')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="flex items-start space-x-3">

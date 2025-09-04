@@ -9,7 +9,9 @@ use App\Models\Teacher;
 use App\Models\Staff;
 use Filament\Pages\Page;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Actions\Action;
 use Filament\Support\Exceptions\Halt;
 use Filament\Notifications\Notification;
@@ -36,9 +38,9 @@ class IssueBook extends Page
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Section::make('Member Information')
                     ->description('Select the member who will receive the book')
@@ -52,11 +54,11 @@ class IssueBook extends Page
                             ])
                             ->required()
                             ->live()
-                            ->afterStateUpdated(fn(Forms\Set $set) => $set('member_id', null)),
+                            ->afterStateUpdated(fn(Set $set) => $set('member_id', null)),
 
                         Forms\Components\Select::make('member_id')
                             ->label('Member')
-                            ->options(function (Forms\Get $get) {
+                            ->options(function (Get $get) {
                                 $memberType = $get('member_type');
                                 if (!$memberType) {
                                     return [];
@@ -84,7 +86,7 @@ class IssueBook extends Page
                             ->searchable()
                             ->required()
                             ->live()
-                            ->afterStateUpdated(function (Forms\Set $set, Forms\Get $get, $state) {
+                            ->afterStateUpdated(function (Set $set, Get $get, $state) {
                                 if (!$state) return;
 
                                 $memberType = $get('member_type');
@@ -123,7 +125,7 @@ class IssueBook extends Page
                             ->preload()
                             ->required()
                             ->live()
-                            ->afterStateUpdated(function (Forms\Set $set, $state) {
+                            ->afterStateUpdated(function (Set $set, $state) {
                                 if (!$state) return;
 
                                 $book = LibraryBook::find($state);

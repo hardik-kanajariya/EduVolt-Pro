@@ -12,6 +12,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\AssignmentSubmission;
@@ -25,10 +26,10 @@ class AssignmentSubmissionsRelationManager extends RelationManager
 
     protected static string|BackedEnum|null $icon = 'heroicon-o-document-text';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Forms\Components\Select::make('assignment_id')
                     ->relationship('assignment', 'title')
                     ->required()
@@ -106,7 +107,7 @@ class AssignmentSubmissionsRelationManager extends RelationManager
 
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'submitted' => 'info',
                         'graded' => 'success',
                         'returned' => 'primary',

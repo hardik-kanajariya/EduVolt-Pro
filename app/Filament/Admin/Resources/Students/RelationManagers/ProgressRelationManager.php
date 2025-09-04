@@ -3,7 +3,7 @@
 namespace App\Filament\Admin\Resources\Students\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,9 +20,9 @@ class ProgressRelationManager extends RelationManager
 
     protected static string|BackedEnum|null $icon = 'heroicon-o-chart-bar';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Select::make('subject_id')
                     ->relationship('subject', 'name')

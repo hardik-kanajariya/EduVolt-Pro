@@ -450,3 +450,5 @@ if any file got currupted while you make changes do not fix this, inform user ab
 do not try to run thus command `php artisan tinker` actually do not test anything what ever development is done ask user to verify and test. if any problems are there user will tell you or fix that by it self. 
 
 run the test often to make sure all are passing and not any failures if failing then check why?, if its the issue with what you made chanegs or need to update that test case with new development. 
+
+do not run commands for testing untill I explicitly told you. Do focus only on development activity. rest I will manage. 

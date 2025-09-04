@@ -37,8 +37,44 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    /**
+     * Create an admin user.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'name' => 'Admin User',
+            'email' => 'admin@eduvaultpro.com',
+            'role' => 'admin',
+        ]);
+    }
+
+    /**
+     * Create a teacher user.
+     */
+    public function teacher(): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'name' => 'Teacher User',
+            'email' => fake()->unique()->safeEmail(),
+            'role' => 'teacher',
+        ]);
+    }
+
+    /**
+     * Create a student user.
+     */
+    public function student(): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'name' => 'Student User',
+            'email' => fake()->unique()->safeEmail(),
+            'role' => 'student',
         ]);
     }
 }

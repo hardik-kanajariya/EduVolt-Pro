@@ -8,6 +8,7 @@
 **Product Name:** EduVault Pro  
 **Version:** 1.0 (Core Features)  
 **Tagline:** "Complete Digital Education Management Solution"  
+**Business Model:** One-time Purchase Software (Not Subscription-based)  
 **Tech Stack:** PHP 8.2+, Laravel 11, Filament v3, MySQL 8.0, Tailwind CSS  
 **Architecture:** MVC Pattern with Repository Pattern, Service Layer Architecture  
 **Frontend Strategy:** Filament Panels for Admin/User Interfaces + Static Pages with Mobile-First Design  
@@ -56,7 +57,6 @@ FILESYSTEM_DISK=local
 **Dependencies to Install:**
 ```bash
 composer require filament/filament:"^3.0" --with-all-dependencies
-composer require laravel/sanctum
 composer require spatie/laravel-permission
 composer require intervention/image
 composer require barryvdh/laravel-dompdf
@@ -76,7 +76,7 @@ composer require maatwebsite/excel
 
 **Detailed Instructions for AI Agent:**
 ```bash
-# Install Laravel API Documentation Generator
+# Install Documentation Tools
 composer require "darkaonline/l5-swagger"
 php artisan vendor:publish --provider="L5Swagger\L5SwaggerServiceProvider"
 ```
@@ -85,8 +85,7 @@ php artisan vendor:publish --provider="L5Swagger\L5SwaggerServiceProvider"
 1. Create `routes/docs.php` file with documentation routes
 2. Create `resources/views/docs/` directory for documentation views
 3. Create `app/Http/Controllers/DocsController.php` for documentation management
-4. Set up Swagger UI for API documentation
-5. Create markdown-based documentation system
+4. Create markdown-based documentation system
 
 **Files to Create:**
 - `routes/docs.php` - Documentation routes
@@ -178,7 +177,7 @@ module.exports = {
 4. **Terms of Service** (`/terms`) - Legal terms and conditions
 5. **Privacy Policy** (`/privacy`) - Data protection and privacy policy
 6. **Features** (`/features`) - Detailed feature breakdown
-7. **Pricing** (`/pricing`) - Subscription plans (if applicable)
+7. **Pricing** (`/pricing`) - One-time purchase pricing and licensing options
 
 **Design Requirements:**
 - Mobile-first responsive design (320px minimum width)
@@ -269,7 +268,6 @@ php artisan make:seeder RolePermissionSeeder
 1. Document all installation steps in `/docs/installation`
 2. Document static pages structure in `/docs/frontend`
 3. Document Filament panel configuration in `/docs/panels`
-4. Create API documentation structure in `/docs/api`
 
 **Validation & Testing:**
 ```bash
@@ -589,7 +587,6 @@ php artisan make:test FacultyPanelTest
 - Document database schema in `/docs/database`
 - Document authentication system in `/docs/authentication`
 - Document model relationships in `/docs/models`
-- Create API documentation for all models
 
 **Expected Outcome:** Working system with seeded test data and comprehensive testing framework
 
@@ -1176,11 +1173,6 @@ php artisan make:seeder AcademicDataSeeder
 - Document assignment system in `/docs/academic/assignments`
 - Document examination system in `/docs/academic/exams`
 - Create user guides for teachers and students
-
-**API Documentation:**
-- Create API endpoints for mobile app access
-- Document all academic APIs in Swagger
-- Create webhook endpoints for real-time updates
 
 **Expected Outcome:** Fully tested academic management system with comprehensive documentation
 

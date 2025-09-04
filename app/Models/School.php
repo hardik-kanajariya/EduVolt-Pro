@@ -19,6 +19,7 @@ class School extends Model
         'website',
         'logo',
         'established_date',
+        'type',
         'status',
         'settings',
     ];

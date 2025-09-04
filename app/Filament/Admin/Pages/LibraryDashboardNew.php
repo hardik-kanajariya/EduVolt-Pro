@@ -7,22 +7,21 @@ use Filament\Actions\Action;
 use App\Models\LibraryBook;
 use App\Models\BookIssue;
 use App\Models\Student;
-use BackedEnum;
-use UnitEnum;
+use Filament\Support\Enums\IconPosition;
 
 class LibraryDashboard extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Library Management';
+    protected static ?string $navigationGroup = 'Library Management';
 
     protected static ?int $navigationSort = 1;
+
+    protected static string $view = 'filament.admin.pages.library-dashboard';
 
     protected static ?string $title = 'Library Dashboard';
 
     protected static ?string $navigationLabel = 'Library Dashboard';
-
-    protected static string $view = 'filament.admin.pages.library-dashboard';
 
     public function getHeaderActions(): array
     {

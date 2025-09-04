@@ -19,56 +19,58 @@ use BackedEnum;
 
 class TeacherResource extends Resource
 {
- protected static ?string $model = Teacher::class;
+    protected static ?string $model = Teacher::class;
 
- protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
 
- protected static string | UnitEnum | null $navigationGroup = 'Academic Structure';
+    protected static string | UnitEnum | null $navigationGroup = 'Academic Structure';
 
- protected static ?string $recordTitleAttribute = 'employee_id';
+    protected static ?string $recordTitleAttribute = 'employee_id';
 
- public static function form(Schema $schema): Schema
- {
- return TeacherForm::configure($schema);
- }
+    public static function form(Schema $schema): Schema
+    {
+        return TeacherForm::configure($schema);
+    }
 
- public static function table(Table $table): Table
- {
- return TeachersTable::configure($table);
- }
+    public static function table(Table $table): Table
+    {
+        return TeachersTable::configure($table);
+    }
 
- public static function getRelations(): array
- {
- return [
- //
- ];
- }
+    public static function getRelations(): array
+    {
+        return [
+            \App\Filament\Admin\Resources\Teachers\RelationManagers\SubjectsRelationManager::class,
+            \App\Filament\Admin\Resources\Teachers\RelationManagers\AssignedClassesRelationManager::class,
+            \App\Filament\Admin\Resources\Teachers\RelationManagers\AssignmentsRelationManager::class,
+        ];
+    }
 
- public static function getPages(): array
- {
- return [
- 'index' => ListTeachers::route('/'),
- 'create' => CreateTeacher::route('/create'),
- 'view' => ViewTeacher::route('/{record}'),
- 'edit' => EditTeacher::route('/{record}/edit'),
- ];
- }
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListTeachers::route('/'),
+            'create' => CreateTeacher::route('/create'),
+            'view' => ViewTeacher::route('/{record}'),
+            'edit' => EditTeacher::route('/{record}/edit'),
+        ];
+    }
 
- public static function getEloquentQuery(): Builder
- {
- return parent::getEloquentQuery()
- ->withoutGlobalScopes([
- SoftDeletingScope::class,
- ]);
- }
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
 
- public static function getNavigationBadge(): ?string
- {
- return static::getModel()::where('status', 'active')->count();
- }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'active')->count();
+    }
 
- public static function getNavigationBadgeColor(): ?string
- {
- return 'success';
- }
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
 }

@@ -8,10 +8,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\ViewField;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Wizard;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Grid;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
@@ -165,33 +164,26 @@ class SchoolForm
                     ->schema([
                         Grid::make(3)
                             ->schema([
-                                ViewField::make('created_at')
+                                Placeholder::make('created_at')
                                     ->label('Created At')
-                                    ->view('filament.forms.components.display-field')
-                                    ->viewData(fn($record) => [
-                                        'value' => $record?->created_at?->format('M j, Y g:i A') ?? 'Not yet created'
-                                    ])
+                                    ->content(fn($record): string => $record?->created_at?->format('M j, Y g:i A') ?? 'Not yet created')
                                     ->columnSpan(1),
 
-                                ViewField::make('updated_at')
+                                Placeholder::make('updated_at')
                                     ->label('Last Updated')
-                                    ->view('filament.forms.components.display-field')
-                                    ->viewData(fn($record) => [
-                                        'value' => $record?->updated_at?->format('M j, Y g:i A') ?? 'Not yet updated'
-                                    ])
+                                    ->content(fn($record): string => $record?->updated_at?->format('M j, Y g:i A') ?? 'Not yet updated')
                                     ->columnSpan(1),
 
-                                ViewField::make('stats')
+                                Placeholder::make('stats')
                                     ->label('Quick Stats')
-                                    ->view('filament.forms.components.display-field')
-                                    ->viewData(function ($record) {
-                                        if (!$record) return ['value' => 'Stats will be available after creation'];
+                                    ->content(function ($record): string {
+                                        if (!$record) return 'Stats will be available after creation';
 
                                         $students = $record->students()->count();
                                         $teachers = $record->teachers()->count();
                                         $classes = $record->classes()->count();
 
-                                        return ['value' => "{$students} Students | {$teachers} Teachers | {$classes} Classes"];
+                                        return "{$students} Students | {$teachers} Teachers | {$classes} Classes";
                                     })
                                     ->columnSpan(1),
                             ]),

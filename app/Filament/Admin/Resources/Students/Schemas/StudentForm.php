@@ -6,6 +6,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Repeater;
 use Filament\Schemas\Schema;
 use App\Models\School;
 use App\Models\SchoolClass;
@@ -100,10 +101,35 @@ class StudentForm
                     ->maxLength(255)
                     ->columnSpan(1),
 
-                Textarea::make('emergency_contacts')
+                Repeater::make('emergency_contacts')
                     ->label('Emergency Contacts')
-                    ->rows(3)
-                    ->columnSpan(1),
+                    ->schema([
+                        TextInput::make('name')
+                            ->label('Contact Name')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('relationship')
+                            ->label('Relationship')
+                            ->required()
+                            ->maxLength(100),
+                        TextInput::make('phone')
+                            ->label('Phone Number')
+                            ->tel()
+                            ->required()
+                            ->maxLength(20),
+                        TextInput::make('email')
+                            ->label('Email Address')
+                            ->email()
+                            ->maxLength(255),
+                        Textarea::make('address')
+                            ->label('Address')
+                            ->rows(2),
+                    ])
+                    ->collapsible()
+                    ->collapsed()
+                    ->columnSpanFull()
+                    ->defaultItems(1)
+                    ->reorderable(),
             ])
             ->columns(3);
     }

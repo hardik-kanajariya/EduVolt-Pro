@@ -18,12 +18,6 @@ class AttendanceResource extends Resource
 {
     protected static ?string $model = Attendance::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
-
-    protected static string $navigaxtionGroup = 'Academic Management';
-
-    protected static ?int $navigationSort = 1;
-
     public static function form(Schema $schema): Schema
     {
         return AttendanceForm::configure($schema);

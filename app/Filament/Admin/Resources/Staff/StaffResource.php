@@ -20,9 +20,7 @@ class StaffResource extends Resource
 {
     protected static ?string $model = Staff::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
-    protected static ?string $recordTitleAttribute = 'Staff';
+    protected static ?string $recordTitleAttribute = 'employee_id';
 
     public static function form(Schema $schema): Schema
     {

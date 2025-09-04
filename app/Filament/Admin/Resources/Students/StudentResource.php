@@ -18,7 +18,7 @@ class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
 
-    protected static ?string $recordTitleAttribute = 'first_name';
+    protected static ?string $recordTitleAttribute = 'admission_number';
 
     public static function form(Schema $schema): Schema
     {

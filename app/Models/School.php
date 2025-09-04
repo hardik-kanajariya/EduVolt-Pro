@@ -25,7 +25,6 @@ class School extends Model
 
     protected $casts = [
         'established_date' => 'date',
-        'status' => 'boolean',
         'settings' => 'array',
     ];
 

@@ -18,7 +18,7 @@ class TimetableResource extends Resource
 {
     protected static ?string $model = Timetable::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    
 
     public static function form(Schema $schema): Schema
     {

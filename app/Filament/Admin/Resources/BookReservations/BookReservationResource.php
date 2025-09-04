@@ -18,7 +18,7 @@ class BookReservationResource extends Resource
 {
     protected static ?string $model = BookReservation::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    
 
     public static function form(Schema $schema): Schema
     {

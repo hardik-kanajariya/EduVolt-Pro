@@ -18,7 +18,7 @@ class ExamMarkResource extends Resource
 {
     protected static ?string $model = ExamMark::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentCheck;
+    
 
     protected static ?int $navigationSort = 6;
 

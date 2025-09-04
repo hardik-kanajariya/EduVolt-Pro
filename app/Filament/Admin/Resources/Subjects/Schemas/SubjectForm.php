@@ -13,25 +13,63 @@ class SubjectForm
     {
         return $schema
             ->components([
-                TextInput::make('school_id')
+                Select::make('school_id')
+                    ->label('School')
+                    ->relationship('school', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required()
-                    ->numeric(),
+                    ->columnSpan(2),
+
                 TextInput::make('name')
-                    ->required(),
-                TextInput::make('code'),
-                Textarea::make('description')
-                    ->columnSpanFull(),
-                TextInput::make('type')
+                    ->label('Subject Name')
                     ->required()
-                    ->default('core'),
+                    ->maxLength(255)
+                    ->placeholder('e.g., Mathematics, Physics, English')
+                    ->columnSpan(1),
+
+                TextInput::make('code')
+                    ->label('Subject Code')
+                    ->maxLength(20)
+                    ->placeholder('e.g., MATH101, PHY201')
+                    ->columnSpan(1),
+
+                Select::make('type')
+                    ->label('Subject Type')
+                    ->options([
+                        'core' => 'Core Subject',
+                        'elective' => 'Elective Subject',
+                        'extra_curricular' => 'Extra-Curricular',
+                    ])
+                    ->default('core')
+                    ->required()
+                    ->columnSpan(1),
+
                 TextInput::make('credits')
+                    ->label('Credit Hours')
                     ->required()
                     ->numeric()
-                    ->default(1),
+                    ->default(1)
+                    ->minValue(1)
+                    ->maxValue(10)
+                    ->columnSpan(1),
+
+                Textarea::make('description')
+                    ->label('Subject Description')
+                    ->rows(3)
+                    ->placeholder('Brief description of the subject curriculum and objectives')
+                    ->columnSpanFull(),
+
                 Select::make('status')
-                    ->options(['active' => 'Active', 'inactive' => 'Inactive'])
+                    ->label('Status')
+                    ->options([
+                        'active' => 'Active',
+                        'inactive' => 'Inactive'
+                    ])
                     ->default('active')
-                    ->required(),
-            ]);
+                    ->required()
+                    ->columnSpan(1),
+            ])
+            ->columns(3);
     }
 }

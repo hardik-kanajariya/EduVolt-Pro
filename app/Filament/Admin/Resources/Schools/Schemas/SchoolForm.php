@@ -7,6 +7,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\KeyValue;
 use Filament\Schemas\Schema;
 
 class SchoolForm
@@ -65,11 +66,14 @@ class SchoolForm
                     ->options([
                         'active' => 'Active',
                         'inactive' => 'Inactive',
-                        'maintenance' => 'Under Maintenance'
                     ])
                     ->default('active')
                     ->required()
                     ->columnSpan(1),
+                KeyValue::make('settings')
+                    ->label('School Settings')
+                    ->reorderable()
+                    ->columnSpanFull(),
             ])
             ->columns(3);
     }

@@ -11,10 +11,7 @@ use Filament\Support\Icons\Heroicon;
 
 class LibraryReports extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::ChartBar;
-    protected static ?string $navigationGroup = 'Library Management';
-    protected static ?int $navigationSort = 4;
-    protected static string $view = 'filament.admin.pages.library-reports';
+    protected string $view = 'filament.admin.pages.library-reports';
 
     public function getOverviewStats()
     {

@@ -14,21 +14,49 @@ class AcademicYearForm
     {
         return $schema
             ->components([
-                TextInput::make('school_id')
+                Select::make('school_id')
+                    ->label('School')
+                    ->relationship('school', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required()
-                    ->numeric(),
+                    ->columnSpan(2),
+
                 TextInput::make('name')
-                    ->required(),
+                    ->label('Academic Year Name')
+                    ->required()
+                    ->maxLength(100)
+                    ->placeholder('e.g., 2024-2025')
+                    ->columnSpan(2),
+
                 DatePicker::make('start_date')
-                    ->required(),
+                    ->label('Start Date')
+                    ->required()
+                    ->native(false)
+                    ->columnSpan(1),
+
                 DatePicker::make('end_date')
-                    ->required(),
+                    ->label('End Date')
+                    ->required()
+                    ->native(false)
+                    ->after('start_date')
+                    ->columnSpan(1),
+
                 Toggle::make('is_current')
-                    ->required(),
+                    ->label('Set as Current Academic Year')
+                    ->helperText('Only one academic year can be current at a time.')
+                    ->columnSpan(1),
+
                 Select::make('status')
-                    ->options(['active' => 'Active', 'inactive' => 'Inactive'])
+                    ->label('Status')
+                    ->options([
+                        'active' => 'Active',
+                        'inactive' => 'Inactive'
+                    ])
                     ->default('active')
-                    ->required(),
-            ]);
+                    ->required()
+                    ->columnSpan(1),
+            ])
+            ->columns(3);
     }
 }

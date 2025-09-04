@@ -7,8 +7,7 @@ use Filament\Widgets\ChartWidget;
 
 class PopularBooksWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Popular Books';
-    protected static ?int $sort = 2;
+    protected ?string $heading = 'Popular Books';
     protected int | string | array $columnSpan = 'full';
 
     protected function getData(): array

@@ -42,7 +42,6 @@ class SchoolsTable
                     ->color(fn(string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'danger',
-                        'maintenance' => 'warning',
                         default => 'gray',
                     }),
                 TextColumn::make('created_at')
@@ -62,7 +61,6 @@ class SchoolsTable
                     ->options([
                         'active' => 'Active',
                         'inactive' => 'Inactive',
-                        'maintenance' => 'Under Maintenance',
                     ]),
             ])
             ->recordActions([

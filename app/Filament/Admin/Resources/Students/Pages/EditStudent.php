@@ -10,14 +10,14 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditStudent extends EditRecord
 {
-    protected static string $resource = StudentResource::class;
+ protected static string $resource = StudentResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-            ForceDeleteAction::make(),
-            RestoreAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ DeleteAction::make(),
+ ForceDeleteAction::make(),
+ RestoreAction::make(),
+ ];
+ }
 }

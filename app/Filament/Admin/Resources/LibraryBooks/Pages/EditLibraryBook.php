@@ -10,14 +10,14 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditLibraryBook extends EditRecord
 {
-    protected static string $resource = LibraryBookResource::class;
+ protected static string $resource = LibraryBookResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-            ForceDeleteAction::make(),
-            RestoreAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ DeleteAction::make(),
+ ForceDeleteAction::make(),
+ RestoreAction::make(),
+ ];
+ }
 }

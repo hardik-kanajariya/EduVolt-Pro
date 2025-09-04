@@ -40,38 +40,38 @@ The system includes four main panels:
 ```php
 public function panel(Panel $panel): Panel
 {
-    return $panel
-        ->default()
-        ->id('admin')
-        ->path('/admin')
-        ->login()
-        ->colors([
-            'primary' => Color::Blue,
-        ])
-        ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
-        ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
-        ->pages([
-            Pages\Dashboard::class,
-        ])
-        ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
-        ->widgets([
-            Widgets\AccountWidget::class,
-            Widgets\FilamentInfoWidget::class,
-        ])
-        ->middleware([
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            AuthenticateSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            DisableBladeIconComponents::class,
-            DispatchServingFilamentEvent::class,
-        ])
-        ->authMiddleware([
-            Authenticate::class,
-        ]);
+ return $panel
+ ->default()
+ ->id('admin')
+ ->path('/admin')
+ ->login()
+ ->colors([
+ 'primary' => Color::Blue,
+ ])
+ ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
+ ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
+ ->pages([
+ Pages\Dashboard::class,
+ ])
+ ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
+ ->widgets([
+ Widgets\AccountWidget::class,
+ Widgets\FilamentInfoWidget::class,
+ ])
+ ->middleware([
+ EncryptCookies::class,
+ AddQueuedCookiesToResponse::class,
+ StartSession::class,
+ AuthenticateSession::class,
+ ShareErrorsFromSession::class,
+ VerifyCsrfToken::class,
+ SubstituteBindings::class,
+ DisableBladeIconComponents::class,
+ DispatchServingFilamentEvent::class,
+ ])
+ ->authMiddleware([
+ Authenticate::class,
+ ]);
 }
 ```
 
@@ -96,33 +96,33 @@ public function panel(Panel $panel): Panel
 ```php
 public function panel(Panel $panel): Panel
 {
-    return $panel
-        ->id('faculty')
-        ->path('/faculty')
-        ->login()
-        ->colors([
-            'primary' => Color::Green,
-        ])
-        ->discoverResources(in: app_path('Filament/Faculty/Resources'), for: 'App\\Filament\\Faculty\\Resources')
-        ->discoverPages(in: app_path('Filament/Faculty/Pages'), for: 'App\\Filament\\Faculty\\Pages')
-        ->pages([
-            Pages\Dashboard::class,
-        ])
-        ->discoverWidgets(in: app_path('Filament/Faculty/Widgets'), for: 'App\\Filament\\Faculty\\Widgets')
-        ->middleware([
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            AuthenticateSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            DisableBladeIconComponents::class,
-            DispatchServingFilamentEvent::class,
-        ])
-        ->authMiddleware([
-            Authenticate::class,
-        ]);
+ return $panel
+ ->id('faculty')
+ ->path('/faculty')
+ ->login()
+ ->colors([
+ 'primary' => Color::Green,
+ ])
+ ->discoverResources(in: app_path('Filament/Faculty/Resources'), for: 'App\\Filament\\Faculty\\Resources')
+ ->discoverPages(in: app_path('Filament/Faculty/Pages'), for: 'App\\Filament\\Faculty\\Pages')
+ ->pages([
+ Pages\Dashboard::class,
+ ])
+ ->discoverWidgets(in: app_path('Filament/Faculty/Widgets'), for: 'App\\Filament\\Faculty\\Widgets')
+ ->middleware([
+ EncryptCookies::class,
+ AddQueuedCookiesToResponse::class,
+ StartSession::class,
+ AuthenticateSession::class,
+ ShareErrorsFromSession::class,
+ VerifyCsrfToken::class,
+ SubstituteBindings::class,
+ DisableBladeIconComponents::class,
+ DispatchServingFilamentEvent::class,
+ ])
+ ->authMiddleware([
+ Authenticate::class,
+ ]);
 }
 ```
 
@@ -146,33 +146,33 @@ public function panel(Panel $panel): Panel
 ```php
 public function panel(Panel $panel): Panel
 {
-    return $panel
-        ->id('student')
-        ->path('/student')
-        ->login()
-        ->colors([
-            'primary' => Color::Purple,
-        ])
-        ->discoverResources(in: app_path('Filament/Student/Resources'), for: 'App\\Filament\\Student\\Resources')
-        ->discoverPages(in: app_path('Filament/Student/Pages'), for: 'App\\Filament\\Student\\Pages')
-        ->pages([
-            Pages\Dashboard::class,
-        ])
-        ->discoverWidgets(in: app_path('Filament/Student/Widgets'), for: 'App\\Filament\\Student\\Widgets')
-        ->middleware([
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            AuthenticateSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            DisableBladeIconComponents::class,
-            DispatchServingFilamentEvent::class,
-        ])
-        ->authMiddleware([
-            Authenticate::class,
-        ]);
+ return $panel
+ ->id('student')
+ ->path('/student')
+ ->login()
+ ->colors([
+ 'primary' => Color::Purple,
+ ])
+ ->discoverResources(in: app_path('Filament/Student/Resources'), for: 'App\\Filament\\Student\\Resources')
+ ->discoverPages(in: app_path('Filament/Student/Pages'), for: 'App\\Filament\\Student\\Pages')
+ ->pages([
+ Pages\Dashboard::class,
+ ])
+ ->discoverWidgets(in: app_path('Filament/Student/Widgets'), for: 'App\\Filament\\Student\\Widgets')
+ ->middleware([
+ EncryptCookies::class,
+ AddQueuedCookiesToResponse::class,
+ StartSession::class,
+ AuthenticateSession::class,
+ ShareErrorsFromSession::class,
+ VerifyCsrfToken::class,
+ SubstituteBindings::class,
+ DisableBladeIconComponents::class,
+ DispatchServingFilamentEvent::class,
+ ])
+ ->authMiddleware([
+ Authenticate::class,
+ ]);
 }
 ```
 
@@ -195,33 +195,33 @@ public function panel(Panel $panel): Panel
 ```php
 public function panel(Panel $panel): Panel
 {
-    return $panel
-        ->id('parent')
-        ->path('/parent')
-        ->login()
-        ->colors([
-            'primary' => Color::Orange,
-        ])
-        ->discoverResources(in: app_path('Filament/Parent/Resources'), for: 'App\\Filament\\Parent\\Resources')
-        ->discoverPages(in: app_path('Filament/Parent/Pages'), for: 'App\\Filament\\Parent\\Pages')
-        ->pages([
-            Pages\Dashboard::class,
-        ])
-        ->discoverWidgets(in: app_path('Filament/Parent/Widgets'), for: 'App\\Filament\\Parent\\Widgets')
-        ->middleware([
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            AuthenticateSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            DisableBladeIconComponents::class,
-            DispatchServingFilamentEvent::class,
-        ])
-        ->authMiddleware([
-            Authenticate::class,
-        ]);
+ return $panel
+ ->id('parent')
+ ->path('/parent')
+ ->login()
+ ->colors([
+ 'primary' => Color::Orange,
+ ])
+ ->discoverResources(in: app_path('Filament/Parent/Resources'), for: 'App\\Filament\\Parent\\Resources')
+ ->discoverPages(in: app_path('Filament/Parent/Pages'), for: 'App\\Filament\\Parent\\Pages')
+ ->pages([
+ Pages\Dashboard::class,
+ ])
+ ->discoverWidgets(in: app_path('Filament/Parent/Widgets'), for: 'App\\Filament\\Parent\\Widgets')
+ ->middleware([
+ EncryptCookies::class,
+ AddQueuedCookiesToResponse::class,
+ StartSession::class,
+ AuthenticateSession::class,
+ ShareErrorsFromSession::class,
+ VerifyCsrfToken::class,
+ SubstituteBindings::class,
+ DisableBladeIconComponents::class,
+ DispatchServingFilamentEvent::class,
+ ])
+ ->authMiddleware([
+ Authenticate::class,
+ ]);
 }
 ```
 
@@ -232,17 +232,17 @@ public function panel(Panel $panel): Panel
 Each panel enforces role-based access through:
 
 1. **Panel-Level Access Control**
-   - Users can only access panels appropriate to their role
-   - Automatic redirection based on user role after login
+ - Users can only access panels appropriate to their role
+ - Automatic redirection based on user role after login
 
 2. **Resource-Level Permissions**
-   - Individual resources check user permissions
-   - Gate policies enforce CRUD operation restrictions
+ - Individual resources check user permissions
+ - Gate policies enforce CRUD operation restrictions
 
 3. **Data Scoping**
-   - Teachers see only their assigned classes
-   - Students see only their own data
-   - Parents see only their children's data
+ - Teachers see only their assigned classes
+ - Students see only their own data
+ - Parents see only their children's data
 
 ### Authentication Flow
 
@@ -250,28 +250,28 @@ Each panel enforces role-based access through:
 // Panel Provider Authorization
 protected function shouldRegisterNavigation(): bool
 {
-    return auth()->user()->hasAnyRole(['admin', 'super_admin']);
+ return auth()->user()->hasAnyRole(['admin', 'super_admin']);
 }
 
 // Resource Authorization
 public static function canViewAny(): bool
 {
-    return auth()->user()->can('view_students');
+ return auth()->user()->can('view_students');
 }
 
 // Data Scoping Example
 public static function getEloquentQuery(): Builder
 {
-    $user = auth()->user();
-    
-    if ($user->hasRole('teacher')) {
-        return parent::getEloquentQuery()
-            ->whereHas('class.teachers', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            });
-    }
-    
-    return parent::getEloquentQuery();
+ $user = auth()->user();
+ 
+ if ($user->hasRole('teacher')) {
+ return parent::getEloquentQuery()
+ ->whereHas('class.teachers', function ($query) use ($user) {
+ $query->where('user_id', $user->id);
+ });
+ }
+ 
+ return parent::getEloquentQuery();
 }
 ```
 
@@ -280,62 +280,62 @@ public static function getEloquentQuery(): Builder
 ### Admin Panel Navigation
 ```
 Dashboard
-├── System Management
-│   ├── Users
-│   ├── Roles & Permissions
-│   └── System Settings
-├── Academic Management
-│   ├── Schools
-│   ├── Academic Years
-│   ├── Classes
-│   └── Subjects
-├── User Management
-│   ├── Students
-│   ├── Teachers
-│   └── Staff
-├── Attendance
-├── Examinations
-├── Fee Management
-├── Library
-├── Reports
-└── Communication
+ System Management
+ Users
+ Roles & Permissions
+ System Settings
+ Academic Management
+ Schools
+ Academic Years
+ Classes
+ Subjects
+ User Management
+ Students
+ Teachers
+ Staff
+ Attendance
+ Examinations
+ Fee Management
+ Library
+ Reports
+ Communication
 ```
 
 ### Faculty Panel Navigation
 ```
 Dashboard
-├── My Classes
-├── Students
-├── Attendance
-├── Assignments
-├── Examinations
-├── Timetable
-└── Reports
+ My Classes
+ Students
+ Attendance
+ Assignments
+ Examinations
+ Timetable
+ Reports
 ```
 
 ### Student Panel Navigation
 ```
 Dashboard
-├── My Profile
-├── Attendance
-├── Assignments
-├── Examinations
-├── Grades
-├── Fees
-├── Library
-└── Notifications
+ My Profile
+ Attendance
+ Assignments
+ Examinations
+ Grades
+ Fees
+ Library
+ Notifications
 ```
 
 ### Parent Panel Navigation
 ```
 Dashboard
-├── Children
-├── Attendance
-├── Academic Progress
-├── Fees
-├── Communication
-├── Events
-└── Reports
+ Children
+ Attendance
+ Academic Progress
+ Fees
+ Communication
+ Events
+ Reports
 ```
 
 ## Customization
@@ -346,10 +346,10 @@ Each panel can have its own color scheme:
 
 ```php
 ->colors([
-    'primary' => Color::Blue,      // Admin
-    'primary' => Color::Green,     // Faculty
-    'primary' => Color::Purple,    // Student
-    'primary' => Color::Orange,    // Parent
+ 'primary' => Color::Blue, // Admin
+ 'primary' => Color::Green, // Faculty
+ 'primary' => Color::Purple, // Student
+ 'primary' => Color::Orange, // Parent
 ])
 ```
 
@@ -386,11 +386,11 @@ All panels must be registered in `config/app.php`:
 
 ```php
 'providers' => [
-    // Other providers...
-    App\Providers\Filament\AdminPanelProvider::class,
-    App\Providers\Filament\FacultyPanelProvider::class,
-    App\Providers\Filament\StudentPanelProvider::class,
-    App\Providers\Filament\ParentPanelProvider::class,
+ // Other providers...
+ App\Providers\Filament\AdminPanelProvider::class,
+ App\Providers\Filament\FacultyPanelProvider::class,
+ App\Providers\Filament\StudentPanelProvider::class,
+ App\Providers\Filament\ParentPanelProvider::class,
 ],
 ```
 

@@ -4,26 +4,26 @@ Welcome to the EduVault Pro comprehensive documentation system.
 
 ## Documentation Structure
 
-### 📚 Installation Guide
+### Installation Guide
 - [Installation Requirements](installation/requirements.md)
 - [Setup Instructions](installation/setup.md)
 - [Configuration Guide](installation/configuration.md)
 - [Troubleshooting](installation/troubleshooting.md)
 
-### 👥 User Guides
+### User Guides
 - [Getting Started](user-guides/getting-started.md)
 - [Student Dashboard](user-guides/student-dashboard.md)
 - [Teacher Portal](user-guides/teacher-portal.md)
 - [Parent Access](user-guides/parent-access.md)
 
-### 🛠️ Administrator Guides
+### Administrator Guides
 - [Admin Dashboard](admin-guides/admin-dashboard.md)
 - [User Management](admin-guides/user-management.md)
 - [Academic Management](admin-guides/academic-management.md)
 - [System Configuration](admin-guides/system-configuration.md)
 - [Reports & Analytics](admin-guides/reports-analytics.md)
 
-### 🔧 Developer Documentation
+### Developer Documentation
 - [Architecture Overview](developer/architecture.md)
 - [Development Setup](developer/development-setup.md)
 - [Code Standards](developer/code-standards.md)

@@ -7,5 +7,5 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateExamSubject extends CreateRecord
 {
-    protected static string $resource = ExamSubjectResource::class;
+ protected static string $resource = ExamSubjectResource::class;
 }

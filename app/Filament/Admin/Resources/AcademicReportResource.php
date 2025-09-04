@@ -16,38 +16,38 @@ class AcademicReportResource extends Resource
 {
 
 
-    protected static ?string $model = AcademicReport::class;
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-chart-bar';
+ protected static ?string $model = AcademicReport::class;
+ protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-chart-bar';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Academic & Report';
+ protected static string | UnitEnum | null $navigationGroup = 'Academic & Report';
 
-    public static function form(Schema $schema): Schema
-    {
-        return AcademicReportForm::configure($schema);
-    }
+ public static function form(Schema $schema): Schema
+ {
+ return AcademicReportForm::configure($schema);
+ }
 
-    public static function table(Table $table): Table
-    {
-        return AcademicReportsTable::configure($table);
-    }
+ public static function table(Table $table): Table
+ {
+ return AcademicReportsTable::configure($table);
+ }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListAcademicReports::route('/'),
-            'create' => Pages\CreateAcademicReport::route('/create'),
-            'view' => Pages\ViewAcademicReport::route('/{record}'),
-            'edit' => Pages\EditAcademicReport::route('/{record}/edit'),
-        ];
-    }
+ public static function getPages(): array
+ {
+ return [
+ 'index' => Pages\ListAcademicReports::route('/'),
+ 'create' => Pages\CreateAcademicReport::route('/create'),
+ 'view' => Pages\ViewAcademicReport::route('/{record}'),
+ 'edit' => Pages\EditAcademicReport::route('/{record}/edit'),
+ ];
+ }
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::where('status', 'pending')->count();
-    }
+ public static function getNavigationBadge(): ?string
+ {
+ return static::getModel()::where('status', 'pending')->count();
+ }
 
-    public static function getNavigationBadgeColor(): ?string
-    {
-        return static::getModel()::where('status', 'pending')->count() > 0 ? 'warning' : 'primary';
-    }
+ public static function getNavigationBadgeColor(): ?string
+ {
+ return static::getModel()::where('status', 'pending')->count() > 0 ? 'warning' : 'primary';
+ }
 }

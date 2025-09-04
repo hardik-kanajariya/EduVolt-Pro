@@ -8,12 +8,12 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditAttendance extends EditRecord
 {
-    protected static string $resource = AttendanceResource::class;
+ protected static string $resource = AttendanceResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ DeleteAction::make(),
+ ];
+ }
 }

@@ -8,12 +8,12 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListStudentProgress extends ListRecords
 {
-    protected static string $resource = StudentProgressResource::class;
+ protected static string $resource = StudentProgressResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ CreateAction::make(),
+ ];
+ }
 }

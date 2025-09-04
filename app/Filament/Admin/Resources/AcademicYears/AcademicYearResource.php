@@ -19,77 +19,77 @@ use BackedEnum;
 
 class AcademicYearResource extends Resource
 {
-    protected static ?string $model = AcademicYear::class;
+ protected static ?string $model = AcademicYear::class;
 
-    protected static ?string $recordTitleAttribute = 'name';
+ protected static ?string $recordTitleAttribute = 'name';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-calendar-days';
+ protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-calendar-days';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Academic & Report';
+ protected static string | UnitEnum | null $navigationGroup = 'Academic & Report';
 
-    protected static ?int $navigationSort = 1;
+ protected static ?int $navigationSort = 1;
 
-    public static function form(Schema $schema): Schema
-    {
-        return AcademicYearForm::configure($schema);
-    }
+ public static function form(Schema $schema): Schema
+ {
+ return AcademicYearForm::configure($schema);
+ }
 
-    public static function table(Table $table): Table
-    {
-        return AcademicYearsTable::configure($table);
-    }
+ public static function table(Table $table): Table
+ {
+ return AcademicYearsTable::configure($table);
+ }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
+ public static function getRelations(): array
+ {
+ return [
+ //
+ ];
+ }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => ListAcademicYears::route('/'),
-            'create' => CreateAcademicYear::route('/create'),
-            'view' => ViewAcademicYear::route('/{record}'),
-            'edit' => EditAcademicYear::route('/{record}/edit'),
-        ];
-    }
+ public static function getPages(): array
+ {
+ return [
+ 'index' => ListAcademicYears::route('/'),
+ 'create' => CreateAcademicYear::route('/create'),
+ 'view' => ViewAcademicYear::route('/{record}'),
+ 'edit' => EditAcademicYear::route('/{record}/edit'),
+ ];
+ }
 
-    public static function getRecordRouteBindingEloquentQuery(): Builder
-    {
-        return parent::getRecordRouteBindingEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
+ public static function getRecordRouteBindingEloquentQuery(): Builder
+ {
+ return parent::getRecordRouteBindingEloquentQuery()
+ ->withoutGlobalScopes([
+ SoftDeletingScope::class,
+ ]);
+ }
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::where('status', 'active')->count();
-    }
+ public static function getNavigationBadge(): ?string
+ {
+ return static::getModel()::where('status', 'active')->count();
+ }
 
-    public static function getNavigationBadgeColor(): ?string
-    {
-        return 'success';
-    }
+ public static function getNavigationBadgeColor(): ?string
+ {
+ return 'success';
+ }
 
-    public static function getGlobalSearchEloquentQuery(): Builder
-    {
-        return parent::getGlobalSearchEloquentQuery()->with(['school']);
-    }
+ public static function getGlobalSearchEloquentQuery(): Builder
+ {
+ return parent::getGlobalSearchEloquentQuery()->with(['school']);
+ }
 
-    public static function getGloballySearchableAttributes(): array
-    {
-        return ['name', 'school.name'];
-    }
+ public static function getGloballySearchableAttributes(): array
+ {
+ return ['name', 'school.name'];
+ }
 
-    public static function getGlobalSearchResultDetails($record): array
-    {
-        return [
-            'School' => $record->school?->name,
-            'Duration' => $record->start_date?->format('M Y') . ' - ' . $record->end_date?->format('M Y'),
-            'Status' => $record->is_current ? 'Current' : ($record->status === 'active' ? 'Active' : 'Inactive'),
-        ];
-    }
+ public static function getGlobalSearchResultDetails($record): array
+ {
+ return [
+ 'School' => $record->school?->name,
+ 'Duration' => $record->start_date?->format('M Y') . ' - ' . $record->end_date?->format('M Y'),
+ 'Status' => $record->is_current ? 'Current' : ($record->status === 'active' ? 'Active' : 'Inactive'),
+ ];
+ }
 }

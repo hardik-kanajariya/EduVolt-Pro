@@ -20,64 +20,64 @@ use BackedEnum;
 
 class SchoolResource extends Resource
 {
-    protected static ?string $model = School::class;
+ protected static ?string $model = School::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-building-office-2';
+ protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Academic Structure';
+ protected static string | UnitEnum | null $navigationGroup = 'Academic Structure';
 
-    protected static ?string $recordTitleAttribute = 'name';
+ protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationLabel = 'Schools';
+ protected static ?string $navigationLabel = 'Schools';
 
-    protected static ?string $modelLabel = 'School';
+ protected static ?string $modelLabel = 'School';
 
-    protected static ?string $pluralModelLabel = 'Schools';
+ protected static ?string $pluralModelLabel = 'Schools';
 
-    protected static ?string $slug = 'schools';
+ protected static ?string $slug = 'schools';
 
-    public static function form(Schema $schema): Schema
-    {
-        return SchoolForm::configure($schema);
-    }
+ public static function form(Schema $schema): Schema
+ {
+ return SchoolForm::configure($schema);
+ }
 
-    public static function table(Table $table): Table
-    {
-        return SchoolsTable::configure($table);
-    }
+ public static function table(Table $table): Table
+ {
+ return SchoolsTable::configure($table);
+ }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return $schema; // Will be configured in ViewSchool page
-    }
+ public static function infolist(Schema $schema): Schema
+ {
+ return $schema; // Will be configured in ViewSchool page
+ }
 
-    public static function getRelations(): array
-    {
-        return [
-            StudentsRelationManager::class,
-        ];
-    }
+ public static function getRelations(): array
+ {
+ return [
+ StudentsRelationManager::class,
+ ];
+ }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => ListSchools::route('/'),
-            'create' => CreateSchool::route('/create'),
-            'view' => ViewSchool::route('/{record}'),
-            'edit' => EditSchool::route('/{record}/edit'),
-        ];
-    }
+ public static function getPages(): array
+ {
+ return [
+ 'index' => ListSchools::route('/'),
+ 'create' => CreateSchool::route('/create'),
+ 'view' => ViewSchool::route('/{record}'),
+ 'edit' => EditSchool::route('/{record}/edit'),
+ ];
+ }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
+ public static function getEloquentQuery(): Builder
+ {
+ return parent::getEloquentQuery()
+ ->withoutGlobalScopes([
+ SoftDeletingScope::class,
+ ]);
+ }
 
-    public static function getGloballySearchableAttributes(): array
-    {
-        return ['name', 'code', 'email', 'phone'];
-    }
+ public static function getGloballySearchableAttributes(): array
+ {
+ return ['name', 'code', 'email', 'phone'];
+ }
 }

@@ -7,5 +7,5 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewAcademicReport extends ViewRecord
 {
-    protected static string $resource = AcademicReportResource::class;
+ protected static string $resource = AcademicReportResource::class;
 }

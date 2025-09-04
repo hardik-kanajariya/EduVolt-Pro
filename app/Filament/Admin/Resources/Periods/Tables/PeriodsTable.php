@@ -9,22 +9,22 @@ use Filament\Tables\Table;
 
 class PeriodsTable
 {
-    public static function configure(Table $table): Table
-    {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
+ public static function configure(Table $table): Table
+ {
+ return $table
+ ->columns([
+ //
+ ])
+ ->filters([
+ //
+ ])
+ ->recordActions([
+ EditAction::make(),
+ ])
+ ->toolbarActions([
+ BulkActionGroup::make([
+ DeleteBulkAction::make(),
+ ]),
+ ]);
+ }
 }

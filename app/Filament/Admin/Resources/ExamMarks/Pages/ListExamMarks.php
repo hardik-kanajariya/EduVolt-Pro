@@ -8,12 +8,12 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListExamMarks extends ListRecords
 {
-    protected static string $resource = ExamMarkResource::class;
+ protected static string $resource = ExamMarkResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ CreateAction::make(),
+ ];
+ }
 }

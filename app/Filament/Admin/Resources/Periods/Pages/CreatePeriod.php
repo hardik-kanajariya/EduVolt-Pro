@@ -7,5 +7,5 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreatePeriod extends CreateRecord
 {
-    protected static string $resource = PeriodResource::class;
+ protected static string $resource = PeriodResource::class;
 }

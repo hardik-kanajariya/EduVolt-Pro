@@ -16,35 +16,35 @@ use Filament\Tables\Table;
 
 class BookReservationResource extends Resource
 {
-    protected static ?string $model = BookReservation::class;
+ protected static ?string $model = BookReservation::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-clock';
+ protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Library Management';
+ protected static string | UnitEnum | null $navigationGroup = 'Library Management';
 
-    public static function form(Schema $schema): Schema
-    {
-        return BookReservationForm::configure($schema);
-    }
+ public static function form(Schema $schema): Schema
+ {
+ return BookReservationForm::configure($schema);
+ }
 
-    public static function table(Table $table): Table
-    {
-        return BookReservationsTable::configure($table);
-    }
+ public static function table(Table $table): Table
+ {
+ return BookReservationsTable::configure($table);
+ }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
+ public static function getRelations(): array
+ {
+ return [
+ //
+ ];
+ }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => ListBookReservations::route('/'),
-            'create' => CreateBookReservation::route('/create'),
-            'edit' => EditBookReservation::route('/{record}/edit'),
-        ];
-    }
+ public static function getPages(): array
+ {
+ return [
+ 'index' => ListBookReservations::route('/'),
+ 'create' => CreateBookReservation::route('/create'),
+ 'edit' => EditBookReservation::route('/{record}/edit'),
+ ];
+ }
 }

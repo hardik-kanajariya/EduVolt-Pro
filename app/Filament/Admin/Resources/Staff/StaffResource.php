@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\Staff;
 use App\Filament\Admin\Resources\Staff\Pages\CreateStaff;
 use App\Filament\Admin\Resources\Staff\Pages\EditStaff;
 use App\Filament\Admin\Resources\Staff\Pages\ListStaff;
+use App\Filament\Admin\Resources\Staff\Pages\ViewStaff;
 use App\Filament\Admin\Resources\Staff\Schemas\StaffForm;
 use App\Filament\Admin\Resources\Staff\Tables\StaffTable;
 use App\Models\Staff;
@@ -25,6 +26,8 @@ class StaffResource extends Resource
     protected static string | UnitEnum | null $navigationGroup = 'Academic Structure';
 
     protected static ?string $recordTitleAttribute = 'employee_id';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Schema $schema): Schema
     {
@@ -48,6 +51,7 @@ class StaffResource extends Resource
         return [
             'index' => ListStaff::route('/'),
             'create' => CreateStaff::route('/create'),
+            'view' => ViewStaff::route('/{record}'),
             'edit' => EditStaff::route('/{record}/edit'),
         ];
     }
@@ -58,5 +62,36 @@ class StaffResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'active')->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['user', 'school']);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['employee_id', 'position', 'department', 'user.name', 'school.name'];
+    }
+
+    public static function getGlobalSearchResultDetails($record): array
+    {
+        return [
+            'Employee' => $record->user?->name,
+            'Position' => $record->position,
+            'Department' => $record->department,
+            'School' => $record->school?->name,
+            'Status' => ucfirst($record->status),
+        ];
     }
 }

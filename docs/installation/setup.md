@@ -143,73 +143,73 @@ Create or update your Apache virtual host:
 
 ```apache
 <VirtualHost *:80>
-    ServerName your-domain.com
-    DocumentRoot "/path/to/eduvaultpro/public"
-    
-    <Directory "/path/to/eduvaultpro/public">
-        AllowOverride All
-        Require all granted
-    </Directory>
-    
-    ErrorLog ${APACHE_LOG_DIR}/eduvaultpro_error.log
-    CustomLog ${APACHE_LOG_DIR}/eduvaultpro_access.log combined
+ ServerName your-domain.com
+ DocumentRoot "/path/to/eduvaultpro/public"
+ 
+ <Directory "/path/to/eduvaultpro/public">
+ AllowOverride All
+ Require all granted
+ </Directory>
+ 
+ ErrorLog ${APACHE_LOG_DIR}/eduvaultpro_error.log
+ CustomLog ${APACHE_LOG_DIR}/eduvaultpro_access.log combined
 </VirtualHost>
 
 <VirtualHost *:443>
-    ServerName your-domain.com
-    DocumentRoot "/path/to/eduvaultpro/public"
-    
-    SSLEngine on
-    SSLCertificateFile /path/to/certificate.crt
-    SSLCertificateKeyFile /path/to/private.key
-    
-    <Directory "/path/to/eduvaultpro/public">
-        AllowOverride All
-        Require all granted
-    </Directory>
-    
-    ErrorLog ${APACHE_LOG_DIR}/eduvaultpro_ssl_error.log
-    CustomLog ${APACHE_LOG_DIR}/eduvaultpro_ssl_access.log combined
+ ServerName your-domain.com
+ DocumentRoot "/path/to/eduvaultpro/public"
+ 
+ SSLEngine on
+ SSLCertificateFile /path/to/certificate.crt
+ SSLCertificateKeyFile /path/to/private.key
+ 
+ <Directory "/path/to/eduvaultpro/public">
+ AllowOverride All
+ Require all granted
+ </Directory>
+ 
+ ErrorLog ${APACHE_LOG_DIR}/eduvaultpro_ssl_error.log
+ CustomLog ${APACHE_LOG_DIR}/eduvaultpro_ssl_access.log combined
 </VirtualHost>
 ```
 
 #### Nginx Configuration
 ```nginx
 server {
-    listen 80;
-    listen 443 ssl;
-    server_name your-domain.com;
-    root /path/to/eduvaultpro/public;
-    
-    # SSL Configuration
-    ssl_certificate /path/to/certificate.crt;
-    ssl_certificate_key /path/to/private.key;
-    
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-Content-Type-Options "nosniff";
-    
-    index index.php;
-    
-    charset utf-8;
-    
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-    
-    location = /favicon.ico { access_log off; log_not_found off; }
-    location = /robots.txt  { access_log off; log_not_found off; }
-    
-    error_page 404 /index.php;
-    
-    location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-    
-    location ~ /\.(?!well-known).* {
-        deny all;
-    }
+ listen 80;
+ listen 443 ssl;
+ server_name your-domain.com;
+ root /path/to/eduvaultpro/public;
+ 
+ # SSL Configuration
+ ssl_certificate /path/to/certificate.crt;
+ ssl_certificate_key /path/to/private.key;
+ 
+ add_header X-Frame-Options "SAMEORIGIN";
+ add_header X-Content-Type-Options "nosniff";
+ 
+ index index.php;
+ 
+ charset utf-8;
+ 
+ location / {
+ try_files $uri $uri/ /index.php?$query_string;
+ }
+ 
+ location = /favicon.ico { access_log off; log_not_found off; }
+ location = /robots.txt { access_log off; log_not_found off; }
+ 
+ error_page 404 /index.php;
+ 
+ location ~ \.php$ {
+ fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+ fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+ include fastcgi_params;
+ }
+ 
+ location ~ /\.(?!well-known).* {
+ deny all;
+ }
 }
 ```
 

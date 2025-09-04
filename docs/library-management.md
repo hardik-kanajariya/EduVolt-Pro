@@ -181,13 +181,13 @@ The Library Management System is a comprehensive module that allows schools to m
 ```php
 // config/library.php
 return [
-    'default_loan_period' => 14, // days
-    'max_renewals' => 3,
-    'renewal_period' => 14, // days
-    'overdue_fine_per_day' => 1.00, // dollars
-    'max_fine_amount' => 50.00, // dollars
-    'reservation_expiry_days' => 7,
-    'max_books_per_student' => 5,
+ 'default_loan_period' => 14, // days
+ 'max_renewals' => 3,
+ 'renewal_period' => 14, // days
+ 'overdue_fine_per_day' => 1.00, // dollars
+ 'max_fine_amount' => 50.00, // dollars
+ 'reservation_expiry_days' => 7,
+ 'max_books_per_student' => 5,
 ];
 ```
 
@@ -207,10 +207,10 @@ return [
 ### Issue a Book
 ```php
 $issue = BookIssue::create([
-    'library_book_id' => $bookId,
-    'student_id' => $studentId,
-    'issued_by' => auth()->id(),
-    'issued_at' => now(),
+ 'library_book_id' => $bookId,
+ 'student_id' => $studentId,
+ 'issued_by' => auth()->id(),
+ 'issued_at' => now(),
 ]);
 
 // Update book availability
@@ -222,8 +222,8 @@ $book->borrowBook();
 ```php
 $issue = BookIssue::find($issueId);
 $issue->update([
-    'returned_at' => now(),
-    'returned_to' => auth()->id(),
+ 'returned_at' => now(),
+ 'returned_to' => auth()->id(),
 ]);
 
 // Update book availability
@@ -231,14 +231,14 @@ $issue->libraryBook->returnBook();
 
 // Create fine if overdue
 if ($issue->isOverdue()) {
-    LibraryFine::create([
-        'book_issue_id' => $issue->id,
-        'student_id' => $issue->student_id,
-        'amount' => $issue->calculateFine(),
-        'reason' => 'Overdue return',
-        'status' => 'unpaid',
-        'fine_date' => now(),
-    ]);
+ LibraryFine::create([
+ 'book_issue_id' => $issue->id,
+ 'student_id' => $issue->student_id,
+ 'amount' => $issue->calculateFine(),
+ 'reason' => 'Overdue return',
+ 'status' => 'unpaid',
+ 'fine_date' => now(),
+ ]);
 }
 ```
 
@@ -246,20 +246,20 @@ if ($issue->isOverdue()) {
 ```php
 // Popular books
 $popularBooks = LibraryBook::withCount('bookIssues')
-    ->orderByDesc('book_issues_count')
-    ->limit(10)
-    ->get();
+ ->orderByDesc('book_issues_count')
+ ->limit(10)
+ ->get();
 
 // Overdue books
 $overdueBooks = BookIssue::with(['libraryBook', 'student'])
-    ->whereNull('returned_at')
-    ->where('due_date', '<', now())
-    ->get();
+ ->whereNull('returned_at')
+ ->where('due_date', '<', now())
+ ->get();
 
 // Outstanding fines
 $outstandingFines = LibraryFine::with(['student', 'bookIssue.libraryBook'])
-    ->where('status', 'unpaid')
-    ->sum('amount');
+ ->where('status', 'unpaid')
+ ->sum('amount');
 ```
 
 ## Testing

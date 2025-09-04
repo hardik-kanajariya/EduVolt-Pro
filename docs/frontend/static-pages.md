@@ -22,20 +22,20 @@ EduVault Pro includes responsive static pages built with Laravel Blade templates
 
 ```
 resources/views/
-├── layouts/
-│   ├── app.blade.php (main layout)
-│   └── guest.blade.php (static pages layout)
-├── pages/
-│   ├── home.blade.php
-│   ├── about.blade.php
-│   ├── contact.blade.php
-│   ├── terms.blade.php
-│   ├── privacy.blade.php
-│   ├── features.blade.php
-│   └── pricing.blade.php
-└── components/
-    ├── navbar.blade.php
-    └── hero.blade.php
+ layouts/
+ app.blade.php (main layout)
+ guest.blade.php (static pages layout)
+ pages/
+ home.blade.php
+ about.blade.php
+ contact.blade.php
+ terms.blade.php
+ privacy.blade.php
+ features.blade.php
+ pricing.blade.php
+ components/
+ navbar.blade.php
+ hero.blade.php
 ```
 
 ## Layout System
@@ -58,9 +58,9 @@ resources/views/
 ### Mobile-First Approach
 - Minimum width support: 320px
 - Responsive breakpoints:
-  - Mobile: 320px - 767px
-  - Tablet: 768px - 1023px
-  - Desktop: 1024px+
+ - Mobile: 320px - 767px
+ - Tablet: 768px - 1023px
+ - Desktop: 1024px+
 
 ### Tailwind CSS Configuration
 - Custom color palette for brand consistency

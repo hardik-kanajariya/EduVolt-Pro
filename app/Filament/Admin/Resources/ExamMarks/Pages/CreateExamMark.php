@@ -7,5 +7,5 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateExamMark extends CreateRecord
 {
-    protected static string $resource = ExamMarkResource::class;
+ protected static string $resource = ExamMarkResource::class;
 }

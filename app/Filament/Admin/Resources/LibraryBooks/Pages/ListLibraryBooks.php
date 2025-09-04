@@ -8,12 +8,12 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListLibraryBooks extends ListRecords
 {
-    protected static string $resource = LibraryBookResource::class;
+ protected static string $resource = LibraryBookResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ CreateAction::make(),
+ ];
+ }
 }

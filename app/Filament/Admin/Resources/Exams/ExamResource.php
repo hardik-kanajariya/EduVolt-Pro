@@ -16,35 +16,35 @@ use Filament\Tables\Table;
 
 class ExamResource extends Resource
 {
-    protected static ?string $model = Exam::class;
+ protected static ?string $model = Exam::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+ protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Examination System';
+ protected static string | UnitEnum | null $navigationGroup = 'Examination System';
 
-    public static function form(Schema $schema): Schema
-    {
-        return ExamForm::configure($schema);
-    }
+ public static function form(Schema $schema): Schema
+ {
+ return ExamForm::configure($schema);
+ }
 
-    public static function table(Table $table): Table
-    {
-        return ExamsTable::configure($table);
-    }
+ public static function table(Table $table): Table
+ {
+ return ExamsTable::configure($table);
+ }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
+ public static function getRelations(): array
+ {
+ return [
+ //
+ ];
+ }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => ListExams::route('/'),
-            'create' => CreateExam::route('/create'),
-            'edit' => EditExam::route('/{record}/edit'),
-        ];
-    }
+ public static function getPages(): array
+ {
+ return [
+ 'index' => ListExams::route('/'),
+ 'create' => CreateExam::route('/create'),
+ 'edit' => EditExam::route('/{record}/edit'),
+ ];
+ }
 }

@@ -7,5 +7,5 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateBookReservation extends CreateRecord
 {
-    protected static string $resource = BookReservationResource::class;
+ protected static string $resource = BookReservationResource::class;
 }

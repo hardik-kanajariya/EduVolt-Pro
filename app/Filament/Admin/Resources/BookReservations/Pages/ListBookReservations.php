@@ -8,12 +8,12 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListBookReservations extends ListRecords
 {
-    protected static string $resource = BookReservationResource::class;
+ protected static string $resource = BookReservationResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ CreateAction::make(),
+ ];
+ }
 }

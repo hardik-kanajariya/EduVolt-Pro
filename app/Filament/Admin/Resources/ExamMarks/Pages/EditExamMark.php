@@ -8,12 +8,12 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditExamMark extends EditRecord
 {
-    protected static string $resource = ExamMarkResource::class;
+ protected static string $resource = ExamMarkResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ DeleteAction::make(),
+ ];
+ }
 }

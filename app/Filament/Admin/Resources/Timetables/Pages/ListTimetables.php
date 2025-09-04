@@ -8,12 +8,12 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListTimetables extends ListRecords
 {
-    protected static string $resource = TimetableResource::class;
+ protected static string $resource = TimetableResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            CreateAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ CreateAction::make(),
+ ];
+ }
 }

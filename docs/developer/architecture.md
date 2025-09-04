@@ -15,64 +15,64 @@ EduVault Pro is built using a modern, scalable architecture with the following k
 ### Multi-Panel Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    EduVault Pro System                      │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
-│  │   Admin     │  │  Student    │  │   Teacher   │        │
-│  │   Panel     │  │   Panel     │  │   Panel     │        │
-│  │             │  │             │  │             │        │
-│  │ /admin      │  │ /student    │  │ /teacher    │        │
-│  └─────────────┘  └─────────────┘  └─────────────┘        │
-├─────────────────────────────────────────────────────────────┤
-│                    Shared Core Services                     │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
-│  │ Auth System │  │ Permissions │  │ Notifications│        │
-│  └─────────────┘  └─────────────┘  └─────────────┘        │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
-│  │ File Storage│  │  Reporting  │  │   Backup    │        │
-│  └─────────────┘  └─────────────┘  └─────────────┘        │
-├─────────────────────────────────────────────────────────────┤
-│                       Data Layer                            │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
-│  │   MySQL     │  │    Redis    │  │ File System │        │
-│  │  Database   │  │   Cache     │  │   Storage   │        │
-│  └─────────────┘  └─────────────┘  └─────────────┘        │
-└─────────────────────────────────────────────────────────────┘
+
+ EduVault Pro System 
+
+ 
+ Admin Student Teacher 
+ Panel Panel Panel 
+ 
+ /admin /student /teacher 
+ 
+
+ Shared Core Services 
+ 
+ Auth System Permissions Notifications 
+ 
+ 
+ File Storage Reporting Backup 
+ 
+
+ Data Layer 
+ 
+ MySQL Redis File System 
+ Database Cache Storage 
+ 
+
 ```
 
 ## Directory Structure
 
 ```
 eduvault-pro/
-├── app/
-│   ├── Filament/           # Filament Panel Configurations
-│   │   ├── Admin/          # Admin Panel Resources
-│   │   ├── Student/        # Student Panel Resources
-│   │   └── Teacher/        # Teacher Panel Resources
-│   ├── Http/
-│   │   ├── Controllers/    # Standard Controllers
-│   │   ├── Middleware/     # Custom Middleware
-│   │   └── Requests/       # Form Requests
-│   ├── Models/             # Eloquent Models
-│   ├── Policies/           # Authorization Policies
-│   ├── Providers/          # Service Providers
-│   ├── Services/           # Business Logic Services
-│   └── Traits/             # Reusable Traits
-├── config/                 # Configuration Files
-├── database/
-│   ├── factories/          # Model Factories
-│   ├── migrations/         # Database Migrations
-│   └── seeders/            # Database Seeders
-├── docs/                   # Documentation
-├── public/                 # Web Root
-├── resources/
-│   ├── css/                # Stylesheets
-│   ├── js/                 # JavaScript
-│   └── views/              # Blade Templates
-├── routes/                 # Route Definitions
-├── storage/                # File Storage
-└── tests/                  # Test Files
+ app/
+ Filament/ # Filament Panel Configurations
+ Admin/ # Admin Panel Resources
+ Student/ # Student Panel Resources
+ Teacher/ # Teacher Panel Resources
+ Http/
+ Controllers/ # Standard Controllers
+ Middleware/ # Custom Middleware
+ Requests/ # Form Requests
+ Models/ # Eloquent Models
+ Policies/ # Authorization Policies
+ Providers/ # Service Providers
+ Services/ # Business Logic Services
+ Traits/ # Reusable Traits
+ config/ # Configuration Files
+ database/
+ factories/ # Model Factories
+ migrations/ # Database Migrations
+ seeders/ # Database Seeders
+ docs/ # Documentation
+ public/ # Web Root
+ resources/
+ css/ # Stylesheets
+ js/ # JavaScript
+ views/ # Blade Templates
+ routes/ # Route Definitions
+ storage/ # File Storage
+ tests/ # Test Files
 ```
 
 ## Core Components
@@ -82,22 +82,22 @@ eduvault-pro/
 ```php
 // Multi-Guard Authentication
 'guards' => [
-    'web' => [
-        'driver' => 'session',
-        'provider' => 'users',
-    ],
-    'admin' => [
-        'driver' => 'session',
-        'provider' => 'admins',
-    ],
-    'student' => [
-        'driver' => 'session',
-        'provider' => 'students',
-    ],
-    'teacher' => [
-        'driver' => 'session',
-        'provider' => 'teachers',
-    ],
+ 'web' => [
+ 'driver' => 'session',
+ 'provider' => 'users',
+ ],
+ 'admin' => [
+ 'driver' => 'session',
+ 'provider' => 'admins',
+ ],
+ 'student' => [
+ 'driver' => 'session',
+ 'provider' => 'students',
+ ],
+ 'teacher' => [
+ 'driver' => 'session',
+ 'provider' => 'teachers',
+ ],
 ];
 
 // Role-Based Permissions (Spatie Laravel Permission)
@@ -114,24 +114,24 @@ eduvault-pro/
 ```sql
 -- Users (Base authentication)
 users
-├── id, name, email, password
-├── user_type (admin/teacher/student/parent)
-└── timestamps
+ id, name, email, password
+ user_type (admin/teacher/student/parent)
+ timestamps
 
 -- Academic Structure
-schools → departments → classes → subjects
-      ↓
-   academic_years → terms → sessions
+schools departments classes subjects
+ 
+ academic_years terms sessions
 
 -- User Relationships
-students ← enrollments → classes
-teachers ← assignments → subjects
-parents  ← relationships → students
+students enrollments classes
+teachers assignments subjects
+parents relationships students
 ```
 
 #### Key Relationships
-- **Many-to-Many**: Students ↔ Classes, Teachers ↔ Subjects
-- **One-to-Many**: Schools → Departments, Classes → Students
+- **Many-to-Many**: Students Classes, Teachers Subjects
+- **One-to-Many**: Schools Departments, Classes Students
 - **Polymorphic**: Comments, Files, Notifications
 
 ### 3. Filament Panel Architecture
@@ -187,23 +187,23 @@ parents  ← relationships → students
 ```php
 // Business Logic Separation
 app/Services/
-├── AttendanceService.php
-├── GradingService.php
-├── NotificationService.php
-└── ReportService.php
+ AttendanceService.php
+ GradingService.php
+ NotificationService.php
+ ReportService.php
 
 // Usage Example
 class AttendanceService
 {
-    public function markAttendance(Student $student, Class $class, string $status)
-    {
-        // Business logic for attendance marking
-    }
-    
-    public function getAttendanceReport(Class $class, DateRange $period)
-    {
-        // Generate attendance reports
-    }
+ public function markAttendance(Student $student, Class $class, string $status)
+ {
+ // Business logic for attendance marking
+ }
+ 
+ public function getAttendanceReport(Class $class, DateRange $period)
+ {
+ // Generate attendance reports
+ }
 }
 ```
 
@@ -212,14 +212,14 @@ class AttendanceService
 // Data Access Abstraction
 interface StudentRepositoryInterface
 {
-    public function findByClass(Class $class): Collection;
-    public function findByParent(Parent $parent): Collection;
-    public function getActiveStudents(): Collection;
+ public function findByClass(Class $class): Collection;
+ public function findByParent(Parent $parent): Collection;
+ public function getActiveStudents(): Collection;
 }
 
 class EloquentStudentRepository implements StudentRepositoryInterface
 {
-    // Implementation details
+ // Implementation details
 }
 ```
 
@@ -250,19 +250,19 @@ NotifyTeacher::class
 ```php
 // Gate-based Permissions
 Gate::define('view-grades', function (User $user, Student $student) {
-    return $user->can('view-student-grades') || 
-           $user->isParentOf($student) || 
-           $user->isTeacherOf($student);
+ return $user->can('view-student-grades') || 
+ $user->isParentOf($student) || 
+ $user->isTeacherOf($student);
 });
 
 // Policy-based Authorization
 class StudentPolicy
 {
-    public function view(User $user, Student $student)
-    {
-        return $user->can('view-students') || 
-               $user->isParentOf($student);
-    }
+ public function view(User $user, Student $student)
+ {
+ return $user->can('view-students') || 
+ $user->isParentOf($student);
+ }
 }
 ```
 
@@ -320,11 +320,11 @@ class StudentPolicy
 ### Third-party Packages
 ```php
 // Key Dependencies
-"filament/filament": "^4.0",           // Admin interface
-"spatie/laravel-permission": "^6.0",   // Permissions
-"intervention/image": "^3.0",          // Image processing
-"maatwebsite/excel": "^3.1",          // Excel import/export
-"barryvdh/laravel-dompdf": "^3.0",    // PDF generation
+"filament/filament": "^4.0", // Admin interface
+"spatie/laravel-permission": "^6.0", // Permissions
+"intervention/image": "^3.0", // Image processing
+"maatwebsite/excel": "^3.1", // Excel import/export
+"barryvdh/laravel-dompdf": "^3.0", // PDF generation
 ```
 
 This architecture provides a solid foundation for building a scalable, maintainable educational management system with clear separation of concerns and modern development practices.

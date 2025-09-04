@@ -8,12 +8,12 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditStudentProgress extends EditRecord
 {
-    protected static string $resource = StudentProgressResource::class;
+ protected static string $resource = StudentProgressResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ DeleteAction::make(),
+ ];
+ }
 }

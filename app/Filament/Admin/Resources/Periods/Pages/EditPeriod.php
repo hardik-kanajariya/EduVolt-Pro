@@ -8,12 +8,12 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditPeriod extends EditRecord
 {
-    protected static string $resource = PeriodResource::class;
+ protected static string $resource = PeriodResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ DeleteAction::make(),
+ ];
+ }
 }

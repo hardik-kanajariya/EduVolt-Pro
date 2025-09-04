@@ -18,47 +18,47 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LibraryBookResource extends Resource
 {
-    protected static ?string $model = LibraryBook::class;
+ protected static ?string $model = LibraryBook::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-book-open';
+ protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-book-open';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Library Management';
+ protected static string | UnitEnum | null $navigationGroup = 'Library Management';
 
-    protected static ?string $modelLabel = 'Library Book';
+ protected static ?string $modelLabel = 'Library Book';
 
-    protected static ?string $pluralModelLabel = 'Library Books';
+ protected static ?string $pluralModelLabel = 'Library Books';
 
-    public static function form(Schema $schema): Schema
-    {
-        return LibraryBookForm::configure($schema);
-    }
+ public static function form(Schema $schema): Schema
+ {
+ return LibraryBookForm::configure($schema);
+ }
 
-    public static function table(Table $table): Table
-    {
-        return LibraryBooksTable::configure($table);
-    }
+ public static function table(Table $table): Table
+ {
+ return LibraryBooksTable::configure($table);
+ }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
+ public static function getRelations(): array
+ {
+ return [
+ //
+ ];
+ }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => ListLibraryBooks::route('/'),
-            'create' => CreateLibraryBook::route('/create'),
-            'edit' => EditLibraryBook::route('/{record}/edit'),
-        ];
-    }
+ public static function getPages(): array
+ {
+ return [
+ 'index' => ListLibraryBooks::route('/'),
+ 'create' => CreateLibraryBook::route('/create'),
+ 'edit' => EditLibraryBook::route('/{record}/edit'),
+ ];
+ }
 
-    public static function getRecordRouteBindingEloquentQuery(): Builder
-    {
-        return parent::getRecordRouteBindingEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
+ public static function getRecordRouteBindingEloquentQuery(): Builder
+ {
+ return parent::getRecordRouteBindingEloquentQuery()
+ ->withoutGlobalScopes([
+ SoftDeletingScope::class,
+ ]);
+ }
 }

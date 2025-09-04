@@ -8,12 +8,12 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditLibraryFine extends EditRecord
 {
-    protected static string $resource = LibraryFineResource::class;
+ protected static string $resource = LibraryFineResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
-    }
+ protected function getHeaderActions(): array
+ {
+ return [
+ DeleteAction::make(),
+ ];
+ }
 }

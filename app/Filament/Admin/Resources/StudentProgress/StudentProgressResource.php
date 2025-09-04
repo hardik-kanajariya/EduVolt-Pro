@@ -13,34 +13,34 @@ use BackedEnum;
 
 class StudentProgress extends Resource
 {
-    protected static ?string $model = Attendance::class;
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-trending-up';
+ protected static ?string $model = Attendance::class;
+ protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-trending-up';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Student & Attendance';
+ protected static string | UnitEnum | null $navigationGroup = 'Student & Attendance';
 
-    public static function form(Schema $schema): Schema
-    {
-        return StudentProgressForm::configure($schema);
-    }
+ public static function form(Schema $schema): Schema
+ {
+ return StudentProgressForm::configure($schema);
+ }
 
-    public static function table(Table $table): Table
-    {
-        return StudentProgressTable::configure($table);
-    }
+ public static function table(Table $table): Table
+ {
+ return StudentProgressTable::configure($table);
+ }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
+ public static function getRelations(): array
+ {
+ return [
+ //
+ ];
+ }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => ListStudentProgress::route('/'),
-            'create' => CreateStudentProgress::route('/create'),
-            'edit' => EditStudentProgress::route('/{record}/edit'),
-        ];
-    }
+ public static function getPages(): array
+ {
+ return [
+ 'index' => ListStudentProgress::route('/'),
+ 'create' => CreateStudentProgress::route('/create'),
+ 'edit' => EditStudentProgress::route('/{record}/edit'),
+ ];
+ }
 }

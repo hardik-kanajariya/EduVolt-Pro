@@ -16,35 +16,35 @@ use Filament\Tables\Table;
 
 class TimetableResource extends Resource
 {
-    protected static ?string $model = Timetable::class;
+ protected static ?string $model = Timetable::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-table-cells';
+ protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-table-cells';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Schedule Management';
+ protected static string | UnitEnum | null $navigationGroup = 'Schedule Management';
 
-    public static function form(Schema $schema): Schema
-    {
-        return TimetableForm::configure($schema);
-    }
+ public static function form(Schema $schema): Schema
+ {
+ return TimetableForm::configure($schema);
+ }
 
-    public static function table(Table $table): Table
-    {
-        return TimetablesTable::configure($table);
-    }
+ public static function table(Table $table): Table
+ {
+ return TimetablesTable::configure($table);
+ }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
+ public static function getRelations(): array
+ {
+ return [
+ //
+ ];
+ }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => ListTimetables::route('/'),
-            'create' => CreateTimetable::route('/create'),
-            'edit' => EditTimetable::route('/{record}/edit'),
-        ];
-    }
+ public static function getPages(): array
+ {
+ return [
+ 'index' => ListTimetables::route('/'),
+ 'create' => CreateTimetable::route('/create'),
+ 'edit' => EditTimetable::route('/{record}/edit'),
+ ];
+ }
 }

@@ -7,5 +7,5 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateLibraryBook extends CreateRecord
 {
-    protected static string $resource = LibraryBookResource::class;
+ protected static string $resource = LibraryBookResource::class;
 }

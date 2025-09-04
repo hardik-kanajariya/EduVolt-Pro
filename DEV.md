@@ -2032,25 +2032,14 @@ php artisan make:seeder ReportsSeeder
 ## **� PHASE 9: API DEVELOPMENT & SYSTEM INTEGRATION**
 
 ### **Task 9.1: RESTful API Development**
-**Objective:** Create comprehensive APIs for mobile app and third-party integrations
+**Objective:** Optimize database performance for scalability
 
 **Detailed Instructions for AI Agent:**
 
-**Install API Dependencies:**
+**Database Optimization Tasks:**
 ```bash
-composer require laravel/sanctum
-php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-```
-
-**Create API Controllers:**
-```bash
-php artisan make:controller API/AuthController
-php artisan make:controller API/StudentController
-php artisan make:controller API/AttendanceController
-php artisan make:controller API/ExamController
-php artisan make:controller API/FeeController
-php artisan make:controller API/LibraryController
-php artisan make:controller API/CommunicationController
+# Create database indexes for performance
+php artisan make:migration add_performance_indexes
 ```
 
 **API Routes Structure:**

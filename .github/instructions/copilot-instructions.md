@@ -2,7 +2,7 @@
 
 ## 🎯 Project Overview & Context
 
-You are developing **EduVault Pro v1.0**, an advanced school management system using Laravel 11 and Filament v3. This is a comprehensive educational platform with role-based access for administrators, faculty, students, and parents.
+You are developing **EduVault Pro v1.0**, an advanced school management system using Laravel 11 and Filament v4. This is a comprehensive educational platform with role-based access for administrators, faculty, students, and parents.
 
 **Critical Version Constraints:**
 - **v1.0 Features**: Cash payments, SMTP email, push notifications, English only
@@ -12,7 +12,7 @@ You are developing **EduVault Pro v1.0**, an advanced school management system u
 
 ### **Primary Technologies (MUST USE)**
 - **Backend**: PHP 8.2+, Laravel 11
-- **Admin Interface**: Filament v3 (Multi-panel approach)
+- **Admin Interface**: Filament v4 (Multi-panel approach)
 - **Frontend**: Tailwind CSS, Blade templates
 - **Database**: MySQL 8.0 with utf8mb4 charset
 - **Authentication**: Spatie Laravel Permission for role-based access

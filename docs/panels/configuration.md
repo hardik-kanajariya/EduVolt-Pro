@@ -4,7 +4,7 @@ This document outlines the multi-panel Filament configuration for role-based acc
 
 ## Overview
 
-EduVault Pro uses Filament v3 with multiple panels to provide role-specific interfaces for different user types in the school management system.
+EduVault Pro uses Filament v4 with multiple panels to provide role-specific interfaces for different user types in the school management system.
 
 ## Panel Architecture
 

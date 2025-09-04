@@ -1,5 +1,5 @@
 # **EduVault Pro** - Complete Development Roadmap v1.0
-*Advanced School Management System with Laravel & Filament v3*
+*Advanced School Management System with Laravel & Filament v4*
 
 ***
 
@@ -9,7 +9,7 @@
 **Version:** 1.0 (Core Features)  
 **Tagline:** "Complete Digital Education Management Solution"  
 **Business Model:** One-time Purchase Software (Not Subscription-based)  
-**Tech Stack:** PHP 8.2+, Laravel 11, Filament v3, MySQL 8.0, Tailwind CSS  
+**Tech Stack:** PHP 8.2+, Laravel 11, Filament v4, MySQL 8.0, Tailwind CSS  
 **Architecture:** MVC Pattern with Repository Pattern, Service Layer Architecture  
 **Frontend Strategy:** Filament Panels for Admin/User Interfaces + Static Pages with Mobile-First Design  
 **Communication:** SMTP Email + Push Notifications (SMS/WhatsApp in v2.0)  

@@ -15,9 +15,9 @@ class AttendanceResource extends Resource
     protected static ?string $model = Attendance::class;
 
     protected static ?string $recordTitleAttribute = 'date';
-    
+
     protected static ?string $label = 'My Attendance';
-    
+
     protected static ?string $pluralLabel = 'My Attendance';
 
     public static function table(Table $table): Table

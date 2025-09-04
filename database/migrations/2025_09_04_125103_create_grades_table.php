@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('remarks')->nullable();
             $table->date('exam_date');
             $table->timestamps();
-            
+
             $table->index(['student_id', 'exam_date']);
         });
     }

@@ -16,9 +16,9 @@ class GradeResource extends Resource
     protected static ?string $model = Grade::class;
 
     protected static ?string $recordTitleAttribute = 'exam_name';
-    
+
     protected static ?string $label = 'My Grades';
-    
+
     protected static ?string $pluralLabel = 'My Grades';
 
     public static function table(Table $table): Table

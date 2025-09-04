@@ -26,7 +26,7 @@ return new class extends Migration
             $table->enum('conduct', ['excellent', 'good', 'satisfactory', 'needs_improvement'])->default('good');
             $table->softDeletes();
             $table->timestamps();
-            
+
             $table->unique(['student_id', 'subject_id', 'term', 'academic_year']);
         });
     }

@@ -17,9 +17,9 @@ class StudentResource extends Resource
     protected static ?string $model = Student::class;
 
     protected static ?string $recordTitleAttribute = 'first_name';
-    
+
     protected static ?string $label = 'My Children';
-    
+
     protected static ?string $pluralLabel = 'My Children';
 
     public static function table(Table $table): Table

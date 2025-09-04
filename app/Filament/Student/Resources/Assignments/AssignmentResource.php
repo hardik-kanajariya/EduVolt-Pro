@@ -17,9 +17,9 @@ class AssignmentResource extends Resource
     protected static ?string $model = Assignment::class;
 
     protected static ?string $recordTitleAttribute = 'title';
-    
+
     protected static ?string $label = 'My Assignments';
-    
+
     protected static ?string $pluralLabel = 'My Assignments';
 
     public static function table(Table $table): Table
@@ -46,7 +46,7 @@ class AssignmentResource extends Resource
         $user = Auth::user();
         if ($user && $user->student) {
             $query->where('class_id', $user->student->class_id)
-                  ->where('status', 'published'); // Only show published assignments
+                ->where('status', 'published'); // Only show published assignments
         }
 
         return $query;

@@ -82,7 +82,7 @@ class BookReservation extends Model
     public function scopeExpired($query)
     {
         return $query->where('status', 'active')
-                    ->where('expiry_date', '<', now());
+            ->where('expiry_date', '<', now());
     }
 
     public function scopeForStudent($query, $studentId)
@@ -98,7 +98,7 @@ class BookReservation extends Model
     public function scopeExpiringWithin($query, $days)
     {
         return $query->where('status', 'active')
-                    ->whereBetween('expiry_date', [now(), now()->addDays($days)]);
+            ->whereBetween('expiry_date', [now(), now()->addDays($days)]);
     }
 
     // Accessors & Methods
@@ -112,15 +112,15 @@ class BookReservation extends Model
         if ($this->status !== 'active') {
             return 0;
         }
-        
+
         return now()->diffInDays($this->expiry_date, false);
     }
 
     public function canFulfill(): bool
     {
-        return $this->status === 'active' 
-               && !$this->is_expired
-               && $this->book->available_copies > 0;
+        return $this->status === 'active'
+            && !$this->is_expired
+            && $this->book->available_copies > 0;
     }
 
     public function fulfill(User $fulfilledBy): bool
@@ -132,7 +132,7 @@ class BookReservation extends Model
         $this->status = 'fulfilled';
         $this->fulfilled_at = now();
         $this->fulfilled_by = $fulfilledBy->id;
-        
+
         return $this->save();
     }
 

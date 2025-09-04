@@ -18,7 +18,7 @@ class BookCategoryForm
             ->components([
                 Hidden::make('school_id')
                     ->default(1), // Default school ID for now
-                
+
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255)
@@ -29,30 +29,30 @@ class BookCategoryForm
                             $set('code', Str::upper(Str::slug($state, '_')));
                         }
                     }),
-                
+
                 TextInput::make('code')
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(50)
                     ->alphaDash()
                     ->helperText('Unique identifier for the category (auto-generated from name)'),
-                
+
                 ColorPicker::make('color')
                     ->label('Category Color')
                     ->default('#6B7280')
                     ->helperText('Color used for visual identification'),
-                
+
                 TextInput::make('sort_order')
                     ->label('Sort Order')
                     ->numeric()
                     ->default(0)
                     ->helperText('Lower numbers appear first'),
-                
+
                 Toggle::make('is_active')
                     ->label('Active')
                     ->default(true)
                     ->helperText('Inactive categories are hidden'),
-                
+
                 Textarea::make('description')
                     ->rows(3)
                     ->columnSpanFull()

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreignId('collected_by')->nullable()->constrained('users')->onDelete('set null');
             $table->text('payment_notes')->nullable();
             $table->timestamps();
-            
+
             $table->index(['student_id', 'status']);
             $table->index(['fine_date', 'status']);
             $table->index(['type', 'status']);

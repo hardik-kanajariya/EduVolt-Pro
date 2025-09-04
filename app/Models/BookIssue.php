@@ -53,7 +53,7 @@ class BookIssue extends Model
         static::updated(function ($issue) {
             // Update book copy counts when status changes
             $issue->book->updateCopyCounts();
-            
+
             // Create fine if overdue
             if ($issue->status === 'returned' && $issue->return_date > $issue->due_date) {
                 $issue->createOverdueFine();
@@ -106,7 +106,7 @@ class BookIssue extends Model
     public function scopeOverdue($query)
     {
         return $query->where('status', 'issued')
-                    ->where('due_date', '<', now());
+            ->where('due_date', '<', now());
     }
 
     public function scopeReturned($query)
@@ -127,7 +127,7 @@ class BookIssue extends Model
     public function scopeDueWithin($query, $days)
     {
         return $query->where('status', 'issued')
-                    ->whereBetween('due_date', [now(), now()->addDays($days)]);
+            ->whereBetween('due_date', [now(), now()->addDays($days)]);
     }
 
     // Accessors & Methods
@@ -141,7 +141,7 @@ class BookIssue extends Model
         if (!$this->is_overdue) {
             return 0;
         }
-        
+
         return now()->diffInDays($this->due_date);
     }
 
@@ -150,16 +150,16 @@ class BookIssue extends Model
         if ($this->status !== 'issued') {
             return 0;
         }
-        
+
         return $this->due_date->diffInDays(now(), false);
     }
 
     public function canRenew(): bool
     {
-        return $this->status === 'issued' 
-               && $this->renewal_count < 2 // Max 2 renewals
-               && !$this->is_overdue
-               && !$this->book->activeReservations()->exists();
+        return $this->status === 'issued'
+            && $this->renewal_count < 2 // Max 2 renewals
+            && !$this->is_overdue
+            && !$this->book->activeReservations()->exists();
     }
 
     public function renew(int $days = 14): bool
@@ -171,7 +171,7 @@ class BookIssue extends Model
         $this->due_date = $this->due_date->addDays($days);
         $this->renewal_count += 1;
         $this->last_renewal_date = now();
-        
+
         return $this->save();
     }
 
@@ -182,7 +182,7 @@ class BookIssue extends Model
         $this->returned_by = $returnedBy->id;
         $this->condition_at_return = $condition;
         $this->return_notes = $notes;
-        
+
         return $this->save();
     }
 

@@ -41,7 +41,7 @@ class LibraryBooksTable
 
                 TextColumn::make('category.name')
                     ->badge()
-                    ->color(fn($record) => match($record->category?->code) {
+                    ->color(fn($record) => match ($record->category?->code) {
                         'FICTION' => 'primary',
                         'NON_FICTION' => 'success',
                         'ACADEMIC' => 'danger',
@@ -82,7 +82,7 @@ class LibraryBooksTable
 
                 TextColumn::make('condition')
                     ->badge()
-                    ->color(fn($state) => match($state) {
+                    ->color(fn($state) => match ($state) {
                         'excellent' => 'success',
                         'good' => 'info',
                         'fair' => 'warning',
@@ -136,8 +136,8 @@ class LibraryBooksTable
                 TernaryFilter::make('available')
                     ->label('Availability')
                     ->queries(
-                        true: fn ($query) => $query->where('available_copies', '>', 0),
-                        false: fn ($query) => $query->where('available_copies', '=', 0),
+                        true: fn($query) => $query->where('available_copies', '>', 0),
+                        false: fn($query) => $query->where('available_copies', '=', 0),
                     )
                     ->trueLabel('Available only')
                     ->falseLabel('Out of stock only')

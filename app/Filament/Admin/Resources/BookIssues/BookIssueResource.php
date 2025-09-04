@@ -19,9 +19,9 @@ class BookIssueResource extends Resource
     protected static ?string $model = BookIssue::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-right-circle';
-    
+
     protected static ?string $modelLabel = 'Book Issue';
-    
+
     protected static ?string $pluralModelLabel = 'Book Issues';
 
     public static function form(Schema $schema): Schema

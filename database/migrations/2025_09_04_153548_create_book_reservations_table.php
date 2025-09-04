@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamp('fulfilled_at')->nullable();
             $table->foreignId('fulfilled_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
-            
+
             $table->index(['student_id', 'status']);
             $table->index(['book_id', 'status']);
             $table->index(['expiry_date', 'status']);

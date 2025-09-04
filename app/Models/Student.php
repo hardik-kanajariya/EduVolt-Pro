@@ -152,6 +152,6 @@ class Student extends Model
     public function canIssueBooks(): bool
     {
         return $this->getCurrentBooksCountAttribute() < 3 // Max 3 books at a time
-               && $this->getTotalLibraryFineAmountAttribute() < 50; // Max ₹50 pending fine
+            && $this->getTotalLibraryFineAmountAttribute() < 50; // Max ₹50 pending fine
     }
 }

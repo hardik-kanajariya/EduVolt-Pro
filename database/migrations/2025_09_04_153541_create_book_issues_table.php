@@ -29,7 +29,7 @@ return new class extends Migration
             $table->integer('renewal_count')->default(0);
             $table->date('last_renewal_date')->nullable();
             $table->timestamps();
-            
+
             $table->index(['due_date', 'status']);
             $table->index(['student_id', 'status']);
             $table->index(['book_id', 'status']);

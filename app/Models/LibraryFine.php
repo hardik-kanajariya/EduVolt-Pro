@@ -105,11 +105,11 @@ class LibraryFine extends Model
         $this->paid_date = now();
         $this->collected_by = $collectedBy->id;
         $this->payment_notes = $notes;
-        
+
         if ($this->is_fully_paid) {
             $this->status = 'paid';
         }
-        
+
         return $this->save();
     }
 
@@ -118,7 +118,7 @@ class LibraryFine extends Model
         $this->status = 'waived';
         $this->collected_by = $waivedBy->id;
         $this->payment_notes = "Waived: " . ($reason ?? 'No reason provided');
-        
+
         return $this->save();
     }
 

@@ -135,9 +135,9 @@ class LibrarySeeder extends Seeder
 
         foreach ($booksData as $bookData) {
             $category = BookCategory::where('school_id', $school->id)
-                                  ->where('code', $bookData['category_code'])
-                                  ->first();
-            
+                ->where('code', $bookData['category_code'])
+                ->first();
+
             if ($category) {
                 LibraryBook::firstOrCreate(
                     [
@@ -166,7 +166,7 @@ class LibrarySeeder extends Seeder
         $students = Student::take(3)->get();
         if ($students->count() > 0) {
             $books = LibraryBook::where('school_id', $school->id)->take(3)->get();
-            
+
             foreach ($books as $index => $book) {
                 if (isset($students[$index])) {
                     BookIssue::firstOrCreate(
@@ -186,7 +186,7 @@ class LibrarySeeder extends Seeder
                     );
                 }
             }
-            
+
             // Update book copy counts
             foreach ($books as $book) {
                 $book->updateCopyCounts();

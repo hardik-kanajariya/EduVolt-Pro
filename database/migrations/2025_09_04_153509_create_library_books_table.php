@@ -37,7 +37,7 @@ return new class extends Migration
             $table->json('additional_info')->nullable(); // For extra fields
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->index(['isbn']);
             $table->index(['school_id', 'category_id']);
             $table->index(['title', 'author']);

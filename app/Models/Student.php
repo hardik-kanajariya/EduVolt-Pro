@@ -99,6 +99,36 @@ class Student extends Model
         return $this->user->name ?? '';
     }
 
+    public function bookIssues()
+    {
+        return $this->hasMany(BookIssue::class);
+    }
+
+    public function bookReservations()
+    {
+        return $this->hasMany(BookReservation::class);
+    }
+
+    public function libraryFines()
+    {
+        return $this->hasMany(LibraryFine::class);
+    }
+
+    public function currentBookIssues()
+    {
+        return $this->hasMany(BookIssue::class)->where('status', 'issued');
+    }
+
+    public function activeBookReservations()
+    {
+        return $this->hasMany(BookReservation::class)->where('status', 'active');
+    }
+
+    public function pendingLibraryFines()
+    {
+        return $this->hasMany(LibraryFine::class)->where('status', 'pending');
+    }
+
     public function getAttendancePercentageAttribute()
     {
         $totalDays = $this->attendances()->count();
@@ -119,5 +149,32 @@ class Student extends Model
         $name = $this->user->name ?? '';
         $nameParts = explode(' ', $name);
         return count($nameParts) > 1 ? implode(' ', array_slice($nameParts, 1)) : '';
+    }
+    
+    // Library-related methods
+    public function getTotalBooksIssuedAttribute(): int
+    {
+        return $this->bookIssues()->count();
+    }
+
+    public function getCurrentBooksCountAttribute(): int
+    {
+        return $this->currentBookIssues()->count();
+    }
+
+    public function getTotalLibraryFineAmountAttribute(): float
+    {
+        return $this->pendingLibraryFines()->sum('amount') ?? 0;
+    }
+
+    public function hasOverdueBooks(): bool
+    {
+        return $this->currentBookIssues()->where('due_date', '<', now())->exists();
+    }
+
+    public function canIssueBooks(): bool
+    {
+        return $this->getCurrentBooksCountAttribute() < 3 // Max 3 books at a time
+            && $this->getTotalLibraryFineAmountAttribute() < 50; // Max ₹50 pending fine
     }
 }

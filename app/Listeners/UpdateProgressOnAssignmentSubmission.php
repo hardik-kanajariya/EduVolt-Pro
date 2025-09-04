@@ -47,7 +47,7 @@ class UpdateProgressOnAssignmentSubmission implements ShouldQueue
     {
         $assignment = $submission->assignment;
         $academicYear = AcademicYear::where('is_current', true)->first();
-        
+
         if (!$academicYear) {
             return;
         }
@@ -65,7 +65,7 @@ class UpdateProgressOnAssignmentSubmission implements ShouldQueue
     {
         $exam = $examMark->exam;
         $academicYear = AcademicYear::where('is_current', true)->first();
-        
+
         if (!$academicYear) {
             return;
         }
@@ -82,7 +82,7 @@ class UpdateProgressOnAssignmentSubmission implements ShouldQueue
     protected function handleAttendance(Attendance $attendance): void
     {
         $academicYear = AcademicYear::where('is_current', true)->first();
-        
+
         if (!$academicYear) {
             return;
         }

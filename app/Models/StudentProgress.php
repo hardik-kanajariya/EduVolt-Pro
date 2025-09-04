@@ -124,33 +124,33 @@ class StudentProgress extends Model
     public function scopeNeedsAttention($query)
     {
         return $query->where('overall_grade', '<', 60)
-                    ->orWhere('performance_trend', 'declining')
-                    ->orWhere('attendance_percentage', '<', 75);
+            ->orWhere('performance_trend', 'declining')
+            ->orWhere('attendance_percentage', '<', 75);
     }
 
     public function scopeImproving($query)
     {
         return $query->where('performance_trend', 'improving')
-                    ->where('grade_change', '>', 0);
+            ->where('grade_change', '>', 0);
     }
 
     public function scopeCurrentPeriod($query)
     {
         return $query->where('reporting_period_start', '<=', now())
-                    ->where('reporting_period_end', '>=', now());
+            ->where('reporting_period_end', '>=', now());
     }
 
     // Accessors
     public function getAssignmentCompletionRateAttribute()
     {
-        return $this->total_assignments > 0 
+        return $this->total_assignments > 0
             ? round(($this->submitted_assignments / $this->total_assignments) * 100, 2)
             : 0;
     }
 
     public function getExamSuccessRateAttribute()
     {
-        return $this->total_exams > 0 
+        return $this->total_exams > 0
             ? round(($this->exams_passed / $this->total_exams) * 100, 2)
             : 0;
     }
@@ -176,7 +176,7 @@ class StudentProgress extends Model
 
     public function getGradeColorAttribute()
     {
-        return match($this->letter_grade) {
+        return match ($this->letter_grade) {
             'A+', 'A' => 'success',
             'B+', 'B' => 'primary',
             'C+', 'C' => 'warning',
@@ -187,7 +187,7 @@ class StudentProgress extends Model
 
     public function getTrendIconAttribute()
     {
-        return match($this->performance_trend) {
+        return match ($this->performance_trend) {
             'improving' => 'heroicon-o-arrow-trending-up',
             'declining' => 'heroicon-o-arrow-trending-down',
             'stable' => 'heroicon-o-minus',
@@ -199,7 +199,7 @@ class StudentProgress extends Model
 
     public function getTrendColorAttribute()
     {
-        return match($this->performance_trend) {
+        return match ($this->performance_trend) {
             'improving', 'excellent' => 'success',
             'declining', 'needs_attention' => 'danger',
             'stable' => 'warning',
@@ -213,10 +213,14 @@ class StudentProgress extends Model
         if (empty($grades)) return 0;
 
         $gradePoints = [
-            'A+' => 4.0, 'A' => 4.0,
-            'B+' => 3.5, 'B' => 3.0,
-            'C+' => 2.5, 'C' => 2.0,
-            'D+' => 1.5, 'D' => 1.0,
+            'A+' => 4.0,
+            'A' => 4.0,
+            'B+' => 3.5,
+            'B' => 3.0,
+            'C+' => 2.5,
+            'C' => 2.0,
+            'D+' => 1.5,
+            'D' => 1.0,
             'F' => 0.0
         ];
 
@@ -253,13 +257,13 @@ class StudentProgress extends Model
     {
         // Calculate assignment metrics
         $assignments = Assignment::where('subject_id', $this->subject_id)
-                                ->where('class_id', $this->class_id)
-                                ->whereBetween('due_date', [$this->reporting_period_start, $this->reporting_period_end])
-                                ->get();
+            ->where('class_id', $this->class_id)
+            ->whereBetween('due_date', [$this->reporting_period_start, $this->reporting_period_end])
+            ->get();
 
         $submissions = AssignmentSubmission::whereIn('assignment_id', $assignments->pluck('id'))
-                                          ->where('student_id', $this->student_id)
-                                          ->get();
+            ->where('student_id', $this->student_id)
+            ->get();
 
         $this->total_assignments = $assignments->count();
         $this->submitted_assignments = $submissions->count();
@@ -267,12 +271,12 @@ class StudentProgress extends Model
         $this->setAttribute('assignment_average', round($submissions->avg('marks') ?? 0, 2));
 
         // Calculate exam metrics
-        $examMarks = ExamMark::whereHas('examSubject', function($query) {
-                            $query->where('subject_id', $this->subject_id)
-                                  ->whereBetween('exam_date', [$this->reporting_period_start, $this->reporting_period_end]);
-                        })
-                        ->where('student_id', $this->student_id)
-                        ->get();
+        $examMarks = ExamMark::whereHas('examSubject', function ($query) {
+            $query->where('subject_id', $this->subject_id)
+                ->whereBetween('exam_date', [$this->reporting_period_start, $this->reporting_period_end]);
+        })
+            ->where('student_id', $this->student_id)
+            ->get();
 
         $this->total_exams = $examMarks->count();
         $this->exams_taken = $examMarks->where('is_absent', false)->count();
@@ -281,15 +285,15 @@ class StudentProgress extends Model
 
         // Calculate attendance metrics
         $attendances = Attendance::where('student_id', $this->student_id)
-                                ->where('subject_id', $this->subject_id)
-                                ->whereBetween('date', [$this->reporting_period_start, $this->reporting_period_end])
-                                ->get();
+            ->where('subject_id', $this->subject_id)
+            ->whereBetween('date', [$this->reporting_period_start, $this->reporting_period_end])
+            ->get();
 
         $this->total_classes = $attendances->count();
         $this->classes_attended = $attendances->where('status', 'present')->count();
         $this->classes_absent = $attendances->where('status', 'absent')->count();
         $this->classes_late = $attendances->where('status', 'late')->count();
-        $this->setAttribute('attendance_percentage', $this->total_classes > 0 
+        $this->setAttribute('attendance_percentage', $this->total_classes > 0
             ? round(($this->classes_attended / $this->total_classes) * 100, 2)
             : 0.0);
 
@@ -297,8 +301,8 @@ class StudentProgress extends Model
         $assignmentWeight = 40; // 40% assignments
         $examWeight = 60; // 60% exams
 
-        $this->setAttribute('overall_grade', round((($this->assignment_average * $assignmentWeight) + 
-                               ($this->exam_average * $examWeight)) / 100, 2));
+        $this->setAttribute('overall_grade', round((($this->assignment_average * $assignmentWeight) +
+            ($this->exam_average * $examWeight)) / 100, 2));
 
         // Update letter grade and GPA
         $this->letter_grade = $this->calculateLetterGrade();
@@ -307,7 +311,7 @@ class StudentProgress extends Model
         // Determine performance trend
         if ($this->previous_grade) {
             $this->setAttribute('grade_change', round($this->overall_grade - $this->previous_grade, 2));
-            
+
             if ($this->grade_change > 5) {
                 $this->performance_trend = 'improving';
             } elseif ($this->grade_change < -5) {
@@ -375,7 +379,7 @@ class StudentProgress extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($progress) {
             if (!$progress->reporting_period_start) {
                 $progress->reporting_period_start = now()->startOfMonth();

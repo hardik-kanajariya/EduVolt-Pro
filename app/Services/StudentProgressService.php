@@ -30,7 +30,7 @@ class StudentProgressService
         string $term = 'first'
     ): StudentProgress {
         DB::beginTransaction();
-        
+
         try {
             $progress = StudentProgress::firstOrCreate([
                 'student_id' => $studentId,
@@ -39,7 +39,7 @@ class StudentProgressService
                 'class_id' => $classId,
                 'term' => $term,
             ]);
-            
+
             // Calculate all metrics
             $this->calculateAssignmentMetrics($progress);
             $this->calculateExamMetrics($progress);
@@ -47,22 +47,21 @@ class StudentProgressService
             $this->calculateOverallGrade($progress);
             $this->calculatePerformanceTrend($progress);
             $this->calculateBehavioralScore($progress);
-            
+
             $progress->last_updated_at = now();
             $progress->updated_by = Auth::id();
             $progress->save();
-            
+
             DB::commit();
-            
+
             Log::info('Student progress updated successfully', [
                 'student_id' => $studentId,
                 'subject_id' => $subjectId,
                 'term' => $term,
                 'overall_grade' => $progress->overall_grade,
             ]);
-            
+
             return $progress;
-            
         } catch (\Exception $e) {
             DB::rollback();
             Log::error('Failed to update student progress', [
@@ -73,7 +72,7 @@ class StudentProgressService
             throw $e;
         }
     }
-    
+
     /**
      * Update progress for all students in a class
      */
@@ -85,7 +84,7 @@ class StudentProgressService
     ): int {
         $class = SchoolClass::with('students')->findOrFail($classId);
         $updated = 0;
-        
+
         foreach ($class->students as $student) {
             try {
                 $this->updateStudentProgress(
@@ -104,10 +103,10 @@ class StudentProgressService
                 ]);
             }
         }
-        
+
         return $updated;
     }
-    
+
     /**
      * Update progress for all subjects of a student
      */
@@ -118,7 +117,7 @@ class StudentProgressService
     ): int {
         $student = Student::with(['classes', 'classes.subjects'])->findOrFail($studentId);
         $updated = 0;
-        
+
         foreach ($student->classes as $class) {
             foreach ($class->subjects as $subject) {
                 try {
@@ -139,10 +138,10 @@ class StudentProgressService
                 }
             }
         }
-        
+
         return $updated;
     }
-    
+
     /**
      * Calculate assignment-related metrics
      */
@@ -152,17 +151,17 @@ class StudentProgressService
         $assignments = Assignment::where('subject_id', $progress->subject_id)
             ->where('class_id', $progress->class_id)
             ->get();
-            
+
         $progress->total_assignments = $assignments->count();
-        
+
         // Get student submissions
         $submissions = AssignmentSubmission::where('student_id', $progress->student_id)
             ->whereIn('assignment_id', $assignments->pluck('id'))
             ->get();
-            
+
         $progress->submitted_assignments = $submissions->count();
         $progress->late_submissions = $submissions->where('is_late', true)->count();
-        
+
         // Calculate assignment average
         $graded_submissions = $submissions->whereNotNull('grade');
         if ($graded_submissions->count() > 0) {
@@ -171,7 +170,7 @@ class StudentProgressService
             $progress->setAttribute('assignment_average', 0);
         }
     }
-    
+
     /**
      * Calculate exam-related metrics
      */
@@ -181,17 +180,17 @@ class StudentProgressService
         $exams = Exam::where('subject_id', $progress->subject_id)
             ->where('class_id', $progress->class_id)
             ->get();
-            
+
         $progress->total_exams = $exams->count();
-        
+
         // Get student exam marks
         $examMarks = ExamMark::where('student_id', $progress->student_id)
             ->whereIn('exam_id', $exams->pluck('id'))
             ->get();
-            
+
         $progress->exams_taken = $examMarks->count();
         $progress->exams_passed = $examMarks->where('marks', '>=', 50)->count(); // Assuming 50 is pass mark
-        
+
         // Calculate exam average
         if ($examMarks->count() > 0) {
             $progress->setAttribute('exam_average', round($examMarks->avg('marks'), 2));
@@ -199,7 +198,7 @@ class StudentProgressService
             $progress->setAttribute('exam_average', 0);
         }
     }
-    
+
     /**
      * Calculate attendance-related metrics
      */
@@ -209,12 +208,12 @@ class StudentProgressService
         $attendance = Attendance::where('student_id', $progress->student_id)
             ->where('subject_id', $progress->subject_id)
             ->get();
-            
+
         $progress->total_classes = $attendance->count();
         $progress->classes_attended = $attendance->where('status', 'present')->count();
         $progress->classes_absent = $attendance->where('status', 'absent')->count();
         $progress->classes_late = $attendance->where('status', 'late')->count();
-        
+
         // Calculate attendance percentage
         if ($progress->total_classes > 0) {
             $progress->setAttribute('attendance_percentage', round(($progress->classes_attended / $progress->total_classes) * 100, 2));
@@ -222,7 +221,7 @@ class StudentProgressService
             $progress->setAttribute('attendance_percentage', 0);
         }
     }
-    
+
     /**
      * Calculate overall grade using weighted average
      */
@@ -231,23 +230,23 @@ class StudentProgressService
         // Weighted calculation: 40% assignments, 60% exams
         $assignmentWeight = 0.4;
         $examWeight = 0.6;
-        
-        $overall = ($progress->assignment_average * $assignmentWeight) + 
-                  ($progress->exam_average * $examWeight);
-                  
+
+        $overall = ($progress->assignment_average * $assignmentWeight) +
+            ($progress->exam_average * $examWeight);
+
         $progress->setAttribute('overall_grade', round($overall, 2));
-        
+
         // Calculate letter grade and GPA
         $this->calculateLetterGradeAndGPA($progress);
     }
-    
+
     /**
      * Calculate letter grade and GPA based on overall grade
      */
     protected function calculateLetterGradeAndGPA(StudentProgress $progress): void
     {
         $grade = $progress->overall_grade;
-        
+
         $progress->letter_grade = match (true) {
             $grade >= 90 => 'A+',
             $grade >= 85 => 'A',
@@ -261,7 +260,7 @@ class StudentProgressService
             $grade >= 45 => 'D',
             default => 'F',
         };
-        
+
         $progress->setAttribute('gpa', match (true) {
             $grade >= 90 => '4.00',
             $grade >= 85 => '3.70',
@@ -276,7 +275,7 @@ class StudentProgressService
             default => '0.00',
         });
     }
-    
+
     /**
      * Calculate performance trend
      */
@@ -289,11 +288,11 @@ class StudentProgressService
             ->where('term', '!=', $progress->term)
             ->orderBy('created_at', 'desc')
             ->first();
-            
+
         if ($previousProgress) {
             $progress->setAttribute('previous_grade', $previousProgress->overall_grade);
             $progress->setAttribute('grade_change', round($progress->overall_grade - $previousProgress->overall_grade, 2));
-            
+
             $progress->performance_trend = match (true) {
                 $progress->overall_grade >= 90 => 'excellent',
                 $progress->grade_change > 10 => 'improving',
@@ -309,14 +308,14 @@ class StudentProgressService
             };
         }
     }
-    
+
     /**
      * Calculate behavioral score based on attendance and submissions
      */
     protected function calculateBehavioralScore(StudentProgress $progress): void
     {
         $score = 0;
-        
+
         // Attendance contribution (40%)
         if ($progress->attendance_percentage >= 95) {
             $score += 40;
@@ -329,12 +328,12 @@ class StudentProgressService
         } else {
             $score += 10;
         }
-        
+
         // Assignment submission rate contribution (30%)
-        $submissionRate = $progress->total_assignments > 0 
-            ? ($progress->submitted_assignments / $progress->total_assignments) * 100 
+        $submissionRate = $progress->total_assignments > 0
+            ? ($progress->submitted_assignments / $progress->total_assignments) * 100
             : 0;
-            
+
         if ($submissionRate >= 100) {
             $score += 30;
         } elseif ($submissionRate >= 90) {
@@ -346,17 +345,17 @@ class StudentProgressService
         } else {
             $score += 5;
         }
-        
+
         // Punctuality contribution (20%) - based on late submissions and tardiness
-        $lateRate = $progress->submitted_assignments > 0 
-            ? ($progress->late_submissions / $progress->submitted_assignments) * 100 
+        $lateRate = $progress->submitted_assignments > 0
+            ? ($progress->late_submissions / $progress->submitted_assignments) * 100
             : 0;
-        $lateClassRate = $progress->total_classes > 0 
-            ? ($progress->classes_late / $progress->total_classes) * 100 
+        $lateClassRate = $progress->total_classes > 0
+            ? ($progress->classes_late / $progress->total_classes) * 100
             : 0;
-            
+
         $avgLateRate = ($lateRate + $lateClassRate) / 2;
-        
+
         if ($avgLateRate <= 5) {
             $score += 20;
         } elseif ($avgLateRate <= 10) {
@@ -366,7 +365,7 @@ class StudentProgressService
         } else {
             $score += 5;
         }
-        
+
         // Academic performance contribution (10%)
         if ($progress->overall_grade >= 90) {
             $score += 10;
@@ -379,10 +378,10 @@ class StudentProgressService
         } else {
             $score += 2;
         }
-        
+
         $progress->behavioral_score = min(100, $score);
     }
-    
+
     /**
      * Generate insights and achievements
      */
@@ -391,7 +390,7 @@ class StudentProgressService
         $insights = [];
         $achievements = [];
         $concerns = [];
-        
+
         // Attendance insights
         if ($progress->attendance_percentage >= 95) {
             $achievements[] = 'Excellent Attendance';
@@ -399,7 +398,7 @@ class StudentProgressService
             $concerns[] = 'Poor Attendance';
             $insights[] = 'Student needs to improve attendance to succeed academically.';
         }
-        
+
         // Academic performance insights
         if ($progress->overall_grade >= 90) {
             $achievements[] = 'Academic Excellence';
@@ -409,19 +408,19 @@ class StudentProgressService
             $concerns[] = 'Declining Performance';
             $insights[] = 'Recent decline in academic performance requires attention.';
         }
-        
+
         // Assignment insights
-        $submissionRate = $progress->total_assignments > 0 
-            ? ($progress->submitted_assignments / $progress->total_assignments) * 100 
+        $submissionRate = $progress->total_assignments > 0
+            ? ($progress->submitted_assignments / $progress->total_assignments) * 100
             : 0;
-            
+
         if ($submissionRate == 100) {
             $achievements[] = 'Perfect Assignment Submission';
         } elseif ($submissionRate < 80) {
             $concerns[] = 'Incomplete Assignments';
             $insights[] = 'Student needs support with assignment completion.';
         }
-        
+
         // Behavioral insights
         if ($progress->behavioral_score >= 90) {
             $achievements[] = 'Exemplary Behavior';
@@ -429,14 +428,14 @@ class StudentProgressService
             $concerns[] = 'Behavioral Issues';
             $insights[] = 'Student behavior and engagement need improvement.';
         }
-        
+
         return [
             'insights' => $insights,
             'achievements' => $achievements,
             'concerns' => $concerns,
         ];
     }
-    
+
     /**
      * Get progress statistics for a class
      */
@@ -446,7 +445,7 @@ class StudentProgressService
             ->where('academic_year_id', $academicYearId)
             ->where('term', $term)
             ->get();
-            
+
         if ($progressRecords->isEmpty()) {
             return [
                 'total_students' => 0,
@@ -457,15 +456,15 @@ class StudentProgressService
                 'struggling_students' => [],
             ];
         }
-        
+
         $totalStudents = $progressRecords->count();
         $averageGrade = $progressRecords->avg('overall_grade');
         $passRate = ($progressRecords->where('overall_grade', '>=', 50)->count() / $totalStudents) * 100;
         $attendanceRate = $progressRecords->avg('attendance_percentage');
-        
+
         $topPerformers = $progressRecords->sortByDesc('overall_grade')->take(5);
         $strugglingStudents = $progressRecords->where('overall_grade', '<', 50)->sortBy('overall_grade');
-        
+
         return [
             'total_students' => $totalStudents,
             'average_grade' => round($averageGrade, 2),

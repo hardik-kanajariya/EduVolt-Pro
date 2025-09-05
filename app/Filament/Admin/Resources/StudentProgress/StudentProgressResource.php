@@ -84,7 +84,7 @@ class StudentProgressResource extends Resource
                                 if ($totalMarks && $state !== null) {
                                     $percentage = ($state / $totalMarks) * 100;
                                     $set('percentage', round($percentage, 2));
-                                    
+
                                     // Calculate grade
                                     $grade = self::calculateGrade($percentage);
                                     $set('grade', $grade);
@@ -167,17 +167,17 @@ class StudentProgressResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('term')
-                    ->formatStateUsing(fn (string $state): string => ucfirst(str_replace('_', ' ', $state)))
+                    ->formatStateUsing(fn(string $state): string => ucfirst(str_replace('_', ' ', $state)))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('obtained_marks')
                     ->label('Marks')
-                    ->formatStateUsing(fn ($state, $record) => $state . '/' . $record->total_marks)
+                    ->formatStateUsing(fn($state, $record) => $state . '/' . $record->total_marks)
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('percentage')
                     ->label('Percentage')
-                    ->formatStateUsing(fn ($state) => $state . '%')
+                    ->formatStateUsing(fn($state) => $state . '%')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('grade')
@@ -195,7 +195,7 @@ class StudentProgressResource extends Resource
 
                 Tables\Columns\TextColumn::make('attendance_percentage')
                     ->label('Attendance')
-                    ->formatStateUsing(fn ($state) => $state ? $state . '%' : '-')
+                    ->formatStateUsing(fn($state) => $state ? $state . '%' : '-')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('recorded_at')
@@ -252,7 +252,7 @@ class StudentProgressResource extends Resource
                     ->query(function (Builder $query, array $data): Builder {
                         return $query->when(
                             $data['class_id'],
-                            fn (Builder $query, $classId): Builder => $query->whereHas('student', function (Builder $query) use ($classId) {
+                            fn(Builder $query, $classId): Builder => $query->whereHas('student', function (Builder $query) use ($classId) {
                                 $query->where('class_id', $classId);
                             })
                         );
@@ -271,11 +271,11 @@ class StudentProgressResource extends Resource
                         return $query
                             ->when(
                                 $data['min_percentage'],
-                                fn (Builder $query, $percentage): Builder => $query->where('percentage', '>=', $percentage),
+                                fn(Builder $query, $percentage): Builder => $query->where('percentage', '>=', $percentage),
                             )
                             ->when(
                                 $data['max_percentage'],
-                                fn (Builder $query, $percentage): Builder => $query->where('percentage', '<=', $percentage),
+                                fn(Builder $query, $percentage): Builder => $query->where('percentage', '<=', $percentage),
                             );
                     }),
             ])

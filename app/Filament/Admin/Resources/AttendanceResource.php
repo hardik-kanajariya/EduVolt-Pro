@@ -166,11 +166,11 @@ class AttendanceResource extends Resource
                         return $query
                             ->when(
                                 $data['from_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
                             )
                             ->when(
                                 $data['to_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
                             );
                     }),
             ])
@@ -182,7 +182,7 @@ class AttendanceResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    
+
                     BulkAction::make('mark_present')
                         ->label('Mark Present')
                         ->icon('heroicon-o-check-circle')

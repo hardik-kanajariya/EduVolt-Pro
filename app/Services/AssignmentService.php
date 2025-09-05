@@ -42,7 +42,7 @@ class AssignmentService
     public function submitAssignment(int $assignmentId, int $studentId, array $data): AssignmentSubmission
     {
         $assignment = Assignment::findOrFail($assignmentId);
-        
+
         // Check if already submitted
         $existingSubmission = AssignmentSubmission::where([
             'assignment_id' => $assignmentId,
@@ -57,7 +57,7 @@ class AssignmentService
                 'submitted_at' => now(),
                 'status' => 'resubmitted',
             ]);
-            
+
             return $existingSubmission;
         }
 
@@ -78,7 +78,7 @@ class AssignmentService
     public function gradeSubmission(int $submissionId, array $data): AssignmentSubmission
     {
         $submission = AssignmentSubmission::findOrFail($submissionId);
-        
+
         $submission->update([
             'marks_obtained' => $data['marks_obtained'],
             'feedback' => $data['feedback'] ?? null,

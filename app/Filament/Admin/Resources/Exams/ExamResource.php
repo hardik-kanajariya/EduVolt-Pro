@@ -115,7 +115,7 @@ class ExamResource extends Resource
 
                         Forms\Components\DateTimePicker::make('published_at')
                             ->label('Published At')
-                            ->visible(fn (Forms\Get $get) => $get('is_published')),
+                            ->visible(fn(Forms\Get $get) => $get('is_published')),
                     ])
                     ->columns(2),
 
@@ -166,7 +166,7 @@ class ExamResource extends Resource
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('type')
-                    ->formatStateUsing(fn (string $state): string => ucfirst(str_replace('_', ' ', $state)))
+                    ->formatStateUsing(fn(string $state): string => ucfirst(str_replace('_', ' ', $state)))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('start_date')
@@ -247,11 +247,11 @@ class ExamResource extends Resource
                         return $query
                             ->when(
                                 $data['from_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('start_date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('start_date', '>=', $date),
                             )
                             ->when(
                                 $data['to_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('end_date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('end_date', '<=', $date),
                             );
                     }),
             ])
@@ -263,7 +263,7 @@ class ExamResource extends Resource
                     ->label('Manage Subjects')
                     ->icon('heroicon-o-book-open')
                     ->color('info')
-                    ->url(fn ($record) => route('filament.admin.resources.exam-subjects.index', ['exam' => $record->id])),
+                    ->url(fn($record) => route('filament.admin.resources.exam-subjects.index', ['exam' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

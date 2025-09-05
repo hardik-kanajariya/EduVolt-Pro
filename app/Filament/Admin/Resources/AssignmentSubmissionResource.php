@@ -122,7 +122,7 @@ class AssignmentSubmissionResource extends Resource
                 Tables\Columns\TextColumn::make('marks_obtained')
                     ->label('Marks')
                     ->sortable()
-                    ->formatStateUsing(fn ($state, $record) => $state ? $state . '/' . $record->assignment->max_marks : '-'),
+                    ->formatStateUsing(fn($state, $record) => $state ? $state . '/' . $record->assignment->max_marks : '-'),
 
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
@@ -134,7 +134,7 @@ class AssignmentSubmissionResource extends Resource
 
                 Tables\Columns\BooleanColumn::make('is_late')
                     ->label('Late')
-                    ->getStateUsing(fn ($record) => $record->submitted_at > $record->assignment->due_date),
+                    ->getStateUsing(fn($record) => $record->submitted_at > $record->assignment->due_date),
 
                 Tables\Columns\TextColumn::make('graded_at')
                     ->label('Graded At')
@@ -170,7 +170,7 @@ class AssignmentSubmissionResource extends Resource
                     ->query(function (Builder $query, array $data): Builder {
                         return $query->when(
                             $data['class_id'],
-                            fn (Builder $query, $classId): Builder => $query->whereHas('student', function (Builder $query) use ($classId) {
+                            fn(Builder $query, $classId): Builder => $query->whereHas('student', function (Builder $query) use ($classId) {
                                 $query->where('class_id', $classId);
                             })
                         );
@@ -178,12 +178,12 @@ class AssignmentSubmissionResource extends Resource
 
                 Filter::make('late_submissions')
                     ->label('Late Submissions')
-                    ->query(fn (Builder $query): Builder => $query->whereRaw('submitted_at > CONCAT(DATE(assignments.due_date), " ", TIME(assignments.due_time))')
+                    ->query(fn(Builder $query): Builder => $query->whereRaw('submitted_at > CONCAT(DATE(assignments.due_date), " ", TIME(assignments.due_time))')
                         ->join('assignments', 'assignment_submissions.assignment_id', '=', 'assignments.id')),
 
                 Filter::make('pending_grading')
                     ->label('Pending Grading')
-                    ->query(fn (Builder $query): Builder => $query->where('status', 'submitted')),
+                    ->query(fn(Builder $query): Builder => $query->where('status', 'submitted')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -191,8 +191,8 @@ class AssignmentSubmissionResource extends Resource
                 Tables\Actions\Action::make('grade')
                     ->icon('heroicon-o-star')
                     ->color('success')
-                    ->visible(fn ($record) => $record->status === 'submitted')
-                    ->url(fn ($record) => route('filament.admin.resources.assignment-submissions.grade', $record)),
+                    ->visible(fn($record) => $record->status === 'submitted')
+                    ->url(fn($record) => route('filament.admin.resources.assignment-submissions.grade', $record)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

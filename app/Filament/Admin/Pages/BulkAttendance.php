@@ -54,7 +54,7 @@ class BulkAttendance extends Page implements Forms\Contracts\HasForms
                             ->searchable()
                             ->required()
                             ->live()
-                            ->afterStateUpdated(fn ($state) => $this->loadStudents($state)),
+                            ->afterStateUpdated(fn($state) => $this->loadStudents($state)),
 
                         Forms\Components\DatePicker::make('date')
                             ->required()
@@ -107,7 +107,7 @@ class BulkAttendance extends Page implements Forms\Contracts\HasForms
                             ->deletable(false)
                             ->default([]),
                     ])
-                    ->visible(fn () => !empty($this->data['attendance'])),
+                    ->visible(fn() => !empty($this->data['attendance'])),
             ])
             ->statePath('data');
     }

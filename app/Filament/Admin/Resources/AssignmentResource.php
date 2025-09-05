@@ -186,11 +186,11 @@ class AssignmentResource extends Resource
                         return $query
                             ->when(
                                 $data['from_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('due_date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('due_date', '>=', $date),
                             )
                             ->when(
                                 $data['to_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('due_date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('due_date', '<=', $date),
                             );
                     }),
 

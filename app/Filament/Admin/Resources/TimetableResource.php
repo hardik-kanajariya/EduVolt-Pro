@@ -118,7 +118,7 @@ class TimetableResource extends Resource
 
                 Tables\Columns\TextColumn::make('day_of_week')
                     ->label('Day')
-                    ->formatStateUsing(fn (string $state): string => ucfirst($state))
+                    ->formatStateUsing(fn(string $state): string => ucfirst($state))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('period.name')

@@ -14,7 +14,7 @@ class CreateAttendance extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['marked_by'] = Auth::id();
-        
+
         return $data;
     }
 

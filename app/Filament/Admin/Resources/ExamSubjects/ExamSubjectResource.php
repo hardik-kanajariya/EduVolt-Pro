@@ -139,7 +139,7 @@ class ExamSubjectResource extends Resource
 
                 Tables\Columns\TextColumn::make('duration_minutes')
                     ->label('Duration')
-                    ->formatStateUsing(fn ($state) => $state . ' min')
+                    ->formatStateUsing(fn($state) => $state . ' min')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('max_marks')
@@ -194,7 +194,7 @@ class ExamSubjectResource extends Resource
                     ->label('Manage Marks')
                     ->icon('heroicon-o-pencil-square')
                     ->color('success')
-                    ->url(fn ($record) => route('filament.admin.resources.exam-marks.index', ['exam_subject' => $record->id])),
+                    ->url(fn($record) => route('filament.admin.resources.exam-marks.index', ['exam_subject' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

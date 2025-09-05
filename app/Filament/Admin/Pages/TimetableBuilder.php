@@ -56,7 +56,7 @@ class TimetableBuilder extends Page implements Forms\Contracts\HasForms
                             ->searchable()
                             ->required()
                             ->live()
-                            ->afterStateUpdated(fn ($state) => $this->loadTimetable($state)),
+                            ->afterStateUpdated(fn($state) => $this->loadTimetable($state)),
                     ]),
             ])
             ->statePath('data');
@@ -70,10 +70,10 @@ class TimetableBuilder extends Page implements Forms\Contracts\HasForms
         }
 
         $this->selectedClass = SchoolClass::find($classId);
-        
+
         // Initialize grid
         $this->timetableGrid = [];
-        
+
         foreach ($this->days as $day) {
             $this->timetableGrid[$day] = [];
             foreach ($this->periods as $period) {

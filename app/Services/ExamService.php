@@ -35,11 +35,11 @@ class ExamService
     {
         return ExamMark::whereHas('examSubject', function ($query) use ($examId, $classId) {
             $query->where('exam_id', $examId)
-                  ->where('class_id', $classId);
+                ->where('class_id', $classId);
         })
-        ->with(['student', 'examSubject.subject'])
-        ->get()
-        ->groupBy('student_id');
+            ->with(['student', 'examSubject.subject'])
+            ->get()
+            ->groupBy('student_id');
     }
 
     /**
@@ -50,9 +50,9 @@ class ExamService
         return ExamMark::whereHas('examSubject', function ($query) use ($examId) {
             $query->where('exam_id', $examId);
         })
-        ->where('student_id', $studentId)
-        ->with(['examSubject.subject'])
-        ->get();
+            ->where('student_id', $studentId)
+            ->with(['examSubject.subject'])
+            ->get();
     }
 
     /**
@@ -103,9 +103,9 @@ class ExamService
     {
         $student = Student::with(['schoolClass', 'user'])->find($studentId);
         $exam = Exam::find($examId);
-        
+
         $results = $this->getStudentExamResults($studentId, $examId);
-        
+
         $totalMarks = 0;
         $obtainedMarks = 0;
         $subjectResults = [];
@@ -235,7 +235,7 @@ class ExamService
     public function canPublishExam(int $examId): array
     {
         $exam = Exam::find($examId);
-        
+
         if (!$exam) {
             return ['can_publish' => false, 'reasons' => ['Exam not found']];
         }
@@ -252,7 +252,7 @@ class ExamService
         $subjectsWithoutMarks = $exam->examSubjects()
             ->whereDoesntHave('examMarks')
             ->count();
-        
+
         if ($subjectsWithoutMarks > 0) {
             $reasons[] = "Marks not entered for {$subjectsWithoutMarks} subjects";
         }

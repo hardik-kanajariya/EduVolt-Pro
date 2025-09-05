@@ -40,8 +40,8 @@ class ExamMarkResource extends Resource
                         Forms\Components\Select::make('exam_subject_id')
                             ->label('Exam Subject')
                             ->relationship('examSubject')
-                            ->getOptionLabelFromRecordUsing(fn ($record) => 
-                                $record->exam->name . ' - ' . $record->subject->name . ' (' . $record->schoolClass->name . ')')
+                            ->getOptionLabelFromRecordUsing(fn($record) =>
+                            $record->exam->name . ' - ' . $record->subject->name . ' (' . $record->schoolClass->name . ')')
                             ->searchable()
                             ->preload()
                             ->required(),
@@ -64,11 +64,11 @@ class ExamMarkResource extends Resource
                                 if ($examSubject && $state !== null) {
                                     $percentage = ($state / $examSubject->max_marks) * 100;
                                     $set('percentage', round($percentage, 2));
-                                    
+
                                     // Calculate grade based on percentage
                                     $grade = self::calculateGrade($percentage);
                                     $set('grade', $grade);
-                                    
+
                                     // Set pass/fail status
                                     $set('is_passed', $state >= $examSubject->passing_marks);
                                 }
@@ -142,14 +142,14 @@ class ExamMarkResource extends Resource
                 Tables\Columns\TextColumn::make('marks_obtained')
                     ->label('Marks')
                     ->sortable()
-                    ->formatStateUsing(fn ($state, $record) => 
-                        $record->is_absent ? 'Absent' : $state . '/' . $record->examSubject->max_marks),
+                    ->formatStateUsing(fn($state, $record) =>
+                    $record->is_absent ? 'Absent' : $state . '/' . $record->examSubject->max_marks),
 
                 Tables\Columns\TextColumn::make('percentage')
                     ->label('Percentage')
                     ->sortable()
-                    ->formatStateUsing(fn ($state, $record) => 
-                        $record->is_absent ? 'Absent' : $state . '%'),
+                    ->formatStateUsing(fn($state, $record) =>
+                    $record->is_absent ? 'Absent' : $state . '%'),
 
                 Tables\Columns\TextColumn::make('grade')
                     ->label('Grade')
@@ -210,11 +210,11 @@ class ExamMarkResource extends Resource
                         return $query
                             ->when(
                                 $data['min_marks'],
-                                fn (Builder $query, $marks): Builder => $query->where('marks_obtained', '>=', $marks),
+                                fn(Builder $query, $marks): Builder => $query->where('marks_obtained', '>=', $marks),
                             )
                             ->when(
                                 $data['max_marks'],
-                                fn (Builder $query, $marks): Builder => $query->where('marks_obtained', '<=', $marks),
+                                fn(Builder $query, $marks): Builder => $query->where('marks_obtained', '<=', $marks),
                             );
                     }),
             ])

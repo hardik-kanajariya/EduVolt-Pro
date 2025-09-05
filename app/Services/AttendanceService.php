@@ -19,7 +19,7 @@ class AttendanceService
     public function markBulkAttendance(array $attendanceData): array
     {
         $results = [];
-        
+
         DB::transaction(function () use ($attendanceData, &$results) {
             foreach ($attendanceData['attendance'] as $studentAttendance) {
                 $result = $this->markStudentAttendance([
@@ -33,11 +33,11 @@ class AttendanceService
                     'remarks' => $studentAttendance['remarks'] ?? null,
                     'marked_by' => Auth::id(), // Set the user who marked the attendance
                 ]);
-                
+
                 $results[] = $result;
             }
         });
-        
+
         return $results;
     }
 
@@ -141,7 +141,7 @@ class AttendanceService
 
         foreach ($students as $student) {
             $stats = $this->calculateAttendancePercentage($student->id);
-            
+
             if ($stats['percentage'] < $thresholdPercentage && $stats['total_days'] > 0) {
                 $student->attendance_stats = $stats;
                 $defaulters->push($student);
@@ -179,7 +179,7 @@ class AttendanceService
     public function getDailyAttendanceStats(string $date): array
     {
         $totalStudents = Student::where('status', 'active')->count();
-        
+
         $attendanceStats = DB::table('attendances')
             ->select('status', DB::raw('COUNT(*) as count'))
             ->whereDate('date', $date)

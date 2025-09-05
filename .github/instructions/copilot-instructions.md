@@ -2,7 +2,7 @@
 
 ## 🎯 Project Overview & Context
 
-You are developing **EduVault Pro v1.0**, an advanced school management system using Laravel 11 and Filament v4. This is a comprehensive educational platform with role-based access for administrators, faculty, students, and parents.
+You are developing **EduVault Pro v1.0**, an advanced school management system using Laravel 11 and Filament v3. This is a comprehensive educational platform with role-based access for administrators, faculty, students, and parents.
 
 **Critical Version Constraints:**
 - **v1.0 Features**: Cash payments, SMTP email, push notifications, English only
@@ -12,7 +12,7 @@ You are developing **EduVault Pro v1.0**, an advanced school management system u
 
 ### **Primary Technologies (MUST USE)**
 - **Backend**: PHP 8.2+, Laravel 11
-- **Admin Interface**: Filament v4 (Multi-panel approach)
+- **Admin Interface**: Filament v3 (Multi-panel approach)
 - **Frontend**: Tailwind CSS, Blade templates
 - **Database**: MySQL 8.0 with utf8mb4 charset
 - **Authentication**: Spatie Laravel Permission for role-based access
@@ -457,7 +457,7 @@ Do not remove any file unless I explicitly told you to do so.
 
 you should not run the cmd commands to create migration, model or resource etc. just create those files in respective folders with proper naming conventions and proper code manually. 
 
-we are using filament v4 so do not use any code or function or anything from filament v3. analyze the filament docs if you are not sure about anything.  
+we are using filament v3 so do not use any code or function or anything from filament v3. analyze the filament docs if you are not sure about anything.  
 https://filamentphp.com/docs/4.x/introduction/overview
 
 the dev.md file is containes only higher level requirements, a list of features only, we have to identify and analyze each in depth and create proper system. we should go beyond the expectations. 

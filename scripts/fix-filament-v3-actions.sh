@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to fix Filament v4 to v3 action compatibility issues
+# Script to fix Filament v3 to v3 action compatibility issues
 # This script will:
 # 1. Replace recordActions with actions
 # 2. Replace recordBulkActions with bulkActions

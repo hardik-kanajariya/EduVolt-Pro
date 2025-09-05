@@ -6,7 +6,7 @@ EduVault Pro is built using a modern, scalable architecture with the following k
 
 ### Core Framework Stack
 - **Backend**: Laravel 11.x (PHP 8.2+)
-- **Admin Panel**: Filament v4.x
+- **Admin Panel**: Filament v3.x
 - **Frontend**: Livewire 3.x + Alpine.js
 - **Database**: MySQL 8.0+ / PostgreSQL 13+
 - **Cache**: Redis 6.0+

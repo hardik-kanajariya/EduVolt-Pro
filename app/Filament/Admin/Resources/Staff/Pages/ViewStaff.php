@@ -12,6 +12,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
+use Illuminate\Support\HtmlString;
 
 class ViewStaff extends ViewRecord
 {
@@ -43,7 +44,7 @@ class ViewStaff extends ViewRecord
                 // Staff Profile Header
                 Placeholder::make('staff_profile_header')
                     ->label('')
-                    ->content(function () use ($record, $yearsOfService): string {
+                    ->content(function () use ($record, $yearsOfService): HtmlString {
                         $avatar = $record->user?->avatar
                             ? '<img src="' . asset('storage/' . $record->user->avatar) . '" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg">'
                             : '<div class="w-24 h-24 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg">' .
@@ -57,21 +58,21 @@ class ViewStaff extends ViewRecord
                             default => 'bg-gray-100 text-gray-800'
                         };
 
-                        return '<div class="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">' .
+                        return new HtmlString('<div class="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">' .
                             $avatar .
-                            '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . ($record->user?->name ?? 'Staff Member') . '</h2>' .
-                            '<p class="text-blue-600 font-medium mb-2">' . $record->employee_id . '</p>' .
-                            '<p class="text-gray-600 mb-4">' . ($record->position ?? 'Position Not Set') . '</p>' .
+                            '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . e($record->user?->name ?? 'Staff Member') . '</h2>' .
+                            '<p class="text-blue-600 font-medium mb-2">' . e($record->employee_id) . '</p>' .
+                            '<p class="text-gray-600 mb-4">' . e($record->position ?? 'Position Not Set') . '</p>' .
                             '<div class="flex justify-center space-x-4 mb-4">' .
                             '<span class="px-3 py-1 rounded-full text-sm font-medium ' . $statusColor . '">' .
-                            ucfirst($record->status) . '</span>' .
+                            e(ucfirst($record->status)) . '</span>' .
                             '<span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">' .
-                            $yearsOfService . ' Years Service</span>' .
+                            e($yearsOfService) . ' Years Service</span>' .
                             '</div>' .
                             '<div class="grid grid-cols-2 gap-4 mt-4">' .
-                            '<div class="text-center"><span class="block text-lg font-bold text-blue-600">' . ($record->department ?? 'N/A') . '</span><span class="text-sm text-gray-600">Department</span></div>' .
-                            '<div class="text-center"><span class="block text-lg font-bold text-green-600">' . ($record->employment_type ?? 'N/A') . '</span><span class="text-sm text-gray-600">Employment Type</span></div>' .
-                            '</div></div>';
+                            '<div class="text-center"><span class="block text-lg font-bold text-blue-600">' . e($record->department ?? 'N/A') . '</span><span class="text-sm text-gray-600">Department</span></div>' .
+                            '<div class="text-center"><span class="block text-lg font-bold text-green-600">' . e($record->employment_type ?? 'N/A') . '</span><span class="text-sm text-gray-600">Employment Type</span></div>' .
+                            '</div></div>');
                     })
                     ->columnSpanFull(),
 
@@ -142,19 +143,19 @@ class ViewStaff extends ViewRecord
                 // Service Information
                 Placeholder::make('service_duration')
                     ->label('Service Duration')
-                    ->content(function () use ($yearsOfService, $monthsOfService): string {
-                        return '<div class="p-4 bg-blue-50 rounded-lg border border-blue-200">' .
+                    ->content(function () use ($yearsOfService, $monthsOfService): HtmlString {
+                        return new HtmlString('<div class="p-4 bg-blue-50 rounded-lg border border-blue-200">' .
                             '<div class="grid grid-cols-2 gap-4">' .
                             '<div class="text-center">' .
-                            '<div class="text-xl font-bold text-blue-700">' . $yearsOfService . '</div>' .
+                            '<div class="text-xl font-bold text-blue-700">' . e($yearsOfService) . '</div>' .
                             '<div class="text-sm text-blue-600">Years</div>' .
                             '</div>' .
                             '<div class="text-center">' .
-                            '<div class="text-xl font-bold text-blue-700">' . $monthsOfService . '</div>' .
+                            '<div class="text-xl font-bold text-blue-700">' . e($monthsOfService) . '</div>' .
                             '<div class="text-sm text-blue-600">Months</div>' .
                             '</div>' .
                             '</div>' .
-                            '</div>';
+                            '</div>');
                     }),
 
                 // Responsibilities
@@ -175,19 +176,19 @@ class ViewStaff extends ViewRecord
                 // Contact Information
                 Placeholder::make('contact_info')
                     ->label('Contact Information')
-                    ->content(function () use ($record): string {
+                    ->content(function () use ($record): HtmlString {
                         $user = $record->user;
                         if (!$user) {
-                            return '<div class="p-4 bg-gray-50 rounded-lg text-gray-500">No user account linked</div>';
+                            return new HtmlString('<div class="p-4 bg-gray-50 rounded-lg text-gray-500">No user account linked</div>');
                         }
 
-                        return '<div class="p-4 bg-green-50 rounded-lg border border-green-200">' .
+                        return new HtmlString('<div class="p-4 bg-green-50 rounded-lg border border-green-200">' .
                             '<div class="space-y-2">' .
-                            '<div><strong>Email:</strong> ' . ($user->email ?? 'Not provided') . '</div>' .
-                            '<div><strong>Phone:</strong> ' . ($user->phone ?? 'Not provided') . '</div>' .
-                            '<div><strong>Address:</strong> ' . ($user->address ?? 'Not provided') . '</div>' .
+                            '<div><strong>Email:</strong> ' . e($user->email ?? 'Not provided') . '</div>' .
+                            '<div><strong>Phone:</strong> ' . e($user->phone ?? 'Not provided') . '</div>' .
+                            '<div><strong>Address:</strong> ' . e($user->address ?? 'Not provided') . '</div>' .
                             '</div>' .
-                            '</div>';
+                            '</div>');
                     })
                     ->columnSpanFull(),
 

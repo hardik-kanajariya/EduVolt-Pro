@@ -13,6 +13,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
+use Illuminate\Support\HtmlString;
 
 class ViewStudent extends ViewRecord
 {
@@ -36,27 +37,27 @@ class ViewStudent extends ViewRecord
             ->schema([
                 Placeholder::make('student_profile_header')
                     ->label('')
-                    ->content(function ($record): string {
+                    ->content(function ($record): HtmlString {
                         $avatar = $record->avatar
-                            ? '<img src="' . asset('storage/' . $record->avatar) . '" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-blue-200">'
+                            ? '<img src="' . e(asset('storage/' . $record->avatar)) . '" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-blue-200">'
                             : '<div class="w-24 h-24 rounded-full mx-auto mb-4 bg-blue-100 flex items-center justify-center text-blue-600 text-2xl font-bold">' .
-                            substr($record->user?->name ?? 'S', 0, 1) . '</div>';
+                            e(substr($record->user?->name ?? 'S', 0, 1)) . '</div>';
 
-                        return '<div class="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">' .
+                        return new HtmlString('<div class="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">' .
                             $avatar .
-                            '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . ($record->user?->name ?? 'Student') . '</h2>' .
-                            '<p class="text-blue-600 font-medium">' . $record->admission_number . '</p>' .
+                            '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . e($record->user?->name ?? 'Student') . '</h2>' .
+                            '<p class="text-blue-600 font-medium">' . e($record->admission_number) . '</p>' .
                             '<div class="mt-4 flex justify-center">' .
                             '<span class="px-3 py-1 rounded-full text-sm font-medium ' .
                             ($record->status === 'active' ? 'bg-green-100 text-green-800' : ($record->status === 'inactive' ? 'bg-red-100 text-red-800' : ($record->status === 'transferred' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'))) . '">' .
-                            match ($record->status) {
+                            e(match ($record->status) {
                                 'active' => ' Active',
                                 'inactive' => ' Inactive',
                                 'transferred' => ' Transferred',
                                 'graduated' => ' Graduated',
                                 'suspended' => ' Suspended',
                                 default => ucfirst($record->status)
-                            } . '</span></div></div>';
+                            }) . '</span></div></div>');
                     })
                     ->columnSpanFull(),
 
@@ -223,16 +224,16 @@ class ViewStudent extends ViewRecord
 
                 Placeholder::make('student_stats')
                     ->label('Quick Statistics')
-                    ->content(function ($record): string {
+                    ->content(function ($record): HtmlString {
                         $age = $record->date_of_birth ? \Carbon\Carbon::parse($record->date_of_birth)->age : 'N/A';
                         $emergencyContacts = is_array($record->emergency_contacts) ? count($record->emergency_contacts) : 0;
                         $hasMedical = !empty($record->medical_info) ? 'Yes' : 'No';
 
-                        return '<div class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">' .
-                            '<div class="text-center"><div class="text-2xl font-bold text-blue-600">' . $age . '</div><div class="text-sm text-gray-600">Age (years)</div></div>' .
-                            '<div class="text-center"><div class="text-2xl font-bold text-green-600">' . $emergencyContacts . '</div><div class="text-sm text-gray-600">Emergency Contacts</div></div>' .
-                            '<div class="text-center"><div class="text-2xl font-bold text-red-600">' . $hasMedical . '</div><div class="text-sm text-gray-600">Medical Info</div></div>' .
-                            '</div>';
+                        return new HtmlString('<div class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">' .
+                            '<div class="text-center"><div class="text-2xl font-bold text-blue-600">' . e($age) . '</div><div class="text-sm text-gray-600">Age (years)</div></div>' .
+                            '<div class="text-center"><div class="text-2xl font-bold text-green-600">' . e($emergencyContacts) . '</div><div class="text-sm text-gray-600">Emergency Contacts</div></div>' .
+                            '<div class="text-center"><div class="text-2xl font-bold text-red-600">' . e($hasMedical) . '</div><div class="text-sm text-gray-600">Medical Info</div></div>' .
+                            '</div>');
                     })
                     ->columnSpanFull(),
             ])

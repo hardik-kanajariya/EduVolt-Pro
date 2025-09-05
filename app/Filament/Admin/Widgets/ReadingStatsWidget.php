@@ -15,16 +15,16 @@ class ReadingStatsWidget extends BaseWidget
     protected function getStats(): array
     {
         $totalBooksIssued = BookIssue::count();
-        $booksIssuedThisMonth = BookIssue::whereMonth('issued_at', now()->month)
-            ->whereYear('issued_at', now()->year)
+        $booksIssuedThisMonth = BookIssue::whereMonth('issue_date', now()->month)
+            ->whereYear('issue_date', now()->year)
             ->count();
-        
+
         $totalStudentsWithBooks = Student::whereHas('bookIssues')->count();
-        $averageBooksPerStudent = $totalStudentsWithBooks > 0 
-            ? round($totalBooksIssued / $totalStudentsWithBooks, 1) 
+        $averageBooksPerStudent = $totalStudentsWithBooks > 0
+            ? round($totalBooksIssued / $totalStudentsWithBooks, 1)
             : 0;
 
-        $overdueBooks = BookIssue::whereNull('returned_at')
+        $overdueBooks = BookIssue::whereNull('return_date')
             ->where('due_date', '<', now())
             ->count();
 

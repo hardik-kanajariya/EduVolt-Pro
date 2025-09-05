@@ -19,8 +19,8 @@ class LibraryReports extends Page
             'total_books' => LibraryBook::count(),
             'total_copies' => LibraryBook::sum('total_copies'),
             'available_copies' => LibraryBook::sum('available_copies'),
-            'issued_books' => BookIssue::whereNull('returned_at')->count(),
-            'overdue_books' => BookIssue::whereNull('returned_at')
+            'issued_books' => BookIssue::whereNull('return_date')->count(),
+            'overdue_books' => BookIssue::whereNull('return_date')
                 ->where('due_date', '<', now())
                 ->count(),
             'total_fines' => LibraryFine::where('status', 'unpaid')->sum('amount'),
@@ -29,8 +29,8 @@ class LibraryReports extends Page
 
     public function getCirculationData()
     {
-        return BookIssue::selectRaw('DATE(issued_at) as date, COUNT(*) as issues')
-            ->whereBetween('issued_at', [now()->subDays(30), now()])
+        return BookIssue::selectRaw('DATE(issue_date) as date, COUNT(*) as issues')
+            ->whereBetween('issue_date', [now()->subDays(30), now()])
             ->groupBy('date')
             ->orderBy('date')
             ->get();
@@ -39,7 +39,7 @@ class LibraryReports extends Page
     public function getOverdueBooks()
     {
         return BookIssue::with(['libraryBook', 'student'])
-            ->whereNull('returned_at')
+            ->whereNull('return_date')
             ->where('due_date', '<', now())
             ->orderBy('due_date')
             ->limit(10)
@@ -66,7 +66,7 @@ class LibraryReports extends Page
     public function getStudentActivity()
     {
         return Student::withCount(['bookIssues' => function ($q) {
-            $q->whereBetween('issued_at', [now()->subDays(30), now()]);
+            $q->whereBetween('issue_date', [now()->subDays(30), now()]);
         }])
             ->having('book_issues_count', '>', 0)
             ->orderByDesc('book_issues_count')

@@ -160,9 +160,9 @@ class SchoolClassForm
                             ->required()
                             ->columnSpan(1),
 
-                        Select::make('teacher_id')
-                            ->label('Subject Teacher')
-                            ->relationship('teacher', 'user.name')
+                        Select::make('class_teacher_id')
+                            ->label('Class Teacher')
+                            ->relationship('classTeacher', 'user.name')
                             ->searchable()
                             ->preload()
                             ->columnSpan(1),

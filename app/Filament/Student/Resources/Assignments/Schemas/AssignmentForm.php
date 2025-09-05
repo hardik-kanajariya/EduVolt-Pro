@@ -16,7 +16,7 @@ class AssignmentForm
         return $form
             ->components([
                 Select::make('teacher_id')
-                    ->relationship('teacher', 'id')
+                    ->relationship('teacher', 'user.name')
                     ->required(),
                 TextInput::make('class_id')
                     ->required()

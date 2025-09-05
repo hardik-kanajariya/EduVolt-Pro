@@ -49,7 +49,7 @@ class StudentsRelationManager extends RelationManager
 
                 Select::make('class_id')
                     ->label('Class')
-                    ->relationship('class', 'name')
+                    ->relationship('schoolClass', 'name')
                     ->required()
                     ->searchable(),
 
@@ -130,7 +130,7 @@ class StudentsRelationManager extends RelationManager
             ->filters([
                 SelectFilter::make('class_id')
                     ->label('Class')
-                    ->relationship('class', 'name'),
+                    ->relationship('schoolClass', 'name'),
 
                 SelectFilter::make('status')
                     ->options([

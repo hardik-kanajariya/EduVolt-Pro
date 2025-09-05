@@ -31,10 +31,10 @@ class BookIssue extends Model
     ];
 
     protected $casts = [
-        'issue_date' => 'datetime',
-        'due_date' => 'datetime',
-        'return_date' => 'datetime',
-        'last_renewal_date' => 'datetime',
+        'issue_date' => 'date',
+        'due_date' => 'date',
+        'return_date' => 'date',
+        'last_renewal_date' => 'date',
         'renewal_count' => 'integer',
     ];
 

@@ -12,7 +12,7 @@ class CreateAcademicReport extends CreateRecord
 
  protected function mutateFormDataBeforeCreate(array $data): array
  {
- $data['created_by'] = Auth::id();
+ $data['generated_by'] = Auth::id();
  $data['status'] = 'pending';
 
  // Parse recipients from textarea to array

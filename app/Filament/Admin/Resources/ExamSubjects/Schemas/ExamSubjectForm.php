@@ -58,7 +58,7 @@ class ExamSubjectForm
 
                 Select::make('teacher_id')
                     ->label('Supervising Teacher')
-                    ->relationship('teacher', 'name')
+                    ->relationship('teacher', 'user.name')
                     ->searchable()
                     ->preload(),
 

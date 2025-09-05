@@ -34,7 +34,7 @@ class AssignmentResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('teacher_id')
                             ->label('Teacher')
-                            ->relationship('teacher', 'name')
+                            ->relationship('teacher', 'user.name')
                             ->searchable()
                             ->preload()
                             ->required(),
@@ -155,7 +155,7 @@ class AssignmentResource extends Resource
             ->filters([
                 SelectFilter::make('teacher_id')
                     ->label('Teacher')
-                    ->relationship('teacher', 'name')
+                    ->relationship('teacher', 'user.name')
                     ->searchable(),
 
                 SelectFilter::make('class_id')

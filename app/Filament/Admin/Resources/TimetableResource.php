@@ -50,7 +50,7 @@ class TimetableResource extends Resource
 
                         Forms\Components\Select::make('teacher_id')
                             ->label('Teacher')
-                            ->relationship('teacher', 'name')
+                            ->relationship('teacher', 'user.name')
                             ->searchable()
                             ->preload()
                             ->required(),
@@ -160,7 +160,7 @@ class TimetableResource extends Resource
 
                 SelectFilter::make('teacher_id')
                     ->label('Teacher')
-                    ->relationship('teacher', 'name')
+                    ->relationship('teacher', 'user.name')
                     ->searchable(),
 
                 SelectFilter::make('day_of_week')

@@ -49,6 +49,96 @@
                         <p class="text-2xl font-bold text-orange-600 dark:text-orange-400">{{ $totalTeachers }}</p>
                     </div>
                     <div class="p-3 bg-orange-100 dark:bg-orange-900 rounded-full">
+                        <x-heroicon-o-users class="w-6 h-6 text-orange-600 dark:text-orange-400" />
+                    </div>
+                </div>
+            </x-filament::card>
+
+            {{-- Total Periods --}}
+            <x-filament::card>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Periods</p>
+                        <p class="text-2xl font-bold text-red-600 dark:text-red-400">{{ $totalPeriods }}</p>
+                    </div>
+                    <div class="p-3 bg-red-100 dark:bg-red-900 rounded-full">
+                        <x-heroicon-o-clock class="w-6 h-6 text-red-600 dark:text-red-400" />
+                    </div>
+                </div>
+            </x-filament::card>
+        </div>
+
+        {{-- Timetable Builder Form --}}
+        <form wire:submit="save">
+            {{ $this->form }}
+
+            <x-filament-actions::group class="mt-6">
+                {{ $this->saveAction }}
+                {{ $this->clearAction }}
+            </x-filament-actions::group>
+        </form>
+
+        {{-- Timetable Grid Display --}}
+        @if(!empty($timetableGrid))
+        <x-filament::section>
+            <x-slot name="heading">
+                Timetable Grid
+            </x-slot>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                Day / Period
+                            </th>
+                            @foreach($periods as $period)
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                {{ $period['name'] }}<br>
+                                <small>{{ date('H:i', strtotime($period['start_time'])) }} - {{ date('H:i', strtotime($period['end_time'])) }}</small>
+                            </th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                        @foreach($days as $day)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-800">
+                                {{ ucfirst($day) }}
+                            </td>
+                            @foreach($periods as $period)
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                @if(!empty($timetableGrid[$day][$period['id']]['subject_name']))
+                                <div class="bg-blue-100 dark:bg-blue-900 p-2 rounded">
+                                    <div class="font-medium text-blue-900 dark:text-blue-100">
+                                        {{ $timetableGrid[$day][$period['id']]['subject_name'] }}
+                                    </div>
+                                    @if(!empty($timetableGrid[$day][$period['id']]['teacher_name']))
+                                    <div class="text-xs text-blue-700 dark:text-blue-300">
+                                        {{ $timetableGrid[$day][$period['id']]['teacher_name'] }}
+                                    </div>
+                                    @endif
+                                    @if(!empty($timetableGrid[$day][$period['id']]['room_number']))
+                                    <div class="text-xs text-blue-600 dark:text-blue-400">
+                                        Room: {{ $timetableGrid[$day][$period['id']]['room_number'] }}
+                                    </div>
+                                    @endif
+                                </div>
+                                @else
+                                <div class="text-gray-400 dark:text-gray-600 text-center">-</div>
+                                @endif
+                            </td>
+                            @endforeach
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </x-filament::section>
+        @endif
+    </div>
+</x-filament-panels::page>
+                    <div class="p-3 bg-orange-100 dark:bg-orange-900 rounded-full">
                         <x-heroicon-o-academic-cap class="w-6 h-6 text-orange-600 dark:text-orange-400" />
                     </div>
                 </div>

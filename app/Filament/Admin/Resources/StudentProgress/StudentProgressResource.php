@@ -39,9 +39,26 @@ class StudentProgressResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('student_id')
                             ->label('Student')
-                            ->relationship('student', 'name')
                             ->searchable()
                             ->preload()
+                            ->options(fn () => Student::with('user')
+                                ->get()
+                                ->mapWithKeys(fn (Student $student) => [
+                                    $student->id => $student->user?->name ?? 'Unknown',
+                                ])
+                                ->toArray()
+                            )
+                            ->getSearchResultsUsing(fn (string $search) => Student::query()
+                                ->whereHas('user', fn ($q) => $q->where('name', 'like', "%{$search}%"))
+                                ->with('user')
+                                ->limit(50)
+                                ->get()
+                                ->mapWithKeys(fn (Student $student) => [
+                                    $student->id => $student->user?->name ?? 'Unknown',
+                                ])
+                                ->toArray()
+                            )
+                            ->getOptionLabelUsing(fn ($value): ?string => Student::with('user')->find($value)?->user?->name)
                             ->required(),
 
                         Forms\Components\Select::make('academic_year_id')

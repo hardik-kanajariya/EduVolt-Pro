@@ -3,13 +3,16 @@
 namespace App\Filament\Admin\Resources\StudentProgress;
 
 use App\Filament\Admin\Resources\StudentProgress\Pages\ListStudentProgress;
+use App\Filament\Admin\Resources\StudentProgress\Pages\CreateStudentProgress;
+use App\Filament\Admin\Resources\StudentProgress\Pages\EditStudentProgress;
+use App\Filament\Admin\Resources\StudentProgress\Schemas\StudentProgressForm;
 use App\Filament\Admin\Resources\StudentProgress\Tables\StudentProgressTable;
 use App\Models\Attendance;
 use Filament\Resources\Resource;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 
-class StudentProgress extends Resource
+class StudentProgressResource extends Resource
 {
     protected static ?string $model = Attendance::class;
     protected static ?string $navigationIcon = 'heroicon-o-trending-up';

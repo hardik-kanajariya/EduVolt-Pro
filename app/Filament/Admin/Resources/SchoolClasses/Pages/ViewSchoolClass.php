@@ -11,7 +11,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
-use Illuminate\Support\HtmlString;
 
 class ViewSchoolClass extends ViewRecord
 {
@@ -35,7 +34,7 @@ class ViewSchoolClass extends ViewRecord
             ->schema([
                 Placeholder::make('class_profile_header')
                     ->label('')
-                    ->content(function ($record): HtmlString {
+                    ->content(function ($record): string {
                         $displayName = $record->display_name ?: "{$record->name}-{$record->section}";
                         $studentCount = $record->students?->count() ?? 0;
                         $capacity = $record->capacity ?? 0;
@@ -60,7 +59,7 @@ class ViewSchoolClass extends ViewRecord
                             default => ' ' . ucfirst($record->stream ?? 'General')
                         };
 
-                        return new HtmlString('<div class="text-center p-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-200">' .
+                        return '<div class="text-center p-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-200">' .
                             '<div class="w-24 h-24 rounded-full mx-auto mb-4 bg-indigo-100 flex items-center justify-center text-indigo-600 text-3xl font-bold"></div>' .
                             '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . $displayName . '</h2>' .
                             '<p class="text-indigo-600 font-medium mb-2">' . $record->school?->name . '</p>' .
@@ -310,13 +309,13 @@ class ViewSchoolClass extends ViewRecord
 
                 Placeholder::make('class_stats')
                     ->label('Class Statistics')
-                    ->content(function ($record): HtmlString {
+                    ->content(function ($record): string {
                         $studentCount = $record->students?->count() ?? 0;
                         $capacity = $record->capacity ?? 0;
                         $subjectCount = $record->subjects?->count() ?? 0;
                         $timetableSlots = is_array($record->timetable_slots) ? count($record->timetable_slots) : 0;
 
-                        return new HtmlString('<div class="grid grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg">' .
+                        return '<div class="grid grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg">' .
                             '<div class="text-center"><div class="text-2xl font-bold text-blue-600">' . $studentCount . '</div><div class="text-sm text-gray-600">Students Enrolled</div></div>' .
                             '<div class="text-center"><div class="text-2xl font-bold text-green-600">' . $capacity . '</div><div class="text-sm text-gray-600">Total Capacity</div></div>' .
                             '<div class="text-center"><div class="text-2xl font-bold text-purple-600">' . $subjectCount . '</div><div class="text-sm text-gray-600">Subjects</div></div>' .

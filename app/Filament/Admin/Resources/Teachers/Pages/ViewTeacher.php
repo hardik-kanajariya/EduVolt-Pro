@@ -13,7 +13,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
-use Illuminate\Support\HtmlString;
 
 class ViewTeacher extends ViewRecord
 {
@@ -37,7 +36,7 @@ class ViewTeacher extends ViewRecord
             ->schema([
                 Placeholder::make('teacher_profile_header')
                     ->label('')
-                    ->content(function ($record): HtmlString {
+                    ->content(function ($record): string {
                         $photo = $record->profile_photo
                             ? '<img src="' . asset('storage/' . $record->profile_photo) . '" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-blue-200">'
                             : '<div class="w-32 h-32 rounded-full mx-auto mb-4 bg-blue-100 flex items-center justify-center text-blue-600 text-4xl font-bold">' .
@@ -54,7 +53,7 @@ class ViewTeacher extends ViewRecord
                             default => ' ' . ucfirst($record->designation ?? 'Teacher')
                         };
 
-                        return new HtmlString('<div class="text-center p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">' .
+                        return '<div class="text-center p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">' .
                             $photo .
                             '<h2 class="text-2xl font-bold text-gray-800 mb-2">' . ($record->user?->name ?? 'Teacher') . '</h2>' .
                             '<p class="text-green-600 font-medium mb-2">' . $record->employee_id . '</p>' .
@@ -74,7 +73,7 @@ class ViewTeacher extends ViewRecord
                             } . '</span>' .
                             '<span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">' .
                             $record->experience_years . ' Years Experience</span>' .
-                            '</div></div>');
+                            '</div></div>';
                     })
                     ->columnSpanFull(),
 
@@ -300,16 +299,16 @@ class ViewTeacher extends ViewRecord
 
                 Placeholder::make('teacher_stats')
                     ->label('Teaching Statistics')
-                    ->content(function ($record): HtmlString {
+                    ->content(function ($record): string {
                         $tenure = $record->join_date ? \Carbon\Carbon::parse($record->join_date)->diffInYears(now()) : 0;
                         $certifications = is_array($record->certifications) ? count($record->certifications) : 0;
                         $previousJobs = is_array($record->previous_experience) ? count($record->previous_experience) : 0;
 
-                        return new HtmlString('<div class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">' .
+                        return '<div class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">' .
                             '<div class="text-center"><div class="text-2xl font-bold text-blue-600">' . $tenure . '</div><div class="text-sm text-gray-600">Years at School</div></div>' .
                             '<div class="text-center"><div class="text-2xl font-bold text-green-600">' . $certifications . '</div><div class="text-sm text-gray-600">Certifications</div></div>' .
                             '<div class="text-center"><div class="text-2xl font-bold text-purple-600">' . $previousJobs . '</div><div class="text-sm text-gray-600">Previous Positions</div></div>' .
-                            '</div>');
+                            '</div>';
                     })
                     ->columnSpanFull(),
             ])

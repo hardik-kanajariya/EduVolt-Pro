@@ -9,7 +9,6 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
 use Carbon\Carbon;
-use Illuminate\Support\HtmlString;
 
 class AcademicYearForm
 {
@@ -76,7 +75,7 @@ class AcademicYearForm
 
                 Placeholder::make('duration_display')
                     ->label('Duration Information')
-                    ->content(function ($get): HtmlString {
+                    ->content(function ($get): string {
                         $startDate = $get('start_date');
                         $endDate = $get('end_date');
 
@@ -86,7 +85,7 @@ class AcademicYearForm
                             $diffInDays = $start->diffInDays($end) + 1;
                             $diffInMonths = $start->diffInMonths($end);
 
-                            return new HtmlString("<div class='p-4 bg-blue-50 rounded-lg border border-blue-200'>" .
+                            return "<div class='p-4 bg-blue-50 rounded-lg border border-blue-200'>" .
                                 "<div class='grid grid-cols-2 gap-4'>" .
                                 "<div class='text-center'>" .
                                 "<div class='text-xl font-bold text-blue-700'>{$diffInDays}</div>" .
@@ -97,12 +96,12 @@ class AcademicYearForm
                                 "<div class='text-sm text-blue-600'>Months</div>" .
                                 "</div>" .
                                 "</div>" .
-                                "</div>");
+                                "</div>";
                         }
 
-                        return new HtmlString("<div class='p-4 bg-gray-50 rounded-lg border border-gray-200 text-center'>" .
+                        return "<div class='p-4 bg-gray-50 rounded-lg border border-gray-200 text-center'>" .
                             "<div class='text-sm text-gray-500'> Select start and end dates to see duration</div>" .
-                            "</div>");
+                            "</div>";
                     })
                     ->columnSpan(2),
 
@@ -135,7 +134,7 @@ class AcademicYearForm
 
                 Placeholder::make('status_info')
                     ->label('Status Information')
-                    ->content(function ($get): HtmlString {
+                    ->content(function ($get): string {
                         $status = $get('status');
                         $isCurrent = $get('is_current');
 
@@ -149,19 +148,19 @@ class AcademicYearForm
 
                         $currentBadge = $isCurrent ? '<div class="mt-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"> Current Academic Year</div>' : '';
 
-                        return new HtmlString("<div class='p-4 rounded-lg border {$statusInfo[1]}'>" .
+                        return "<div class='p-4 rounded-lg border {$statusInfo[1]}'>" .
                             "<div class='text-sm font-medium mb-1'>Status Details:</div>" .
                             "<div class='text-sm'>{$statusInfo[0]}</div>" .
                             $currentBadge .
-                            "</div>");
+                            "</div>";
                     })
                     ->columnSpan(2),
 
                 // Quick Setup Information
                 Placeholder::make('quick_setup_info')
                     ->label('Quick Setup Tips')
-                    ->content(function (): HtmlString {
-                        return new HtmlString("<div class='p-4 bg-indigo-50 rounded-lg border border-indigo-200'>" .
+                    ->content(function (): string {
+                        return "<div class='p-4 bg-indigo-50 rounded-lg border border-indigo-200'>" .
                             "<div class='text-sm font-medium text-indigo-800 mb-2'> Quick Setup Tips:</div>" .
                             "<ul class='text-sm text-indigo-700 space-y-1'>" .
                             "<li> Academic years typically run for 10-12 months</li>" .
@@ -170,7 +169,7 @@ class AcademicYearForm
                             "<li> Set start date first - end date will auto-suggest</li>" .
                             "<li> Draft status allows planning before activation</li>" .
                             "</ul>" .
-                            "</div>");
+                            "</div>";
                     })
                     ->columnSpanFull(),
             ])

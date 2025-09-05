@@ -272,7 +272,7 @@ class GradesRelationManager extends RelationManager
                 EditAction::make(),
                 DeleteAction::make(),
             ])
-            ->toolbarActions([
+            ->headerAction([
                 CreateAction::make(),
             ])
             ->defaultSort('graded_at', 'desc')

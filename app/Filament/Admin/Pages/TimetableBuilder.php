@@ -31,13 +31,13 @@ class TimetableBuilder extends Page
                 ->label('Create New Timetable')
                 ->icon('heroicon-o-plus')
                 ->color('success')
-                ->url(route('filament.admin.resources.timetables.create')),
+                ->url(route('filament.admin.resources.timetables.timetables.create')),
 
             Action::make('view_all_timetables')
                 ->label('View All Timetables')
                 ->icon('heroicon-o-table-cells')
                 ->color('info')
-                ->url(route('filament.admin.resources.timetables.index')),
+                ->url(route('filament.admin.resources.timetables.timetables.index')),
         ];
     }
 

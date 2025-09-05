@@ -134,7 +134,7 @@ class ExamSubjectsTable
  EditAction::make(),
  DeleteAction::make(),
  ])
- ->toolbarActions([
+ ->bulkActions([
  BulkActionGroup::make([
  DeleteBulkAction::make(),
  ]),

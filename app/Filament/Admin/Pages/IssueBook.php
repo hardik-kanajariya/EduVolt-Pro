@@ -294,7 +294,7 @@ class IssueBook extends Page
                 ->label('Active Issues')
                 ->icon('heroicon-o-list-bullet')
                 ->color('info')
-                ->url(fn() => route('filament.admin.resources.book-issues.index')),
+                ->url(fn() => route('filament.admin.resources.book-issues.book-issues.index')),
 
             Action::make('quickStats')
                 ->label('Library Stats')

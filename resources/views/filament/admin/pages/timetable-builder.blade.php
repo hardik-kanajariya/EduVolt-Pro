@@ -74,7 +74,7 @@
             <x-filament::card>
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Timetables</h3>
-                    <x-filament::link :href="route('filament.admin.resources.timetables.index')" color="primary">
+                    <x-filament::link :href="route('filament.admin.resources.timetables.timetables.index')" color="primary">
                         View All
                     </x-filament::link>
                 </div>
@@ -111,7 +111,7 @@
                 <div class="space-y-4">
                     <div class="grid grid-cols-2 gap-3">
                         <x-filament::button
-                            :href="route('filament.admin.resources.timetables.create')"
+                            :href="route('filament.admin.resources.timetables.timetables.create')"
                             color="success"
                             size="lg"
                             icon="heroicon-o-plus"
@@ -120,7 +120,7 @@
                         </x-filament::button>
 
                         <x-filament::button
-                            :href="route('filament.admin.resources.timetables.index')"
+                            :href="route('filament.admin.resources.timetables.timetables.index')"
                             color="info"
                             size="lg"
                             icon="heroicon-o-table-cells"
@@ -133,7 +133,7 @@
                         <h4 class="font-medium text-gray-900 dark:text-white">Quick Access</h4>
 
                         <x-filament::button
-                            :href="route('filament.admin.resources.school-classes.index')"
+                            :href="route('filament.admin.resources.school-classes.school-classes.index')"
                             color="gray"
                             outlined
                             icon="heroicon-o-user-group"
@@ -151,7 +151,7 @@
                         </x-filament::button>
 
                         <x-filament::button
-                            :href="route('filament.admin.resources.teachers.index')"
+                            :href="route('filament.admin.resources.teachers.teachers.index')"
                             color="gray"
                             outlined
                             icon="heroicon-o-academic-cap"
@@ -160,7 +160,7 @@
                         </x-filament::button>
 
                         <x-filament::button
-                            :href="route('filament.admin.resources.periods.index')"
+                            :href="route('filament.admin.resources.periods.periods.index')"
                             color="gray"
                             outlined
                             icon="heroicon-o-clock"

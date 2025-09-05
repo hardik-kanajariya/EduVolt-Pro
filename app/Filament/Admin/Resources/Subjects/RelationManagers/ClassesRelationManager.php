@@ -156,7 +156,7 @@ class ClassesRelationManager extends RelationManager
                 ForceDeleteAction::make(),
                 RestoreAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DetachBulkAction::make(),
                     DeleteBulkAction::make(),

@@ -430,7 +430,7 @@ class AttendancesTable
             ->poll('30s')
             ->deferLoading()
             ->recordUrl(
-                fn($record): string => route('filament.admin.resources.attendances.view', $record)
+                fn($record): string => route('filament.admin.resources.attendances.attendances.view', $record)
             );
     }
 }

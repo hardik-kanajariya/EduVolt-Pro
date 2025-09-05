@@ -140,7 +140,7 @@ class ExamsTable
  EditAction::make(),
  DeleteAction::make(),
  ])
- ->toolbarActions([
+ ->bulkActions([
  BulkActionGroup::make([
  DeleteBulkAction::make(),
  ]),

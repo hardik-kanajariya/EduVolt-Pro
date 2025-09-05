@@ -153,7 +153,7 @@ class StudentsRelationManager extends RelationManager
                 DissociateAction::make(),
                 DeleteAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DissociateBulkAction::make(),
                     DeleteBulkAction::make(),

@@ -12,7 +12,6 @@ use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -196,11 +195,6 @@ class SchoolsTable
             ->actions([
                 ViewAction::make(),
                 EditAction::make(),
-            ])
-            ->toolbarActions([
-                CreateAction::make()
-                    ->label('New School')
-                    ->icon('heroicon-o-plus'),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

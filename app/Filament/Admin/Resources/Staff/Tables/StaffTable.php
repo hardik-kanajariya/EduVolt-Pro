@@ -318,7 +318,7 @@ class StaffTable
             ->poll('60s')
             ->deferLoading()
             ->recordUrl(
-                fn($record): string => route('filament.admin.resources.staffs.view', $record)
+                fn($record): string => route('filament.admin.resources.staff.staffs.view', $record)
             );
     }
 }

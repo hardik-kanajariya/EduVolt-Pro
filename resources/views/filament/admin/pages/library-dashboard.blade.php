@@ -61,7 +61,7 @@
             <x-filament::card>
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Issues</h3>
-                    <x-filament::link :href="route('filament.admin.resources.book-issues.index')" color="primary">
+                    <x-filament::link :href="route('filament.admin.resources.book-issues.book-issues.index')" color="primary">
                         View All
                     </x-filament::link>
                 </div>
@@ -88,7 +88,7 @@
             <x-filament::card>
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Popular Books</h3>
-                    <x-filament::link :href="route('filament.admin.resources.library-books.index')" color="primary">
+                    <x-filament::link :href="route('filament.admin.resources.library-books.library-books.index')" color="primary">
                         View All
                     </x-filament::link>
                 </div>

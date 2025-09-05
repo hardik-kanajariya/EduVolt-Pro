@@ -9,21 +9,19 @@ use App\Models\Teacher;
 use App\Models\Staff;
 use Filament\Pages\Page;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Actions\Action;
 use Filament\Support\Exceptions\Halt;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
-use BackedEnum;
-use UnitEnum;
 
 class IssueBook extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Library Management';
+    protected static ?string $navigationGroup = 'Library Management';
 
     protected static ?string $navigationLabel = 'Issue Book';
 
@@ -38,9 +36,9 @@ class IssueBook extends Page
         $this->form->fill();
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->schema([
                 Forms\Components\Section::make('Member Information')
                     ->description('Select the member who will receive the book')
@@ -249,7 +247,7 @@ class IssueBook extends Page
                 'priority' => $data['priority'],
                 'notes' => $data['notes'] ?? null,
                 'status' => 'issued',
-                'issued_by' => auth()->id(),
+                'issued_by' => Auth::id(),
             ]);
 
             // Update book availability

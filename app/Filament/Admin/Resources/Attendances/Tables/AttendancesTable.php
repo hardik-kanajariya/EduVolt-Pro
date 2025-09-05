@@ -10,7 +10,6 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
@@ -48,8 +47,7 @@ class AttendancesTable
                     ->searchable(['first_name', 'last_name'])
                     ->sortable()
                     ->weight('medium')
-                    ->icon('heroicon-m-user')
-                    ->color('primary'),
+                    ->icon('heroicon-m-user'),
 
                 TextColumn::make('schoolClass.name')
                     ->label('Class')
@@ -91,8 +89,9 @@ class AttendancesTable
                     }),
 
                 // Attendance Status
-                BadgeColumn::make('status')
+                TextColumn::make('status')
                     ->label('Status')
+                    ->badge()
                     ->color(fn(string $state): string => match ($state) {
                         'present' => 'success',
                         'absent' => 'danger',
@@ -356,7 +355,7 @@ class AttendancesTable
                     })
                     ->toggle(),
             ])
-            ->recordActions([
+            ->actions([
                 ViewAction::make()
                     ->icon('heroicon-m-eye')
                     ->color('info'),

@@ -2,15 +2,15 @@
 
 namespace App\Filament\Admin\Resources\Periods\Schemas;
 
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 
 class PeriodForm
 {
- public static function configure(Schema $schema): Schema
- {
- return $schema
- ->components([
- //
- ]);
- }
+    public static function configure(Form $form): Form
+    {
+        return $form
+            ->components([
+                //
+            ]);
+    }
 }

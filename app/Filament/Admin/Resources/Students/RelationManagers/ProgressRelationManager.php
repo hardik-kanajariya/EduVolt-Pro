@@ -3,14 +3,10 @@
 namespace App\Filament\Admin\Resources\Students\RelationManagers;
 
 use Filament\Forms;
-use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Models\StudentProgress;
-use BackedEnum;
 
 class ProgressRelationManager extends RelationManager
 {
@@ -18,11 +14,11 @@ class ProgressRelationManager extends RelationManager
 
     protected static ?string $title = 'Academic Progress';
 
-    protected static string|BackedEnum|null $icon = 'heroicon-o-chart-bar';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
-    public function form(Schema $schema): Schema
+    public function form(Forms\Form $form): Forms\Form
     {
-        return $schema
+        return $form
             ->schema([
                 Forms\Components\Select::make('subject_id')
                     ->relationship('subject', 'name')
@@ -110,13 +106,14 @@ class ProgressRelationManager extends RelationManager
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\BadgeColumn::make('term')
-                    ->colors([
-                        'primary' => 'first',
-                        'success' => 'second',
-                        'warning' => 'third',
-                        'info' => 'annual',
-                    ])
+                Tables\Columns\TextColumn::make('term')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'first' => 'primary',
+                        'second' => 'success',
+                        'third' => 'warning',
+                        'annual' => 'info',
+                    })
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('assessment_score')
@@ -171,14 +168,15 @@ class ProgressRelationManager extends RelationManager
                     })
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'success' => 'excellent',
-                        'primary' => 'good',
-                        'info' => 'satisfactory',
-                        'warning' => 'needs_improvement',
-                        'danger' => 'poor',
-                    ])
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'excellent' => 'success',
+                        'good' => 'primary',
+                        'satisfactory' => 'info',
+                        'needs_improvement' => 'warning',
+                        'poor' => 'danger',
+                    })
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('teacher_comments')

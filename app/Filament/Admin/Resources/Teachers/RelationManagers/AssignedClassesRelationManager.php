@@ -3,14 +3,13 @@
 namespace App\Filament\Admin\Resources\Teachers\RelationManagers;
 
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\SchoolClass;
-use BackedEnum;
 
 class AssignedClassesRelationManager extends RelationManager
 {
@@ -18,11 +17,11 @@ class AssignedClassesRelationManager extends RelationManager
 
     protected static ?string $title = 'Assigned Classes';
 
-    protected static string|BackedEnum|null $icon = 'heroicon-o-user-group';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
@@ -94,7 +93,7 @@ class AssignedClassesRelationManager extends RelationManager
                     ->searchable()
                     ->weight('medium'),
 
-                Tables\Columns\BadgeColumn::make('grade_level')
+                Tables\Columns\TextColumn::make('grade_level')
                     ->label('Grade')
                     ->colors([
                         'success' => ['1', '2', '3', '4', '5'],
@@ -103,7 +102,7 @@ class AssignedClassesRelationManager extends RelationManager
                     ])
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('section')
+                Tables\Columns\TextColumn::make('section')
                     ->colors([
                         'blue' => 'A',
                         'green' => 'B',

@@ -9,10 +9,8 @@ use App\Filament\Admin\Resources\Staff\Pages\ViewStaff;
 use App\Filament\Admin\Resources\Staff\Schemas\StaffForm;
 use App\Filament\Admin\Resources\Staff\Tables\StaffTable;
 use App\Models\Staff;
-use UnitEnum;
-use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -21,17 +19,17 @@ class StaffResource extends Resource
 {
     protected static ?string $model = Staff::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Academic Structure';
+    protected static ?string $navigationGroup = 'Academic Structure';
 
     protected static ?string $recordTitleAttribute = 'employee_id';
 
     protected static ?int $navigationSort = 5;
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return StaffForm::configure($schema);
+        return StaffForm::configure($form);
     }
 
     public static function table(Table $table): Table

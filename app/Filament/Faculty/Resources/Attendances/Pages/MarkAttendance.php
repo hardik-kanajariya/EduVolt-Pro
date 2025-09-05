@@ -9,5 +9,5 @@ class MarkAttendance extends Page
 {
     protected static string $resource = AttendanceResource::class;
 
-    protected string $view = 'filament.faculty.resources.attendances.pages.mark-attendance';
+    protected static string $view = 'filament.faculty.resources.attendances.pages.mark-attendance';
 }

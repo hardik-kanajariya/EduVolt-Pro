@@ -5,18 +5,16 @@ namespace App\Filament\Faculty\Pages;
 use App\Models\Attendance;
 use App\Models\SchoolClass;
 use App\Models\Student;
-use App\Models\AttendanceSession;
 use Filament\Pages\Page;
 use Filament\Notifications\Notification;
-use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 
 class MarkAttendance extends Page
 {
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
+    protected static ?string $navigationIcon = 'heroicon-h-pin';
 
-    protected string $view = 'filament.faculty.pages.mark-attendance';
+    protected static string $view = 'filament.faculty.pages.mark-attendance';
 
     public Collection $students;
     public ?int $selectedClass = null;

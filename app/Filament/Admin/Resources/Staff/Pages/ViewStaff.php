@@ -11,7 +11,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Repeater;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 
 class ViewStaff extends ViewRecord
 {
@@ -29,7 +29,7 @@ class ViewStaff extends ViewRecord
         ];
     }
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
         $record = $this->getRecord();
 
@@ -38,7 +38,7 @@ class ViewStaff extends ViewRecord
         $monthsOfService = $record->join_date ? $record->join_date->diffInMonths(now()) % 12 : 0;
         $responsibilities = is_array($record->responsibilities) ? $record->responsibilities : [];
 
-        return $schema
+        return $form
             ->schema([
                 // Staff Profile Header
                 Placeholder::make('staff_profile_header')

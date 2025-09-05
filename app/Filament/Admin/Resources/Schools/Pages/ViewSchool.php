@@ -4,23 +4,21 @@ namespace App\Filament\Admin\Resources\Schools\Pages;
 
 use App\Filament\Admin\Resources\Schools\SchoolResource;
 use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Schemas\Schema;
+use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Grid;
 use Filament\Support\Enums\FontWeight;
 
 class ViewSchool extends ViewRecord
 {
     protected static string $resource = SchoolResource::class;
 
-    public function infolist(Schema $schema): Schema
+    public function infolist(Infolist $infolist): Infolist
     {
-        return $schema
+        return $infolist
             ->schema([
                 Section::make('School Overview')
                     ->description('Basic information about the school')
@@ -37,7 +35,6 @@ class ViewSchool extends ViewRecord
                                 TextEntry::make('name')
                                     ->label('School Name')
                                     ->weight(FontWeight::Bold)
-                                    ->size('lg')
                                     ->columnSpan(2),
 
                                 TextEntry::make('code')
@@ -50,24 +47,6 @@ class ViewSchool extends ViewRecord
                                 TextEntry::make('type')
                                     ->label('School Type')
                                     ->badge()
-                                    ->color(fn(string $state): string => match ($state) {
-                                        'public' => 'success',
-                                        'private' => 'info',
-                                        'charter' => 'warning',
-                                        'magnet' => 'primary',
-                                        'international' => 'secondary',
-                                        'religious' => 'danger',
-                                        default => 'gray',
-                                    })
-                                    ->formatStateUsing(fn(string $state): string => match ($state) {
-                                        'public' => 'Public School',
-                                        'private' => 'Private School',
-                                        'charter' => 'Charter School',
-                                        'magnet' => 'Magnet School',
-                                        'international' => 'International School',
-                                        'religious' => 'Religious School',
-                                        default => $state,
-                                    })
                                     ->columnSpan(1),
 
                                 TextEntry::make('status')
@@ -77,20 +56,11 @@ class ViewSchool extends ViewRecord
                                         'active' => 'success',
                                         'inactive' => 'danger',
                                         'pending' => 'warning',
-                                        'suspended' => 'danger',
                                         default => 'gray',
-                                    })
-                                    ->formatStateUsing(fn(string $state): string => match ($state) {
-                                        'active' => 'Active',
-                                        'inactive' => 'Inactive',
-                                        'pending' => 'Pending',
-                                        'suspended' => 'Suspended',
-                                        default => $state,
                                     })
                                     ->columnSpan(1),
                             ]),
-                    ])
-                    ->collapsible(),
+                    ]),
 
                 Section::make('Contact Information')
                     ->description('How to reach the school')
@@ -121,8 +91,7 @@ class ViewSchool extends ViewRecord
                                     ->icon('heroicon-o-globe-alt')
                                     ->columnSpanFull(),
                             ]),
-                    ])
-                    ->collapsible(),
+                    ]),
 
                 Section::make('Statistics')
                     ->description('School statistics and metrics')
@@ -151,14 +120,15 @@ class ViewSchool extends ViewRecord
                                     ->getStateUsing(fn($record) => $record->classes()->count())
                                     ->columnSpan(1),
 
+                                TextEntry::make('principal.name')
+                                    ->label('Principal')
+                                    ->placeholder('Not assigned'),
+
                                 TextEntry::make('established_date')
                                     ->label('Established Date')
-                                    ->date('M j, Y')
-                                    ->icon('heroicon-o-calendar')
-                                    ->columnSpan(1),
+                                    ->date('M j, Y'),
                             ]),
-                    ])
-                    ->collapsible(),
+                    ]),
 
                 Section::make('System Information')
                     ->description('Record tracking information')
@@ -172,32 +142,17 @@ class ViewSchool extends ViewRecord
                                     ->columnSpan(1),
 
                                 TextEntry::make('updated_at')
-                                    ->label('Last Modified')
-                                    ->dateTime('M j, Y g:i A')
-                                    ->columnSpan(1),
+                                    ->label('Last Updated')
+                                    ->dateTime(),
                             ]),
-                    ])
-                    ->collapsible()
-                    ->collapsed(),
+                    ]),
             ]);
     }
 
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('visit_website')
-                ->label('Visit Website')
-                ->icon('heroicon-o-globe-alt')
-                ->color('primary')
-                ->url(fn($record) => $record->website)
-                ->openUrlInNewTab()
-                ->visible(fn($record) => filled($record->website)),
-
-            EditAction::make()
-                ->icon('heroicon-o-pencil'),
-
-            DeleteAction::make()
-                ->icon('heroicon-o-trash'),
+            EditAction::make(),
         ];
     }
 }

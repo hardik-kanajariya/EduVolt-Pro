@@ -6,5 +6,5 @@ use Filament\Widgets\Widget;
 
 class LibraryStatsWidget extends Widget
 {
-    protected string $view = 'filament.admin.widgets.library-stats-widget';
+    protected static string $view = 'filament.admin.widgets.library-stats-widget';
 }

@@ -10,9 +10,9 @@ use App\Filament\Parent\Resources\StudentProgress\Schemas\StudentProgressForm;
 use App\Filament\Parent\Resources\StudentProgress\Schemas\StudentProgressInfolist;
 use App\Filament\Parent\Resources\StudentProgress\Tables\StudentProgressTable;
 use App\Models\StudentProgress;
-use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
+use Filament\Infolists\Infolist;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,18 +22,13 @@ class StudentProgressResource extends Resource
 {
     protected static ?string $model = StudentProgress::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     protected static ?string $recordTitleAttribute = 'Student Progres';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return StudentProgressForm::configure($schema);
-    }
-
-    public static function infolist(Schema $schema): Schema
-    {
-        return StudentProgressInfolist::configure($schema);
+        return StudentProgressForm::configure($form);
     }
 
     public static function table(Table $table): Table

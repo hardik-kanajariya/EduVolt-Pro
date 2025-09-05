@@ -6,5 +6,5 @@ use Filament\Pages\Page;
 
 class ChildSelector extends Page
 {
-    protected string $view = 'filament.parent.pages.child-selector';
+    protected static string $view = 'filament.parent.pages.child-selector';
 }

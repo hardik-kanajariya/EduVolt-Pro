@@ -7,13 +7,13 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TimePicker;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 
 class AssignmentForm
 {
-    public static function configure(Schema $schema): Schema
+    public static function configure(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Select::make('teacher_id')
                     ->relationship('teacher', 'id')

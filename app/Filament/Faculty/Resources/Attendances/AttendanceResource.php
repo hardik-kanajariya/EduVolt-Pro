@@ -8,9 +8,8 @@ use App\Filament\Faculty\Resources\Attendances\Pages\ListAttendances;
 use App\Filament\Faculty\Resources\Attendances\Schemas\AttendanceForm;
 use App\Filament\Faculty\Resources\Attendances\Tables\AttendancesTable;
 use App\Models\Attendance;
-use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
@@ -20,9 +19,9 @@ class AttendanceResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'date';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return AttendanceForm::configure($schema);
+        return AttendanceForm::configure($form);
     }
 
     public static function table(Table $table): Table

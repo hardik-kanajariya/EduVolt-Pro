@@ -9,14 +9,12 @@ use App\Models\SchoolClass;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Period;
-use BackedEnum;
-use UnitEnum;
 
 class TimetableBuilder extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Academic Management';
+    protected static ?string $navigationGroup = 'Academic Management';
 
     protected static ?int $navigationSort = 4;
 

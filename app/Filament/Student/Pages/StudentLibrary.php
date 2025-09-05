@@ -6,5 +6,5 @@ use Filament\Pages\Page;
 
 class StudentLibrary extends Page
 {
-    protected string $view = 'filament.student.pages.student-library';
+    protected static string $view = 'filament.student.pages.student-library';
 }

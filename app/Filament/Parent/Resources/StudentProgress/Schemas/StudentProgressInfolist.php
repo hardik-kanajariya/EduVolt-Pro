@@ -3,13 +3,13 @@
 namespace App\Filament\Parent\Resources\StudentProgress\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 
 class StudentProgressInfolist
 {
-    public static function configure(Schema $schema): Schema
+    public static function configure(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 TextEntry::make('student.id'),
                 TextEntry::make('subject.name'),

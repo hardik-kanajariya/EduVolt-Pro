@@ -3,13 +3,13 @@
 namespace App\Filament\Student\Resources\Assignments\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 
 class AssignmentInfolist
 {
-    public static function configure(Schema $schema): Schema
+    public static function configure(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 TextEntry::make('teacher.id'),
                 TextEntry::make('class_id')

@@ -6,13 +6,13 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 
 class StudentForm
 {
-    public static function configure(Schema $schema): Schema
+    public static function configure(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 TextInput::make('user_id')
                     ->required()
@@ -41,11 +41,11 @@ class StudentForm
                 TextInput::make('emergency_contacts'),
                 Select::make('status')
                     ->options([
-            'active' => 'Active',
-            'inactive' => 'Inactive',
-            'transferred' => 'Transferred',
-            'graduated' => 'Graduated',
-        ])
+                        'active' => 'Active',
+                        'inactive' => 'Inactive',
+                        'transferred' => 'Transferred',
+                        'graduated' => 'Graduated',
+                    ])
                     ->default('active')
                     ->required(),
             ]);

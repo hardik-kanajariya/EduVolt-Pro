@@ -6,5 +6,5 @@ use Filament\Widgets\Widget;
 
 class MySchedule extends Widget
 {
-    protected string $view = 'filament.faculty.widgets.my-schedule';
+    protected static string $view = 'filament.faculty.widgets.my-schedule';
 }

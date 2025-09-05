@@ -8,43 +8,41 @@ use App\Filament\Admin\Resources\Exams\Pages\ListExams;
 use App\Filament\Admin\Resources\Exams\Schemas\ExamForm;
 use App\Filament\Admin\Resources\Exams\Tables\ExamsTable;
 use App\Models\Exam;
-use UnitEnum;
-use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 
 class ExamResource extends Resource
 {
- protected static ?string $model = Exam::class;
+    protected static ?string $model = Exam::class;
 
- protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
- protected static string | UnitEnum | null $navigationGroup = 'Examination System';
+    protected static ?string $navigationGroup = 'Examination System';
 
- public static function form(Schema $schema): Schema
- {
- return ExamForm::configure($schema);
- }
+    public static function form(Form $form): Form
+    {
+        return ExamForm::configure($form);
+    }
 
- public static function table(Table $table): Table
- {
- return ExamsTable::configure($table);
- }
+    public static function table(Table $table): Table
+    {
+        return ExamsTable::configure($table);
+    }
 
- public static function getRelations(): array
- {
- return [
- //
- ];
- }
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
 
- public static function getPages(): array
- {
- return [
- 'index' => ListExams::route('/'),
- 'create' => CreateExam::route('/create'),
- 'edit' => EditExam::route('/{record}/edit'),
- ];
- }
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListExams::route('/'),
+            'create' => CreateExam::route('/create'),
+            'edit' => EditExam::route('/{record}/edit'),
+        ];
+    }
 }

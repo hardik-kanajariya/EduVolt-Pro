@@ -11,11 +11,10 @@ use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Attendance;
-use BackedEnum;
 
 class AttendancesRelationManager extends RelationManager
 {
@@ -23,11 +22,11 @@ class AttendancesRelationManager extends RelationManager
 
     protected static ?string $title = 'Attendance Records';
 
-    protected static string|BackedEnum|null $icon = 'heroicon-o-calendar-days';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 Forms\Components\Select::make('subject_id')
                     ->relationship('subject', 'name')
@@ -71,7 +70,7 @@ class AttendancesRelationManager extends RelationManager
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\BadgeColumn::make('status')
+                Tables\Columns\TextColumn::make('status')
                     ->colors([
                         'success' => 'present',
                         'danger' => 'absent',

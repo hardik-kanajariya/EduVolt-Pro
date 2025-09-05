@@ -11,14 +11,14 @@ use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\ViewField;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Illuminate\Support\Str;
 
 class SchoolForm
 {
-    public static function configure(Schema $schema): Schema
+    public static function configure(Form $form): Form
     {
-        return $schema
+        return $form
             ->schema([
                 Section::make('Basic Information')
                     ->description('Enter the basic details about the school')

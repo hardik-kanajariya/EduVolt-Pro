@@ -8,16 +8,16 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Placeholder;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use App\Models\User;
 use App\Models\School;
 use Illuminate\Support\Str;
 
 class StaffForm
 {
-    public static function configure(Schema $schema): Schema
+    public static function configure(Form $form): Form
     {
-        return $schema
+        return $form
             ->components([
                 // Staff Identity Section
                 Select::make('user_id')

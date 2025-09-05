@@ -7,14 +7,12 @@ use Filament\Actions\Action;
 use App\Models\LibraryBook;
 use App\Models\BookIssue;
 use App\Models\Student;
-use BackedEnum;
-use UnitEnum;
 
 class LibraryDashboard extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Library Management';
+    protected static ?string $navigationGroup = 'Library Management';
 
     protected static ?int $navigationSort = 1;
 

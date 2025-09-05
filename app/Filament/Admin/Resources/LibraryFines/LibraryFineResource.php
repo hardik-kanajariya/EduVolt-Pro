@@ -8,43 +8,41 @@ use App\Filament\Admin\Resources\LibraryFines\Pages\ListLibraryFines;
 use App\Filament\Admin\Resources\LibraryFines\Schemas\LibraryFineForm;
 use App\Filament\Admin\Resources\LibraryFines\Tables\LibraryFinesTable;
 use App\Models\LibraryFine;
-use UnitEnum;
-use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 
 class LibraryFineResource extends Resource
 {
- protected static ?string $model = LibraryFine::class;
+    protected static ?string $model = LibraryFine::class;
 
- protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-exclamation-triangle';
+    protected static ?string $navigationIcon = 'heroicon-o-exclamation-triangle';
 
- protected static string | UnitEnum | null $navigationGroup = 'Library Management';
+    protected static ?string $navigationGroup = 'Library Management';
 
- public static function form(Schema $schema): Schema
- {
- return LibraryFineForm::configure($schema);
- }
+    public static function form(Form $form): Form
+    {
+        return LibraryFineForm::configure($form);
+    }
 
- public static function table(Table $table): Table
- {
- return LibraryFinesTable::configure($table);
- }
+    public static function table(Table $table): Table
+    {
+        return LibraryFinesTable::configure($table);
+    }
 
- public static function getRelations(): array
- {
- return [
- //
- ];
- }
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
 
- public static function getPages(): array
- {
- return [
- 'index' => ListLibraryFines::route('/'),
- 'create' => CreateLibraryFine::route('/create'),
- 'edit' => EditLibraryFine::route('/{record}/edit'),
- ];
- }
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListLibraryFines::route('/'),
+            'create' => CreateLibraryFine::route('/create'),
+            'edit' => EditLibraryFine::route('/{record}/edit'),
+        ];
+    }
 }

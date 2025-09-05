@@ -2,15 +2,15 @@
 
 namespace App\Filament\Admin\Resources\Timetables\Schemas;
 
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 
 class TimetableForm
 {
- public static function configure(Schema $schema): Schema
- {
- return $schema
- ->components([
- //
- ]);
- }
+    public static function configure(Form $form): Form
+    {
+        return $form
+            ->components([
+                //
+            ]);
+    }
 }

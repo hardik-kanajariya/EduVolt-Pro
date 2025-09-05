@@ -3,14 +3,13 @@
 namespace App\Filament\Admin\Resources\Teachers\RelationManagers;
 
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Assignment;
-use BackedEnum;
 
 class AssignmentsRelationManager extends RelationManager
 {
@@ -18,11 +17,11 @@ class AssignmentsRelationManager extends RelationManager
 
     protected static ?string $title = 'Created Assignments';
 
-    protected static string|BackedEnum|null $icon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
+        return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
                     ->required()
@@ -141,7 +140,7 @@ class AssignmentsRelationManager extends RelationManager
                     ->badge()
                     ->color('info'),
 
-                Tables\Columns\BadgeColumn::make('type')
+                Tables\Columns\TextColumn::make('type')
                     ->colors([
                         'blue' => 'homework',
                         'green' => 'project',
@@ -154,7 +153,7 @@ class AssignmentsRelationManager extends RelationManager
                     ])
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('difficulty_level')
+                Tables\Columns\TextColumn::make('difficulty_level')
                     ->label('Difficulty')
                     ->colors([
                         'success' => 'easy',

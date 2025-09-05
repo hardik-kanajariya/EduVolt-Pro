@@ -9,7 +9,6 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Filters\SelectFilter;
@@ -77,7 +76,7 @@ class StaffTable
                     ->icon('heroicon-m-building-office-2'),
 
                 // Employment Details
-                BadgeColumn::make('employment_type')
+                TextColumn::make('employment_type')
                     ->label('Type')
                     ->color(fn(string $state): string => match ($state) {
                         'full_time' => 'success',
@@ -140,7 +139,7 @@ class StaffTable
                     ->color('success'),
 
                 // Status Management
-                BadgeColumn::make('status')
+                TextColumn::make('status')
                     ->label('Status')
                     ->color(fn(string $state): string => match ($state) {
                         'active' => 'success',

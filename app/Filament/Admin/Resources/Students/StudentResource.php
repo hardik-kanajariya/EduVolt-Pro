@@ -10,26 +10,24 @@ use App\Filament\Admin\Resources\Students\Schemas\StudentForm;
 use App\Filament\Admin\Resources\Students\Tables\StudentsTable;
 use App\Models\Student;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use UnitEnum;
-use BackedEnum;
 
 class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Student & Attendance';
+    protected static ?string $navigationGroup = 'Student & Attendance';
 
     protected static ?string $recordTitleAttribute = 'admission_number';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return StudentForm::configure($schema);
+        return StudentForm::configure($form);
     }
 
     public static function table(Table $table): Table

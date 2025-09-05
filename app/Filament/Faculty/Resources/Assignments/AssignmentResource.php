@@ -8,9 +8,8 @@ use App\Filament\Faculty\Resources\Assignments\Pages\ListAssignments;
 use App\Filament\Faculty\Resources\Assignments\Schemas\AssignmentForm;
 use App\Filament\Faculty\Resources\Assignments\Tables\AssignmentsTable;
 use App\Models\Assignment;
-use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,9 +21,9 @@ class AssignmentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return AssignmentForm::configure($schema);
+        return AssignmentForm::configure($form);
     }
 
     public static function table(Table $table): Table

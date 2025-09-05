@@ -11,7 +11,7 @@ use Filament\Support\Icons\Heroicon;
 
 class LibraryReports extends Page
 {
-    protected string $view = 'filament.admin.pages.library-reports';
+    protected static string $view = 'filament.admin.pages.library-reports';
 
     public function getOverviewStats()
     {

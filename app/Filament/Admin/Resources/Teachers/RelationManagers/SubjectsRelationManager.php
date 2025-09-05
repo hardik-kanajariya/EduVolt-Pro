@@ -10,7 +10,6 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Subject;
-use BackedEnum;
 
 class SubjectsRelationManager extends RelationManager
 {
@@ -18,7 +17,7 @@ class SubjectsRelationManager extends RelationManager
 
     protected static ?string $title = 'Teaching Subjects';
 
-    protected static string|BackedEnum|null $icon = 'heroicon-o-academic-cap';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     public function form(Form $form): Form
     {
@@ -94,7 +93,7 @@ class SubjectsRelationManager extends RelationManager
                     ->searchable()
                     ->weight('medium'),
 
-                Tables\Columns\BadgeColumn::make('department')
+                Tables\Columns\TextColumn::make('department')
                     ->colors([
                         'blue' => 'science',
                         'green' => 'mathematics',
@@ -108,7 +107,7 @@ class SubjectsRelationManager extends RelationManager
                     ])
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('grade_level')
+                Tables\Columns\TextColumn::make('grade_level')
                     ->label('Grade Level')
                     ->colors([
                         'success' => 'primary',

@@ -11,6 +11,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
 use Illuminate\Support\Str;
+use Illuminate\Support\HtmlString;
 
 class TeacherForm
 {
@@ -271,7 +272,7 @@ class TeacherForm
 
                 Placeholder::make('teacher_stats')
                     ->label('Quick Statistics')
-                    ->content(function ($record): string {
+                    ->content(function ($record): HtmlString {
                         if (!$record) return 'Stats will be available after creation';
 
                         $experience = $record->experience_years ?? 0;

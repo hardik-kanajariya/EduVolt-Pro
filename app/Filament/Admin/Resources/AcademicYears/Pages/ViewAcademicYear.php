@@ -14,6 +14,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Form;
+use Illuminate\Support\HtmlString;
 
 class ViewAcademicYear extends ViewRecord
 {
@@ -72,7 +73,7 @@ class ViewAcademicYear extends ViewRecord
                             ? '<span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"> Current Academic Year</span>'
                             : '';
 
-                        return '<div class="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">' .
+                        return new HtmlString('<div class="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">' .
                             '<h2 class="text-2xl font-bold text-gray-800 mb-2"> ' . $record->name . '</h2>' .
                             '<p class="text-blue-600 font-medium mb-2"> ' . ($record->school?->name ?? 'No School') . '</p>' .
                             '<p class="text-gray-600 mb-4">' . $duration . '</p>' .
@@ -85,7 +86,7 @@ class ViewAcademicYear extends ViewRecord
                             '<div class="text-center"><span class="block text-lg font-bold text-blue-600">' . $totalClasses . '</span><span class="text-sm text-gray-600">Total Classes</span></div>' .
                             '<div class="text-center"><span class="block text-lg font-bold text-green-600">' . $activeClasses . '</span><span class="text-sm text-gray-600">Active Classes</span></div>' .
                             '<div class="text-center"><span class="block text-lg font-bold text-purple-600">' . $totalStudents . '</span><span class="text-sm text-gray-600">Total Students</span></div>' .
-                            '</div></div>';
+                            '</div></div>');
                     })
                     ->columnSpanFull(),
 
@@ -132,7 +133,7 @@ class ViewAcademicYear extends ViewRecord
                     ->content(function () use ($duration, $progress): string {
                         $progressColor = $progress > 75 ? 'bg-green-500' : ($progress > 50 ? 'bg-yellow-500' : 'bg-blue-500');
 
-                        return '<div class="space-y-4">' .
+                        return new HtmlString('<div class="space-y-4">' .
                             '<div class="flex justify-between items-center">' .
                             '<span class="text-sm font-medium text-gray-600">Total Duration:</span>' .
                             '<span class="text-sm font-bold text-gray-800">' . $duration . '</span>' .
@@ -146,7 +147,7 @@ class ViewAcademicYear extends ViewRecord
                             '<div class="' . $progressColor . ' h-2 rounded-full" style="width: ' . min(100, $progress) . '%"></div>' .
                             '</div>' .
                             '</div>' .
-                            '</div>';
+                            '</div>');
                     }),
 
                 Placeholder::make('class_stats')
@@ -154,7 +155,7 @@ class ViewAcademicYear extends ViewRecord
                     ->content(function () use ($totalClasses, $activeClasses, $totalStudents): string {
                         $utilization = $totalClasses > 0 ? round(($activeClasses / $totalClasses) * 100, 1) : 0;
 
-                        return '<div class="grid grid-cols-2 gap-4">' .
+                        return new HtmlString('<div class="grid grid-cols-2 gap-4">' .
                             '<div class="bg-blue-50 p-3 rounded-lg">' .
                             '<span class="block text-lg font-bold text-blue-600">' . $totalClasses . '</span>' .
                             '<span class="text-sm text-blue-800">Total Classes</span>' .
@@ -171,7 +172,7 @@ class ViewAcademicYear extends ViewRecord
                             '<span class="block text-lg font-bold text-orange-600">' . $utilization . '%</span>' .
                             '<span class="text-sm text-orange-800">Utilization Rate</span>' .
                             '</div>' .
-                            '</div>';
+                            '</div>');
                     }),
 
                 // Record Tracking

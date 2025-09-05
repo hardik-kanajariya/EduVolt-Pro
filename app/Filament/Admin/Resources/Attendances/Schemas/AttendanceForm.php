@@ -13,6 +13,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
 
 class AttendanceForm
 {
@@ -172,12 +173,12 @@ class AttendanceForm
 
                 Placeholder::make('attendance_summary')
                     ->label('Student Attendance Summary')
-                    ->content(function ($get): string {
+                    ->content(function ($get): HtmlString {
                         $studentId = $get('student_id');
                         $date = $get('date');
 
                         if (!$studentId || !$date) {
-                            return '<div class="p-4 bg-gray-50 rounded-lg text-gray-500">Select student and date to see attendance summary</div>';
+                            return new HtmlString('<div class="p-4 bg-gray-50 rounded-lg text-gray-500">Select student and date to see attendance summary</div>');
                         }
 
                         $monthStart = \Carbon\Carbon::parse($date)->startOfMonth();
@@ -204,7 +205,7 @@ class AttendanceForm
 
                         $percentage = $totalDays > 0 ? round(($presentDays / $totalDays) * 100, 1) : 0;
 
-                        return '<div class="p-4 bg-blue-50 rounded-lg border border-blue-200">' .
+                        return new HtmlString('<div class="p-4 bg-blue-50 rounded-lg border border-blue-200">' .
                             '<h4 class="font-semibold text-blue-900 mb-2">Monthly Attendance Summary</h4>' .
                             '<div class="grid grid-cols-2 gap-4 text-sm">' .
                             '<div><strong>Total Days:</strong> ' . $totalDays . '</div>' .
@@ -217,7 +218,7 @@ class AttendanceForm
                             '">' . $percentage . '%</span>' .
                             '</div>' .
                             '</div>' .
-                            '</div>';
+                            '</div>');
                     })
                     ->columnSpan(2),
             ])

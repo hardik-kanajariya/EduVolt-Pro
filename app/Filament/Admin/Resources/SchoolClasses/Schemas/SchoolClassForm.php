@@ -9,6 +9,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
 use Illuminate\Support\Str;
+use Illuminate\Support\HtmlString;
 
 class SchoolClassForm
 {
@@ -266,7 +267,7 @@ class SchoolClassForm
 
                 Placeholder::make('class_stats')
                     ->label('Quick Statistics')
-                    ->content(function ($record): string {
+                    ->content(function ($record): HtmlString {
                         if (!$record) return 'Stats will be available after creation';
 
                         $studentCount = $record->students?->count() ?? 0;

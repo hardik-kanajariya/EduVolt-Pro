@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use App\Models\User;
 use App\Models\School;
 use Illuminate\Support\Str;
+use Illuminate\Support\HtmlString;
 
 class StaffForm
 {
@@ -195,7 +196,7 @@ class StaffForm
                 // Employment Summary
                 Placeholder::make('employment_summary')
                     ->label('Employment Summary')
-                    ->content(function ($get): string {
+                    ->content(function ($get): HtmlString {
                         $joinDate = $get('join_date');
                         $position = $get('position');
                         $department = $get('department');
@@ -203,7 +204,7 @@ class StaffForm
                         $salary = $get('salary');
 
                         if (!$joinDate || !$position) {
-                            return '<div class="p-4 bg-gray-50 rounded-lg text-gray-500">Fill in the basic details to see employment summary</div>';
+                            return new HtmlString('<div class="p-4 bg-gray-50 rounded-lg text-gray-500">Fill in the basic details to see employment summary</div>');
                         }
 
                         $yearsOfService = $joinDate ? \Carbon\Carbon::parse($joinDate)->diffInYears(now()) : 0;
@@ -218,7 +219,7 @@ class StaffForm
                             default => ucfirst($employmentType)
                         };
 
-                        return '<div class="p-4 bg-blue-50 rounded-lg border border-blue-200">' .
+                        return new HtmlString('<div class="p-4 bg-blue-50 rounded-lg border border-blue-200">' .
                             '<div class="grid grid-cols-2 gap-4">' .
                             '<div><strong>Position:</strong> ' . $position . '</div>' .
                             '<div><strong>Department:</strong> ' . $department . '</div>' .
@@ -227,7 +228,7 @@ class StaffForm
                             '<div><strong>Annual Salary:</strong> ' . $formattedSalary . '</div>' .
                             '<div><strong>Join Date:</strong> ' . \Carbon\Carbon::parse($joinDate)->format('M j, Y') . '</div>' .
                             '</div>' .
-                            '</div>';
+                            '</div>');
                     })
                     ->columnSpanFull(),
             ])

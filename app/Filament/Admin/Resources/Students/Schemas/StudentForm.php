@@ -14,6 +14,7 @@ use App\Models\School;
 use App\Models\SchoolClass;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\HtmlString;
 
 class StudentForm
 {
@@ -229,7 +230,7 @@ class StudentForm
 
                 Placeholder::make('stats')
                     ->label('Quick Stats')
-                    ->content(function ($record): string {
+                    ->content(function ($record): HtmlString {
                         if (!$record) return 'Stats will be available after creation';
 
                         $age = $record->date_of_birth ? \Carbon\Carbon::parse($record->date_of_birth)->age : 'N/A';

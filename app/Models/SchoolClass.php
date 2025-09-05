@@ -25,7 +25,6 @@ class SchoolClass extends Model
 
     protected $casts = [
         'capacity' => 'integer',
-        'status' => 'boolean',
     ];
 
     // Relationships

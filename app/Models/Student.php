@@ -150,7 +150,7 @@ class Student extends Model
         $nameParts = explode(' ', $name);
         return count($nameParts) > 1 ? implode(' ', array_slice($nameParts, 1)) : '';
     }
-    
+
     // Library-related methods
     public function getTotalBooksIssuedAttribute(): int
     {

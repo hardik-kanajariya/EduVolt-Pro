@@ -52,9 +52,9 @@ class Student extends Model
         return $this->hasMany(Attendance::class);
     }
 
-    public function assignments()
+    public function getClassAssignmentsAttribute()
     {
-        return $this->hasManyThrough(Assignment::class, SchoolClass::class, 'id', 'class_id', 'class_id');
+        return Assignment::where('class_id', $this->class_id)->get();
     }
 
     public function grades()

@@ -23,7 +23,7 @@ class StudentProgressResource extends Resource
 {
     protected static ?string $model = StudentProgress::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-trending-up';
+    protected static ?string $navigationIcon = 'heroicon-o-at-symbol';
 
     protected static ?string $navigationLabel = 'Student Progress';
 
@@ -131,8 +131,8 @@ class StudentProgressResource extends Resource
                             ->rows(3)
                             ->columnSpanFull(),
 
-                        Forms\Components\DatePicker::make('recorded_at')
-                            ->label('Recorded Date')
+                        Forms\Components\DatePicker::make('last_updated_at')
+                            ->label('Last Updated')
                             ->required()
                             ->default(today()),
                     ])
@@ -198,8 +198,8 @@ class StudentProgressResource extends Resource
                     ->formatStateUsing(fn($state) => $state ? $state . '%' : '-')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('recorded_at')
-                    ->label('Recorded Date')
+                Tables\Columns\TextColumn::make('last_updated_at')
+                    ->label('Last Updated')
                     ->date()
                     ->sortable(),
 
@@ -289,7 +289,7 @@ class StudentProgressResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('recorded_at', 'desc');
+            ->defaultSort('last_updated_at', 'desc');
     }
 
     public static function getRelations(): array
@@ -317,7 +317,7 @@ class StudentProgressResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::whereDate('recorded_at', today())->count();
+        return static::getModel()::whereDate('last_updated_at', today())->count();
     }
 
     private static function calculateGrade(float $percentage): string

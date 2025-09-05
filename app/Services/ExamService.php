@@ -6,9 +6,9 @@ use App\Models\Exam;
 use App\Models\ExamSubject;
 use App\Models\ExamMark;
 use App\Models\Student;
-use App\Models\SchoolClass;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ExamService
 {
@@ -208,7 +208,7 @@ class ExamService
                     'grade' => 'F',
                     'is_passed' => false,
                     'is_absent' => true,
-                    'entered_by' => auth()->user()->id,
+                    'entered_by' => Auth::id(),
                 ]
             );
         }

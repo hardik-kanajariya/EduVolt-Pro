@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class StudentProgress extends Model
 {
@@ -329,7 +329,7 @@ class StudentProgress extends Model
 
         // Update timestamps
         $this->last_updated_at = now();
-        $this->updated_by = auth()->id();
+        $this->updated_by = Auth::id();
 
         // Merge any additional data
         $this->fill($data);

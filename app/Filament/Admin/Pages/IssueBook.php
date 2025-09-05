@@ -15,7 +15,7 @@ use Filament\Forms\Set;
 use Filament\Actions\Action;
 use Filament\Support\Exceptions\Halt;
 use Filament\Notifications\Notification;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class IssueBook extends Page
 {

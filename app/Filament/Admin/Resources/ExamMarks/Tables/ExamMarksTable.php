@@ -2,11 +2,11 @@
 
 namespace App\Filament\Admin\Resources\ExamMarks\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\Action;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
@@ -138,7 +138,7 @@ class ExamMarksTable
  ->query(fn(Builder $query): Builder => $query->failed())
  ->toggle(),
  ])
- ->recordActions([
+ ->actions([
  Action::make('verify')
  ->icon('heroicon-o-check-badge')
  ->color('success')

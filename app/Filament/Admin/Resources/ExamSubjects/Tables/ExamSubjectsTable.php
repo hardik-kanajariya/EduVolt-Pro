@@ -2,11 +2,11 @@
 
 namespace App\Filament\Admin\Resources\ExamSubjects\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\Action;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
@@ -106,7 +106,7 @@ class ExamSubjectsTable
  ->query(fn(Builder $query): Builder => $query->upcoming())
  ->toggle(),
  ])
- ->recordActions([
+ ->actions([
  Action::make('complete')
  ->icon('heroicon-o-check-circle')
  ->color('success')

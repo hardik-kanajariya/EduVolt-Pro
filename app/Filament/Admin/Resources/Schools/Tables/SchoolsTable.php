@@ -2,14 +2,14 @@
 
 namespace App\Filament\Admin\Resources\Schools\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\ExportBulkAction;
-use Filament\Actions\CreateAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\ForceDeleteBulkAction;
+use Filament\Tables\Actions\RestoreBulkAction;
+use Filament\Tables\Actions\ExportBulkAction;
+use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\IconColumn;
@@ -193,7 +193,7 @@ class SchoolsTable
                             ->when($data['established_until'], fn(Builder $query, $date): Builder => $query->whereDate('established_date', '<=', $date));
                     }),
             ])
-            ->recordActions([
+            ->actions([
                 ViewAction::make(),
                 EditAction::make(),
             ])
@@ -202,7 +202,7 @@ class SchoolsTable
                     ->label('New School')
                     ->icon('heroicon-o-plus'),
             ])
-            ->recordBulkActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     ExportBulkAction::make()
                         ->label('Export Selected')

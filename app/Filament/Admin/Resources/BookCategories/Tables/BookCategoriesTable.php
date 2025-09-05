@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources\BookCategories\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -68,7 +68,7 @@ class BookCategoriesTable
  ->falseLabel('Inactive only')
  ->native(false),
  ])
- ->recordActions([
+ ->actions([
  EditAction::make(),
  ])
  ->toolbarActions([

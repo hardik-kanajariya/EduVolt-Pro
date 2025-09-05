@@ -3,11 +3,11 @@
 namespace App\Filament\Admin\Resources\Exams\Tables;
 
 use App\Models\AcademicYear;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\Action;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
@@ -114,7 +114,7 @@ class ExamsTable
  ->query(fn(Builder $query): Builder => $query->ongoing())
  ->toggle(),
  ])
- ->recordActions([
+ ->actions([
  Action::make('publish')
  ->icon('heroicon-o-eye')
  ->color('success')

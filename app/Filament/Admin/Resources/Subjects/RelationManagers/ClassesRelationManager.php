@@ -3,17 +3,17 @@
 namespace App\Filament\Admin\Resources\Subjects\RelationManagers;
 
 use Filament\Actions\AttachAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Actions\DetachAction;
 use Filament\Actions\DetachBulkAction;
-use Filament\Actions\EditAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
-use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -149,7 +149,7 @@ class ClassesRelationManager extends RelationManager
                     ->label('Assign Existing Class')
                     ->preloadRecordSelect(),
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
                 DetachAction::make(),
                 DeleteAction::make(),

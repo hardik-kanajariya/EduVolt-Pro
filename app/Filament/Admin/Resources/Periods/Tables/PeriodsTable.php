@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources\Periods\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Table;
 
 class PeriodsTable
@@ -18,7 +18,7 @@ class PeriodsTable
  ->filters([
  //
  ])
- ->recordActions([
+ ->actions([
  EditAction::make(),
  ])
  ->toolbarActions([

@@ -83,11 +83,9 @@ class ExamMarksTable
  ->boolean()
  ->label('Absent'),
 
- IconColumn::make('is_verified')
- ->boolean()
- ->label('Verified'),
-
- TextColumn::make('enteredBy.name')
+                IconColumn::make('is_published')
+                    ->boolean()
+                    ->label('Published'), TextColumn::make('enteredBy.name')
  ->label('Entered By')
  ->toggleable(isToggledHiddenByDefault: true),
 
@@ -139,23 +137,21 @@ class ExamMarksTable
  ->toggle(),
  ])
  ->actions([
- Action::make('verify')
- ->icon('heroicon-o-check-badge')
- ->color('success')
- ->action(function ($record) {
- $record->verify(Auth::id(), 'Verified via admin panel');
- })
- ->visible(fn($record) => !$record->is_verified),
+                Action::make('publish')
+                    ->icon('heroicon-o-check-badge')
+                    ->color('success')
+                    ->action(function ($record) {
+                        $record->update(['is_published' => true]);
+                    })
+                    ->visible(fn($record) => !$record->is_published),
 
- Action::make('unverify')
- ->icon('heroicon-o-x-circle')
- ->color('warning')
- ->action(function ($record) {
- $record->unverify('Unverified via admin panel');
- })
- ->visible(fn($record) => $record->is_verified),
-
- EditAction::make(),
+                Action::make('unpublish')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('warning')
+                    ->action(function ($record) {
+                        $record->update(['is_published' => false]);
+                    })
+                    ->visible(fn($record) => $record->is_published), EditAction::make(),
  DeleteAction::make(),
  ])
  ->bulkActions([

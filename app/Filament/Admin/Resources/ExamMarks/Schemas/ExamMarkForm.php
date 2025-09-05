@@ -100,8 +100,8 @@ class ExamMarkForm
                     ->searchable()
                     ->preload(),
 
-                Toggle::make('is_verified')
-                    ->label('Verified')
+                Toggle::make('is_published')
+                    ->label('Published')
                     ->default(false),
 
                 Hidden::make('entered_at')

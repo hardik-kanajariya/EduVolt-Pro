@@ -8,24 +8,24 @@ use Illuminate\Support\Facades\Auth;
 
 class CreateAcademicReport extends CreateRecord
 {
- protected static string $resource = AcademicReportResource::class;
+    protected static string $resource = AcademicReportResource::class;
 
- protected function mutateFormDataBeforeCreate(array $data): array
- {
- $data['generated_by'] = Auth::id();
- $data['status'] = 'pending';
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['generated_by'] = Auth::id();
+        $data['status'] = 'pending';
 
- // Parse recipients from textarea to array
- if (!empty($data['recipients'])) {
- $recipients = array_filter(array_map('trim', explode("\n", $data['recipients'])));
- $data['recipients'] = json_encode($recipients);
- }
+        // Parse recipients from textarea to array
+        if (!empty($data['recipients'])) {
+            $recipients = array_filter(array_map('trim', explode("\n", $data['recipients'])));
+            $data['recipients'] = json_encode($recipients);
+        }
 
- return $data;
- }
+        return $data;
+    }
 
- protected function getRedirectUrl(): string
- {
- return $this->getResource()::getUrl('index');
- }
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

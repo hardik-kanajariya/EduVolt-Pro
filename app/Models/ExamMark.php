@@ -113,8 +113,8 @@ class ExamMark extends Model
             return 'Absent';
         }
 
-        if (!$this->is_verified) {
-            return 'Pending Verification';
+        if (!$this->is_published) {
+            return 'Pending Publication';
         }
 
         $passingMarks = $this->examSubject->exam->passing_marks ??
@@ -197,23 +197,23 @@ class ExamMark extends Model
         ]);
     }
 
-    public function verify($verifierId, $remarks = null)
+    public function publish($publisherId, $remarks = null)
     {
         $this->update([
-            'is_verified' => true,
-            'verified_by' => $verifierId,
+            'is_published' => true,
+            'verified_by' => $publisherId,
             'verified_at' => now(),
-            'remarks' => $remarks ? $this->remarks . "\nVerification: " . $remarks : $this->remarks,
+            'remarks' => $remarks ? $this->remarks . "\nPublished: " . $remarks : $this->remarks,
         ]);
     }
 
-    public function unverify($remarks = null)
+    public function unpublish($remarks = null)
     {
         $this->update([
-            'is_verified' => false,
+            'is_published' => false,
             'verified_by' => null,
             'verified_at' => null,
-            'remarks' => $remarks ? $this->remarks . "\nUnverified: " . $remarks : $this->remarks,
+            'remarks' => $remarks ? $this->remarks . "\nUnpublished: " . $remarks : $this->remarks,
         ]);
     }
 

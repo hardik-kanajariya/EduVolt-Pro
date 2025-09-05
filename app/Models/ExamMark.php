@@ -23,7 +23,7 @@ class ExamMark extends Model
         'verified_by',
         'entered_at',
         'verified_at',
-        'is_verified',
+        'is_published',
     ];
 
     protected $casts = [
@@ -33,7 +33,7 @@ class ExamMark extends Model
         'is_absent' => 'boolean',
         'entered_at' => 'datetime',
         'verified_at' => 'datetime',
-        'is_verified' => 'boolean',
+        'is_published' => 'boolean',
     ];
 
     public function examSubject(): BelongsTo
@@ -57,14 +57,14 @@ class ExamMark extends Model
     }
 
     // Scopes
-    public function scopeVerified($query)
+    public function scopePublished($query)
     {
-        return $query->where('is_verified', true);
+        return $query->where('is_published', true);
     }
 
-    public function scopeUnverified($query)
+    public function scopeUnpublished($query)
     {
-        return $query->where('is_verified', false);
+        return $query->where('is_published', false);
     }
 
     public function scopeAbsent($query)

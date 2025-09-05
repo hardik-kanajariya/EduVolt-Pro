@@ -31,7 +31,7 @@ class Assignment extends Model
         'due_date' => 'date',
         'due_time' => 'datetime:H:i',
         'attachments' => 'array',
-        'max_marks' => 'decimal:2',
+        'max_marks' => 'integer',
     ];
 
     public function teacher(): BelongsTo

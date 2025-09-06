@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
             $table->foreignId('subject_id')->constrained()->onDelete('cascade');
             $table->foreignId('teacher_id')->constrained()->onDelete('cascade');
-            $table->foreignId('period_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('period_id'); // Will add constraint after periods table is created
             $table->foreignId('academic_year_id')->constrained()->onDelete('cascade');
             $table->enum('day_of_week', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']);
             $table->string('room_number', 50)->nullable();

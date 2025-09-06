@@ -14,34 +14,34 @@ return new class extends Migration
         Schema::table('student_progress', function (Blueprint $table) {
             // Add missing performance trend
             if (!Schema::hasColumn('student_progress', 'performance_trend')) {
-                $table->enum('performance_trend', ['improving', 'declining', 'stable', 'excellent', 'needs_attention'])->nullable()->after('classes_late');
+                $table->enum('performance_trend', ['improving', 'declining', 'stable', 'excellent', 'needs_attention'])->nullable();
             }
 
             // Performance indicators
             if (!Schema::hasColumn('student_progress', 'previous_grade')) {
-                $table->decimal('previous_grade', 5, 2)->nullable()->after('performance_trend');
-                $table->decimal('grade_change', 5, 2)->nullable()->after('previous_grade');
+                $table->decimal('previous_grade', 5, 2)->nullable();
+                $table->decimal('grade_change', 5, 2)->nullable();
             }
 
             // Behavioral indicators
             if (!Schema::hasColumn('student_progress', 'behavioral_score')) {
-                $table->integer('behavioral_score')->nullable()->after('grade_change');
-                $table->json('achievements')->nullable()->after('behavioral_score');
-                $table->json('areas_of_concern')->nullable()->after('achievements');
+                $table->integer('behavioral_score')->nullable();
+                $table->json('achievements')->nullable();
+                $table->json('areas_of_concern')->nullable();
             }
 
             // Enhanced feedback
             if (!Schema::hasColumn('student_progress', 'effort_level')) {
-                $table->enum('effort_level', ['excellent', 'good', 'satisfactory', 'needs_improvement', 'poor'])->nullable()->after('teacher_remarks');
-                $table->enum('participation_level', ['excellent', 'good', 'satisfactory', 'needs_improvement', 'poor'])->nullable()->after('effort_level');
+                $table->enum('effort_level', ['excellent', 'good', 'satisfactory', 'needs_improvement', 'poor'])->nullable();
+                $table->enum('participation_level', ['excellent', 'good', 'satisfactory', 'needs_improvement', 'poor'])->nullable();
             }
 
             // Timestamps and tracking
             if (!Schema::hasColumn('student_progress', 'last_updated_at')) {
-                $table->timestamp('last_updated_at')->nullable()->after('participation_level');
-                $table->foreignId('updated_by')->nullable()->constrained('users')->after('last_updated_at');
-                $table->date('reporting_period_start')->nullable()->after('updated_by');
-                $table->date('reporting_period_end')->nullable()->after('reporting_period_start');
+                $table->timestamp('last_updated_at')->nullable();
+                $table->foreignId('updated_by')->nullable()->constrained('users');
+                $table->date('reporting_period_start')->nullable();
+                $table->date('reporting_period_end')->nullable();
             }
 
             // Rename teacher_remarks to teacher_comments if exists

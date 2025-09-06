@@ -26,7 +26,7 @@ class StudentFeeAssignmentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Student Assignment')
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([
@@ -70,10 +70,9 @@ class StudentFeeAssignmentResource extends Resource
                                     ->reactive()
                                     ->searchable(),
                             ]),
-                    ])
-                    ->heading('Assignment Details'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Fee Configuration')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
@@ -122,10 +121,9 @@ class StudentFeeAssignmentResource extends Resource
                             ->label('Discount Reason')
                             ->placeholder('e.g., Merit scholarship, Financial hardship')
                             ->visible(fn(callable $get) => $get('discount_type') !== null),
-                    ])
-                    ->heading('Discount Configuration'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Status & Validity')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([

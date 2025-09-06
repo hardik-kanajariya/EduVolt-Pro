@@ -27,7 +27,7 @@ class FeeStructureResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Basic Information')
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([
@@ -84,10 +84,9 @@ class FeeStructureResource extends Resource
                                     ->required()
                                     ->searchable(),
                             ]),
-                    ])
-                    ->heading('Basic Information'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Fee Details')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
@@ -126,10 +125,9 @@ class FeeStructureResource extends Resource
                                 $additional = $get('additional_charges') ?? 0;
                                 $component->state($amount - $discount + $additional);
                             }),
-                    ])
-                    ->heading('Amount Configuration'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Variable Amounts')
                     ->schema([
                         Forms\Components\KeyValue::make('month_wise_amounts')
                             ->label('Month-wise Amounts')
@@ -137,11 +135,9 @@ class FeeStructureResource extends Resource
                             ->valueLabel('Amount')
                             ->hint('Optional: Specify different amounts for different months')
                             ->columnSpan('full'),
-                    ])
-                    ->heading('Variable Amounts')
-                    ->collapsible(),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Validity & Status')
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([

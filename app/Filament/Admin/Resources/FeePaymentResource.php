@@ -27,7 +27,7 @@ class FeePaymentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Payment Information')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
@@ -57,10 +57,9 @@ class FeePaymentResource extends Resource
                                     ->reactive()
                                     ->searchable(),
                             ]),
-                    ])
-                    ->heading('Payment Details'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Amount Details')
                     ->schema([
                         Forms\Components\Grid::make(4)
                             ->schema([
@@ -107,10 +106,9 @@ class FeePaymentResource extends Resource
                                 $adjustment = $get('adjustment_amount') ?? 0;
                                 $component->state($total + $lateFee - $discount + $adjustment);
                             }),
-                    ])
-                    ->heading('Amount Breakdown'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Payment Method')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
@@ -153,10 +151,9 @@ class FeePaymentResource extends Resource
                                     ->label('Payment Time')
                                     ->default(now()),
                             ]),
-                    ])
-                    ->heading('Payment Information'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Status & Notes')
                     ->schema([
                         Forms\Components\Select::make('status')
                             ->label('Status')

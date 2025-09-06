@@ -27,7 +27,7 @@ class TimetableResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Timetable Entry')
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([

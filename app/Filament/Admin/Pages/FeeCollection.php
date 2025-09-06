@@ -44,7 +44,7 @@ class FeeCollection extends Page
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Student Search')
                     ->schema([
                         Forms\Components\TextInput::make('search_student')
                             ->label('Search Student')
@@ -53,10 +53,9 @@ class FeeCollection extends Page
                             ->afterStateUpdated(function ($state) {
                                 $this->searchStudent($state);
                             }),
-                    ])
-                    ->heading('Student Search'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Student Information')
                     ->schema([
                         Forms\Components\Placeholder::make('student_info')
                             ->label('')
@@ -70,10 +69,9 @@ class FeeCollection extends Page
                                 ]);
                             }),
                     ])
-                    ->heading('Student Information')
                     ->visible(fn() => $this->selectedStudent !== null),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Pending Installments')
                     ->schema([
                         Forms\Components\CheckboxList::make('selected_installments')
                             ->label('Select Installments to Pay')
@@ -89,10 +87,9 @@ class FeeCollection extends Page
                                 $this->calculateAmounts($state);
                             }),
                     ])
-                    ->heading('Pending Installments')
                     ->visible(fn() => !empty($this->pendingInstallments)),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Payment Summary')
                     ->schema([
                         Forms\Components\Grid::make(4)
                             ->schema([
@@ -120,11 +117,9 @@ class FeeCollection extends Page
                                     ->prefix('$')
                                     ->disabled(),
                             ]),
-                    ])
-                    ->heading('Payment Summary')
-                    ->visible(fn() => !empty($this->selectedInstallments)),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Payment Details')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([

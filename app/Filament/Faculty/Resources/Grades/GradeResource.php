@@ -27,7 +27,7 @@ class GradeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Grade Information')
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([

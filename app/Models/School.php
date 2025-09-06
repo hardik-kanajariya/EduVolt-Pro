@@ -22,11 +22,18 @@ class School extends Model
         'type',
         'status',
         'settings',
+        'financial_settings',
+        'subscription_plan',
+        'subscription_expires_at',
+        'monthly_fee_target',
     ];
 
     protected $casts = [
         'established_date' => 'date',
         'settings' => 'array',
+        'financial_settings' => 'array',
+        'subscription_expires_at' => 'datetime',
+        'monthly_fee_target' => 'float',
     ];
 
     // Relationships
@@ -92,6 +99,21 @@ class School extends Model
         return $this->hasMany(FeePayment::class);
     }
 
+    public function schoolFinances()
+    {
+        return $this->hasMany(SchoolFinance::class);
+    }
+
+    public function paymentGateways()
+    {
+        return $this->hasMany(PaymentGatewaySetting::class);
+    }
+
+    public function smsGateways()
+    {
+        return $this->hasMany(SmsGatewaySetting::class);
+    }
+
     // Scopes
     public function scopeActive($query)
     {
@@ -101,5 +123,38 @@ class School extends Model
     public function getCurrentAcademicYear()
     {
         return $this->academicYears()->where('is_current', true)->first();
+    }
+
+    /**
+     * Get current month's financial data
+     */
+    public function getCurrentMonthFinance(): ?SchoolFinance
+    {
+        return SchoolFinance::getOrCreateCurrentMonth($this->id);
+    }
+
+    /**
+     * Check if subscription is active
+     */
+    public function hasActiveSubscription(): bool
+    {
+        return $this->subscription_expires_at === null || 
+               $this->subscription_expires_at->isFuture();
+    }
+
+    /**
+     * Get active payment gateway
+     */
+    public function getActivePaymentGateway(): ?PaymentGatewaySetting
+    {
+        return PaymentGatewaySetting::getActiveGateway($this->id);
+    }
+
+    /**
+     * Get active SMS gateway
+     */
+    public function getActiveSmsGateway(): ?SmsGatewaySetting
+    {
+        return SmsGatewaySetting::getActiveGateway($this->id);
     }
 }

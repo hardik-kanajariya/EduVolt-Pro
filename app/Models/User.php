@@ -29,6 +29,7 @@ class User extends Authenticatable
         'gender',
         'status',
         'school_id',
+        'is_super_admin',
         'last_panel_accessed',
     ];
 
@@ -54,6 +55,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'date_of_birth' => 'date',
             'status' => 'boolean',
+            'is_super_admin' => 'boolean',
         ];
     }
 
@@ -81,7 +83,7 @@ class User extends Authenticatable
     // Check if user is a super admin
     public function isSuperAdmin(): bool
     {
-        return $this->hasRole('super_admin');
+        return $this->is_super_admin === true || $this->hasRole('super_admin');
     }
 
     // Check if user is a school admin

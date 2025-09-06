@@ -175,21 +175,25 @@ class FeeCategoryResource extends Resource
                     ->searchable()
                     ->copyable(),
 
-                Tables\Columns\BadgeColumn::make('type')
-                    ->colors([
-                        'primary' => 'mandatory',
-                        'warning' => 'optional',
-                        'secondary' => 'conditional',
-                    ]),
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'mandatory' => 'primary',
+                        'optional' => 'warning',
+                        'conditional' => 'secondary',
+                        default => 'gray',
+                    }),
 
-                Tables\Columns\BadgeColumn::make('frequency')
-                    ->colors([
-                        'success' => 'monthly',
-                        'info' => 'quarterly',
-                        'warning' => 'half_yearly',
-                        'primary' => 'yearly',
-                        'secondary' => 'one_time',
-                    ]),
+                Tables\Columns\TextColumn::make('frequency')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'monthly' => 'success',
+                        'quarterly' => 'info',
+                        'half_yearly' => 'warning',
+                        'yearly' => 'primary',
+                        'one_time' => 'secondary',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('due_day')
                     ->label('Due Day')

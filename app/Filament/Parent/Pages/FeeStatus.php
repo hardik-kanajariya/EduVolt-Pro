@@ -11,6 +11,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 
 class FeeStatus extends Page implements HasTable
@@ -41,7 +42,7 @@ class FeeStatus extends Page implements HasTable
     {
         // Assuming parent user relationship exists
         return Student::whereHas('user', function ($query) {
-            $query->where('email', auth()->user()?->email); // or however parent-child relationship is defined
+            $query->where('email', Auth::user()?->email); // or however parent-child relationship is defined
         })->get();
     }
 
@@ -104,13 +105,15 @@ class FeeStatus extends Page implements HasTable
                     ->date()
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'success' => 'paid',
-                        'warning' => 'partially_paid',
-                        'danger' => 'overdue',
-                        'info' => 'pending',
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'paid' => 'success',
+                        'partially_paid' => 'warning',
+                        'overdue' => 'danger',
+                        'pending' => 'info',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('formatted_balance_amount')
                     ->label('Outstanding')

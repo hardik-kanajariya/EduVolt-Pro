@@ -41,24 +41,26 @@ class StudentProgressResource extends Resource
                             ->label('Student')
                             ->searchable()
                             ->preload()
-                            ->options(fn () => Student::with('user')
-                                ->get()
-                                ->mapWithKeys(fn (Student $student) => [
-                                    $student->id => $student->user?->name ?? 'Unknown',
-                                ])
-                                ->toArray()
+                            ->options(
+                                fn() => Student::with('user')
+                                    ->get()
+                                    ->mapWithKeys(fn(Student $student) => [
+                                        $student->id => $student->user?->name ?? 'Unknown',
+                                    ])
+                                    ->toArray()
                             )
-                            ->getSearchResultsUsing(fn (string $search) => Student::query()
-                                ->whereHas('user', fn ($q) => $q->where('name', 'like', "%{$search}%"))
-                                ->with('user')
-                                ->limit(50)
-                                ->get()
-                                ->mapWithKeys(fn (Student $student) => [
-                                    $student->id => $student->user?->name ?? 'Unknown',
-                                ])
-                                ->toArray()
+                            ->getSearchResultsUsing(
+                                fn(string $search) => Student::query()
+                                    ->whereHas('user', fn($q) => $q->where('name', 'like', "%{$search}%"))
+                                    ->with('user')
+                                    ->limit(50)
+                                    ->get()
+                                    ->mapWithKeys(fn(Student $student) => [
+                                        $student->id => $student->user?->name ?? 'Unknown',
+                                    ])
+                                    ->toArray()
                             )
-                            ->getOptionLabelUsing(fn ($value): ?string => Student::with('user')->find($value)?->user?->name)
+                            ->getOptionLabelUsing(fn($value): ?string => Student::with('user')->find($value)?->user?->name)
                             ->required(),
 
                         Forms\Components\Select::make('academic_year_id')
@@ -201,14 +203,17 @@ class StudentProgressResource extends Resource
                     ->label('Grade')
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('performance_level')
+                Tables\Columns\TextColumn::make('performance_level')
                     ->label('Performance')
-                    ->colors([
-                        'success' => 'excellent',
-                        'info' => 'good',
-                        'warning' => 'satisfactory',
-                        'danger' => ['needs_improvement', 'poor'],
-                    ]),
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'excellent' => 'success',
+                        'good' => 'info',
+                        'satisfactory' => 'warning',
+                        'needs_improvement' => 'danger',
+                        'poor' => 'danger',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('attendance_percentage')
                     ->label('Attendance')

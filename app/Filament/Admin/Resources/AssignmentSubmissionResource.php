@@ -124,17 +124,21 @@ class AssignmentSubmissionResource extends Resource
                     ->sortable()
                     ->formatStateUsing(fn($state, $record) => $state ? $state . '/' . $record->assignment->max_marks : '-'),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'warning' => 'submitted',
-                        'success' => 'graded',
-                        'info' => 'returned',
-                        'secondary' => 'resubmitted',
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'submitted' => 'success',
+                        'pending' => 'warning',
+                        'late' => 'danger',
+                        'graded' => 'info',
+                        'draft' => 'secondary',
+                        default => 'gray',
+                    }),
 
-                Tables\Columns\BooleanColumn::make('is_late')
+                Tables\Columns\IconColumn::make('is_late')
                     ->label('Late')
-                    ->getStateUsing(fn($record) => $record->submitted_at > $record->assignment->due_date),
+                    ->getStateUsing(fn($record) => $record->submitted_at > $record->assignment->due_date)
+                    ->boolean(),
 
                 Tables\Columns\TextColumn::make('graded_at')
                     ->label('Graded At')

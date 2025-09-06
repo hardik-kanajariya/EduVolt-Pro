@@ -212,15 +212,17 @@ class FeePaymentResource extends Resource
                     ->label('Amount Paid')
                     ->sortable('net_amount'),
 
-                Tables\Columns\BadgeColumn::make('payment_method_label')
+                Tables\Columns\TextColumn::make('payment_method_label')
                     ->label('Payment Method')
-                    ->colors([
-                        'success' => 'cash',
-                        'info' => 'cheque',
-                        'warning' => 'bank_transfer',
-                        'primary' => 'card',
-                        'secondary' => 'online',
-                    ]),
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'cash' => 'success',
+                        'cheque' => 'info',
+                        'bank_transfer' => 'warning',
+                        'card' => 'primary',
+                        'online' => 'secondary',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('payment_date')
                     ->label('Payment Date')
@@ -231,14 +233,16 @@ class FeePaymentResource extends Resource
                     ->label('Collected By')
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'success' => 'completed',
-                        'warning' => 'pending',
-                        'danger' => 'failed',
-                        'info' => 'refunded',
-                        'secondary' => 'cancelled',
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'completed' => 'success',
+                        'pending' => 'warning',
+                        'failed' => 'danger',
+                        'refunded' => 'info',
+                        'cancelled' => 'secondary',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\IconColumn::make('is_printed')
                     ->boolean()

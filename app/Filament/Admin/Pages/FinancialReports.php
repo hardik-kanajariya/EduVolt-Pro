@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class FinancialReports extends Page implements HasForms
@@ -35,7 +36,7 @@ class FinancialReports extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill([
-            'school_id' => auth()->user()?->school_id,
+            'school_id' => Auth::user()?->school_id,
             'date_from' => now()->startOfMonth(),
             'date_to' => now()->endOfMonth(),
             'academic_year' => now()->year,

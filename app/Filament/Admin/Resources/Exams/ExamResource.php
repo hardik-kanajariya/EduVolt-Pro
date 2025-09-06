@@ -179,21 +179,24 @@ class ExamResource extends Resource
                     ->date()
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'secondary' => 'draft',
-                        'warning' => 'scheduled',
-                        'info' => 'ongoing',
-                        'success' => 'completed',
-                        'danger' => 'cancelled',
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'draft' => 'secondary',
+                        'scheduled' => 'warning',
+                        'ongoing' => 'info',
+                        'completed' => 'success',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('total_marks')
                     ->label('Total Marks')
                     ->sortable(),
 
-                Tables\Columns\BooleanColumn::make('is_published')
-                    ->label('Published'),
+                Tables\Columns\IconColumn::make('is_published')
+                    ->label('Published')
+                    ->boolean(),
 
                 Tables\Columns\TextColumn::make('examSubjects_count')
                     ->label('Subjects')

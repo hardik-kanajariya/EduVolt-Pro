@@ -135,12 +135,14 @@ class AssignmentResource extends Resource
                     ->label('Max Marks')
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'secondary' => 'draft',
-                        'success' => 'published',
-                        'danger' => 'closed',
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'draft' => 'secondary',
+                        'published' => 'success',
+                        'closed' => 'danger',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('submissions_count')
                     ->label('Submissions')

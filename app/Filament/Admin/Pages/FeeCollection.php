@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\Auth;
 
 class FeeCollection extends Page
 {
@@ -286,7 +287,7 @@ class FeeCollection extends Page
                 'transaction_reference' => $this->data['transaction_reference'],
                 'payment_date' => $this->data['payment_date'],
                 'payment_time' => now(),
-                'collected_by' => auth()->id(),
+                'collected_by' => Auth::id(),
                 'status' => 'completed',
                 'remarks' => $this->data['remarks'],
             ]);

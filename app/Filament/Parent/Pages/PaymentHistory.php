@@ -10,6 +10,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 
 class PaymentHistory extends Page implements HasTable
@@ -39,7 +40,7 @@ class PaymentHistory extends Page implements HasTable
     public function getChildren()
     {
         return Student::whereHas('user', function ($query) {
-            $query->where('email', auth()->user()?->email);
+            $query->where('email', Auth::user()?->email);
         })->get();
     }
 
@@ -109,21 +110,25 @@ class PaymentHistory extends Page implements HasTable
                     ->label('Amount Paid')
                     ->sortable('amount'),
 
-                Tables\Columns\BadgeColumn::make('payment_method')
-                    ->colors([
-                        'success' => 'cash',
-                        'info' => 'bank_transfer',
-                        'warning' => 'cheque',
-                        'primary' => 'online',
-                    ]),
+                Tables\Columns\TextColumn::make('payment_method')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'cash' => 'success',
+                        'bank_transfer' => 'info',
+                        'cheque' => 'warning',
+                        'online' => 'primary',
+                        default => 'gray',
+                    }),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'success' => 'completed',
-                        'warning' => 'pending',
-                        'danger' => 'failed',
-                        'info' => 'processing',
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'completed' => 'success',
+                        'pending' => 'warning',
+                        'failed' => 'danger',
+                        'processing' => 'info',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Collected By')

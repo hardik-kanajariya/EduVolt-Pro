@@ -114,14 +114,16 @@ class AttendanceResource extends Resource
                     ->date()
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'success' => 'present',
-                        'danger' => 'absent',
-                        'warning' => 'late',
-                        'info' => 'partial',
-                        'secondary' => 'excused',
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'present' => 'success',
+                        'absent' => 'danger',
+                        'late' => 'warning',
+                        'partial' => 'info',
+                        'excused' => 'secondary',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('in_time')
                     ->label('Time In')

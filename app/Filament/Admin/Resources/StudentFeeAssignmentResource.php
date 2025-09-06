@@ -196,13 +196,15 @@ class StudentFeeAssignmentResource extends Resource
                     ->money()
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('payment_status')
+                Tables\Columns\TextColumn::make('payment_status')
                     ->label('Payment Status')
-                    ->colors([
-                        'danger' => 'unpaid',
-                        'warning' => 'partially_paid',
-                        'success' => 'paid',
-                    ]),
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'paid' => 'success',
+                        'partially_paid' => 'warning',
+                        'unpaid' => 'danger',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('assigned_date')
                     ->label('Assigned')

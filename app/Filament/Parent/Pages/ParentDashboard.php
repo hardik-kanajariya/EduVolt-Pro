@@ -2,6 +2,9 @@
 
 namespace App\Filament\Parent\Pages;
 
+use App\Filament\Parent\Widgets\ParentStatsWidget;
+use App\Filament\Parent\Widgets\ChildAttendanceWidget;
+use App\Filament\Parent\Widgets\ChildrenPerformanceWidget;
 use App\Models\Student;
 use App\Models\Grade;
 use App\Models\Attendance;
@@ -28,6 +31,22 @@ class ParentDashboard extends Page
     {
         return Student::whereHas('user', function ($query) {
             $query->where('email', Auth::user()->email);
+        })->orWhere('parent_email', Auth::user()->email)->get();
+    }
+
+    public function getWidgets(): array
+    {
+        return [
+            ParentStatsWidget::class,
+            ChildAttendanceWidget::class,
+            ChildrenPerformanceWidget::class,
+        ];
+    }
+
+    public function getColumns(): int | array
+    {
+        return 2;
+    }
         })->with(['user', 'schoolClass', 'school'])->get();
     }
 

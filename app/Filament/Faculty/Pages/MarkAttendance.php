@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class MarkAttendance extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-h-pin';
+    protected static ?string $navigationIcon = 'heroicon-o-check-badge';
 
     protected static string $view = 'filament.faculty.pages.mark-attendance';
 

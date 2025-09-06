@@ -60,6 +60,26 @@ class School extends Model
         return $this->hasMany(Staff::class);
     }
 
+    public function feeSettings()
+    {
+        return $this->hasOne(FeeSettings::class);
+    }
+
+    public function feeCategories()
+    {
+        return $this->hasMany(FeeCategory::class);
+    }
+
+    public function feeStructures()
+    {
+        return $this->hasMany(FeeStructure::class);
+    }
+
+    public function feePayments()
+    {
+        return $this->hasMany(FeePayment::class);
+    }
+
     // Scopes
     public function scopeActive($query)
     {

@@ -77,6 +77,26 @@ class Student extends Model
         return $this->hasMany(AssignmentSubmission::class);
     }
 
+    public function feeAssignments()
+    {
+        return $this->hasMany(StudentFeeAssignment::class);
+    }
+
+    public function feePayments()
+    {
+        return $this->hasMany(FeePayment::class);
+    }
+
+    public function feeWaivers()
+    {
+        return $this->hasMany(FeeWaiver::class);
+    }
+
+    public function feeReminders()
+    {
+        return $this->hasMany(FeeReminder::class);
+    }
+
     // Scopes
     public function scopeActive($query)
     {

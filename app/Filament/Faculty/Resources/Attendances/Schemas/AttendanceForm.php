@@ -13,6 +13,24 @@ class AttendanceForm
     public static function configure(Form $form): Form
     {
         return $form
-            ->schema();
+            ->schema([
+                Select::make('student_id')
+                    ->relationship('student', 'id')
+                    ->required(),
+                TextInput::make('class_id')
+                    ->required()
+                    ->numeric(),
+                DatePicker::make('date')
+                    ->required(),
+                Select::make('status')
+                    ->options(['present' => 'Present', 'absent' => 'Absent', 'late' => 'Late', 'excused' => 'Excused'])
+                    ->default('present')
+                    ->required(),
+                Textarea::make('remarks')
+                    ->columnSpanFull(),
+                TextInput::make('marked_by')
+                    ->required()
+                    ->numeric(),
+            ]);
     }
 }

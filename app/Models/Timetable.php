@@ -11,6 +11,7 @@ class Timetable extends Model
     use HasFactory;
 
     protected $fillable = [
+        'school_id',
         'class_id',
         'subject_id',
         'teacher_id',
@@ -29,6 +30,11 @@ class Timetable extends Model
     public function schoolClass(): BelongsTo
     {
         return $this->belongsTo(SchoolClass::class, 'class_id');
+    }
+
+    public function school(): BelongsTo
+    {
+        return $this->belongsTo(School::class);
     }
 
     public function subject(): BelongsTo

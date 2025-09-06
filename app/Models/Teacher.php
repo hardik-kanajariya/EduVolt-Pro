@@ -62,6 +62,18 @@ class Teacher extends Model
         return $this->hasMany(Attendance::class, 'marked_by');
     }
 
+    public function teacherClassSubjects()
+    {
+        return $this->hasMany(TeacherClassSubject::class);
+    }
+
+    public function teachingClasses()
+    {
+        return $this->belongsToMany(SchoolClass::class, 'teacher_class_subjects', 'teacher_id', 'class_id')
+            ->withPivot(['subject_id', 'status'])
+            ->wherePivot('status', 'active');
+    }
+
     // Scopes
     public function scopeActive($query)
     {

@@ -14,6 +14,7 @@ class Assignment extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'school_id',
         'teacher_id',
         'class_id',
         'subject_id',
@@ -37,6 +38,11 @@ class Assignment extends Model
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class);
+    }
+
+    public function school(): BelongsTo
+    {
+        return $this->belongsTo(School::class);
     }
 
     public function schoolClass(): BelongsTo

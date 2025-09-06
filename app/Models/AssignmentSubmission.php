@@ -11,6 +11,7 @@ class AssignmentSubmission extends Model
     use HasFactory;
 
     protected $fillable = [
+        'school_id',
         'assignment_id',
         'student_id',
         'content',
@@ -35,6 +36,11 @@ class AssignmentSubmission extends Model
     public function assignment(): BelongsTo
     {
         return $this->belongsTo(Assignment::class);
+    }
+
+    public function school(): BelongsTo
+    {
+        return $this->belongsTo(School::class);
     }
 
     public function student(): BelongsTo

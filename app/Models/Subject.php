@@ -40,6 +40,11 @@ class Subject extends Model
         return $this->belongsToMany(Teacher::class, 'teacher_subject');
     }
 
+    public function teacherClassSubjects()
+    {
+        return $this->hasMany(TeacherClassSubject::class);
+    }
+
     // Scopes
     public function scopeActive($query)
     {

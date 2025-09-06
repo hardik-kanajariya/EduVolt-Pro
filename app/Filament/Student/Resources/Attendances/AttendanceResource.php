@@ -36,10 +36,14 @@ class AttendanceResource extends Resource
     {
         $query = parent::getEloquentQuery();
 
-        // Restrict to attendance records of the current student
+        // Restrict to attendance records of the current student and school
         $user = Auth::user();
         if ($user && $user->student) {
-            $query->where('student_id', $user->student->id);
+            $query->where('student_id', $user->student->id)
+                ->where('school_id', $user->school_id);
+        } else {
+            // If no student record, return empty query
+            $query->whereRaw('1 = 0');
         }
 
         return $query;

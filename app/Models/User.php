@@ -80,6 +80,57 @@ class User extends Authenticatable
         return $this->hasOne(Staff::class);
     }
 
+    // Get classes where this user is the main class teacher
+    public function assignedClasses()
+    {
+        if (!$this->isTeacher()) {
+            return SchoolClass::whereRaw('1 = 0');
+        }
+
+        $teacherId = $this->teacher?->id;
+        if (!$teacherId) {
+            return SchoolClass::whereRaw('1 = 0');
+        }
+
+        // Get classes from teacher_class_subjects table + main class teacher assignments
+        return SchoolClass::where(function ($query) use ($teacherId) {
+            $query->where('class_teacher_id', $teacherId)
+                ->orWhereHas('teacherSubjects', function ($q) use ($teacherId) {
+                    $q->where('teacher_id', $teacherId)->where('status', 'active');
+                });
+        })->where('school_id', $this->school_id);
+    }
+
+    // Get all classes where this teacher teaches (including main classes and subject-specific classes)
+    public function teachingClasses()
+    {
+        if (!$this->isTeacher()) {
+            return SchoolClass::whereRaw('1 = 0');
+        }
+
+        $teacherId = $this->teacher?->id;
+        if (!$teacherId) {
+            return SchoolClass::whereRaw('1 = 0');
+        }
+
+        return SchoolClass::where(function ($query) use ($teacherId) {
+            $query->where('class_teacher_id', $teacherId)
+                ->orWhereHas('teacherSubjects', function ($q) use ($teacherId) {
+                    $q->where('teacher_id', $teacherId)->where('status', 'active');
+                });
+        })->where('school_id', $this->school_id);
+    }
+
+    // Get teacher-class-subject assignments
+    public function teacherClassSubjects()
+    {
+        if (!$this->isTeacher() || !$this->teacher) {
+            return collect();
+        }
+
+        return $this->teacher->teacherClassSubjects();
+    }
+
     // Check if user is a super admin
     public function isSuperAdmin(): bool
     {
@@ -108,6 +159,12 @@ class User extends Authenticatable
     public function isParent(): bool
     {
         return $this->hasRole('parent');
+    }
+
+    // Check if user is a principal
+    public function isPrincipal(): bool
+    {
+        return $this->hasRole('principal');
     }
 
     // Check if user can access multiple schools (super admin)

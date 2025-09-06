@@ -63,6 +63,18 @@ class SchoolClass extends Model
         return $this->hasMany(Attendance::class, 'class_id');
     }
 
+    public function teacherSubjects()
+    {
+        return $this->hasMany(TeacherClassSubject::class, 'class_id');
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'teacher_class_subjects', 'class_id', 'teacher_id')
+            ->withPivot(['subject_id', 'status'])
+            ->wherePivot('status', 'active');
+    }
+
     // Scopes
     public function scopeActive($query)
     {

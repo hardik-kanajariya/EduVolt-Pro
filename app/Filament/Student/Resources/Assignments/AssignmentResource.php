@@ -42,11 +42,15 @@ class AssignmentResource extends Resource
                 SoftDeletingScope::class,
             ]);
 
-        // Restrict to assignments for the current student's class
+        // Restrict to assignments for the current student's class and school
         $user = Auth::user();
         if ($user && $user->student) {
             $query->where('class_id', $user->student->class_id)
+                ->where('school_id', $user->school_id)
                 ->where('status', 'published'); // Only show published assignments
+        } else {
+            // If no student record, return empty query
+            $query->whereRaw('1 = 0');
         }
 
         return $query;

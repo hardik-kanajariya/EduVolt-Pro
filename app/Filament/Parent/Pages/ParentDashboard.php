@@ -47,8 +47,6 @@ class ParentDashboard extends Page
     {
         return 2;
     }
-        })->with(['user', 'schoolClass', 'school'])->get();
-    }
 
     public function getChildrenStats()
     {

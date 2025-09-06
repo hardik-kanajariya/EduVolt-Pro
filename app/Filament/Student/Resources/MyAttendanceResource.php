@@ -33,7 +33,7 @@ class MyAttendanceResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $user = Auth::user();
-        
+
         if (!$user || !$user->isStudent() || !$user->student) {
             return parent::getEloquentQuery()->whereRaw('1 = 0');
         }
@@ -66,7 +66,7 @@ class MyAttendanceResource extends Resource
                         'warning' => 'late',
                         'primary' => 'excused',
                     ])
-                    ->formatStateUsing(fn ($state) => ucfirst($state))
+                    ->formatStateUsing(fn($state) => ucfirst($state))
                     ->sortable(),
 
                 TextColumn::make('in_time')
@@ -105,22 +105,24 @@ class MyAttendanceResource extends Resource
                         return $query
                             ->when(
                                 $data['from_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
                             )
                             ->when(
                                 $data['to_date'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
                             );
                     }),
 
                 Filter::make('this_month')
-                    ->query(fn (Builder $query): Builder => 
+                    ->query(
+                        fn(Builder $query): Builder =>
                         $query->whereMonth('date', now()->month)
-                              ->whereYear('date', now()->year)
+                            ->whereYear('date', now()->year)
                     ),
 
                 Filter::make('this_week')
-                    ->query(fn (Builder $query): Builder => 
+                    ->query(
+                        fn(Builder $query): Builder =>
                         $query->whereBetween('date', [
                             now()->startOfWeek(),
                             now()->endOfWeek()

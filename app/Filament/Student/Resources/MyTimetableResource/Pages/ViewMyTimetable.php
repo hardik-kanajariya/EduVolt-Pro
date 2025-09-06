@@ -14,7 +14,7 @@ class ViewMyTimetable extends ViewRecord
     public function mount($record): void
     {
         $user = Auth::user();
-        
+
         if (!$user || !$user->isStudent() || !$user->student) {
             redirect()->route('filament.student.auth.login');
         }

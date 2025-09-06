@@ -32,7 +32,7 @@ class MyAssignmentsResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $user = Auth::user();
-        
+
         if (!$user || !$user->isStudent() || !$user->student) {
             return parent::getEloquentQuery()->whereRaw('1 = 0');
         }
@@ -73,7 +73,8 @@ class MyAssignmentsResource extends Resource
                 TextColumn::make('due_date')
                     ->date()
                     ->sortable()
-                    ->color(fn ($record) => 
+                    ->color(
+                        fn($record) =>
                         $record->due_date < now() ? 'danger' : 'primary'
                     ),
 
@@ -86,11 +87,11 @@ class MyAssignmentsResource extends Resource
                     ->getStateUsing(function ($record) {
                         $user = Auth::user();
                         $submission = $record->submissions->where('student_id', $user->student->id)->first();
-                        
+
                         if (!$submission) {
                             return $record->due_date < now() ? 'overdue' : 'pending';
                         }
-                        
+
                         return $submission->status;
                     })
                     ->colors([
@@ -100,18 +101,18 @@ class MyAssignmentsResource extends Resource
                         'primary' => 'pending',
                         'info' => 'reviewed',
                     ])
-                    ->formatStateUsing(fn ($state) => ucfirst($state)),
+                    ->formatStateUsing(fn($state) => ucfirst($state)),
 
                 TextColumn::make('obtained_marks')
                     ->label('Marks')
                     ->getStateUsing(function ($record) {
                         $user = Auth::user();
                         $submission = $record->submissions->where('student_id', $user->student->id)->first();
-                        
+
                         if (!$submission || !$submission->marks_obtained) {
                             return '-';
                         }
-                        
+
                         return $submission->marks_obtained . '/' . $record->total_marks;
                     })
                     ->sortable(),
@@ -147,12 +148,13 @@ class MyAssignmentsResource extends Resource
 
                         return $query->whereHas('submissions', function ($subQuery) use ($data, $user) {
                             $subQuery->where('student_id', $user->student->id)
-                                    ->where('status', $data['status']);
+                                ->where('status', $data['status']);
                         });
                     }),
 
                 Filter::make('due_this_week')
-                    ->query(fn (Builder $query): Builder => 
+                    ->query(
+                        fn(Builder $query): Builder =>
                         $query->whereBetween('due_date', [
                             now()->startOfWeek(),
                             now()->endOfWeek()
@@ -160,7 +162,8 @@ class MyAssignmentsResource extends Resource
                     ),
 
                 Filter::make('overdue')
-                    ->query(fn (Builder $query): Builder => 
+                    ->query(
+                        fn(Builder $query): Builder =>
                         $query->where('due_date', '<', now())
                     ),
             ])
@@ -169,11 +172,11 @@ class MyAssignmentsResource extends Resource
                 Tables\Actions\Action::make('submit')
                     ->label('Submit/Edit')
                     ->icon('heroicon-o-paper-airplane')
-                    ->url(fn ($record) => route('filament.student.resources.my-assignments.submit', $record))
+                    ->url(fn($record) => route('filament.student.resources.my-assignments.submit', $record))
                     ->visible(function ($record) {
                         $user = Auth::user();
                         $submission = $record->submissions->where('student_id', $user->student->id)->first();
-                        
+
                         // Can submit if no submission exists or if submission is in draft
                         return !$submission || $submission->status === 'draft';
                     }),

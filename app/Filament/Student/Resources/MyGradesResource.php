@@ -31,7 +31,7 @@ class MyGradesResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $user = Auth::user();
-        
+
         if (!$user || !$user->isStudent() || !$user->student) {
             return parent::getEloquentQuery()->whereRaw('1 = 0');
         }
@@ -59,7 +59,7 @@ class MyGradesResource extends Resource
 
                 TextColumn::make('exam_type')
                     ->label('Exam Type')
-                    ->formatStateUsing(fn ($state) => ucfirst(str_replace('_', ' ', $state)))
+                    ->formatStateUsing(fn($state) => ucfirst(str_replace('_', ' ', $state)))
                     ->sortable(),
 
                 TextColumn::make('exam_name')
@@ -77,8 +77,9 @@ class MyGradesResource extends Resource
 
                 TextColumn::make('percentage')
                     ->label('Percentage')
-                    ->formatStateUsing(fn ($record) => 
-                        $record->total_marks > 0 
+                    ->formatStateUsing(
+                        fn($record) =>
+                        $record->total_marks > 0
                             ? round(($record->obtained_marks / $record->total_marks) * 100, 2) . '%'
                             : '0%'
                     )

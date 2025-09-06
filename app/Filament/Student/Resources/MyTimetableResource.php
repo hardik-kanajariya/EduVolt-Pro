@@ -30,7 +30,7 @@ class MyTimetableResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $user = Auth::user();
-        
+
         if (!$user || !$user->isStudent() || !$user->student) {
             return parent::getEloquentQuery()->whereRaw('1 = 0');
         }
@@ -54,7 +54,7 @@ class MyTimetableResource extends Resource
             ->columns([
                 TextColumn::make('day_of_week')
                     ->label('Day')
-                    ->formatStateUsing(fn ($state) => ucfirst($state))
+                    ->formatStateUsing(fn($state) => ucfirst($state))
                     ->sortable()
                     ->searchable(),
 

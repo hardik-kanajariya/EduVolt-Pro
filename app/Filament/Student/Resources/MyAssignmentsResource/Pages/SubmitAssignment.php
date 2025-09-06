@@ -26,13 +26,13 @@ class SubmitAssignment extends Page
     public function mount($record): void
     {
         $user = Auth::user();
-        
+
         if (!$user || !$user->isStudent() || !$user->student) {
             redirect()->route('filament.student.auth.login');
         }
 
         $this->assignment = $record;
-        
+
         // Check if student has existing submission
         $this->submission = AssignmentSubmission::where('assignment_id', $this->assignment->id)
             ->where('student_id', $user->student->id)
@@ -113,8 +113,8 @@ class SubmitAssignment extends Page
                 ]);
             }
 
-            $message = $data['status'] === 'submitted' 
-                ? 'Assignment submitted successfully!' 
+            $message = $data['status'] === 'submitted'
+                ? 'Assignment submitted successfully!'
                 : 'Assignment saved as draft!';
 
             Notification::make()
@@ -123,7 +123,6 @@ class SubmitAssignment extends Page
                 ->send();
 
             $this->redirect(route('filament.student.resources.my-assignments.index'));
-
         } catch (\Exception $e) {
             Notification::make()
                 ->title('Error')

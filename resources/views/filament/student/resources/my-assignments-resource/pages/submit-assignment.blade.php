@@ -3,18 +3,11 @@
         {{ $this->form }}
 
         <div class="mt-6 flex justify-end gap-3">
-            <x-filament::button
-                type="submit"
-                wire:click="$set('data.status', 'draft')"
-                color="gray"
-            >
+            <x-filament::button type="submit" wire:click="$set('data.status', 'draft')" color="gray">
                 Save as Draft
             </x-filament::button>
-            
-            <x-filament::button
-                type="submit"
-                wire:click="$set('data.status', 'submitted')"
-            >
+
+            <x-filament::button type="submit" wire:click="$set('data.status', 'submitted')">
                 Submit Assignment
             </x-filament::button>
         </div>

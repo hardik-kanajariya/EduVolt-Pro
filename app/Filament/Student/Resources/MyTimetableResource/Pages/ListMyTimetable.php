@@ -14,7 +14,7 @@ class ListMyTimetable extends ListRecords
     public function mount(): void
     {
         $user = Auth::user();
-        
+
         if (!$user || !$user->isStudent() || !$user->student) {
             redirect()->route('filament.student.auth.login');
         }

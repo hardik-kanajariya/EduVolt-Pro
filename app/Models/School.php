@@ -30,6 +30,18 @@ class School extends Model
     ];
 
     // Relationships
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function schoolAdmins()
+    {
+        return $this->users()->whereHas('roles', function ($query) {
+            $query->where('name', 'school_admin');
+        });
+    }
+
     public function academicYears()
     {
         return $this->hasMany(AcademicYear::class);

@@ -28,6 +28,7 @@ class User extends Authenticatable
         'date_of_birth',
         'gender',
         'status',
+        'school_id',
     ];
 
     /**
@@ -56,6 +57,11 @@ class User extends Authenticatable
     }
 
     // Relationships
+    public function school()
+    {
+        return $this->belongsTo(School::class);
+    }
+
     public function student()
     {
         return $this->hasOne(Student::class);
@@ -69,6 +75,18 @@ class User extends Authenticatable
     public function staff()
     {
         return $this->hasOne(Staff::class);
+    }
+
+    // Check if user is a super admin
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole('super_admin');
+    }
+
+    // Check if user is a school admin
+    public function isSchoolAdmin(): bool
+    {
+        return $this->hasRole('school_admin');
     }
 
     // Check if user is a student
@@ -87,6 +105,22 @@ class User extends Authenticatable
     public function isParent(): bool
     {
         return $this->hasRole('parent');
+    }
+
+    // Check if user can access multiple schools (super admin)
+    public function canAccessAllSchools(): bool
+    {
+        return $this->isSuperAdmin() && is_null($this->school_id);
+    }
+
+    // Get user's accessible schools
+    public function getAccessibleSchools()
+    {
+        if ($this->canAccessAllSchools()) {
+            return School::all();
+        }
+        
+        return $this->school ? collect([$this->school]) : collect();
     }
 
     // Get children for parent users

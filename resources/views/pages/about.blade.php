@@ -14,8 +14,9 @@
                         Transforming <span class="text-primary-600">Education</span> Through Technology
                     </h1>
                     <p class="text-body mb-8">
-                        EduVault Pro was born from a simple belief: every educational institution deserves access to
-                        powerful, easy-to-use technology that enhances learning and simplifies administration.
+                        EduVault Pro was created to provide educational institutions with a powerful, affordable, and
+                        completely owned school management solution. Unlike subscription-based systems, we believe schools
+                        deserve to own their technology infrastructure and have complete control over their data.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="{{ route('contact') }}" class="btn-primary text-center">
@@ -38,8 +39,10 @@
                                 </svg>
                             </div>
                             <h3 class="font-bold text-gray-900 mb-2">Our Mission</h3>
-                            <p class="text-gray-600">Empowering educational institutions with comprehensive, user-friendly
-                                technology solutions that enhance learning outcomes and operational efficiency.</p>
+                            <p class="text-gray-600">Providing educational institutions with complete ownership of their
+                                management system,
+                                eliminating recurring costs while ensuring data privacy and long-term stability through a
+                                one-time purchase model.</p>
                         </div>
                     </div>
                 </div>

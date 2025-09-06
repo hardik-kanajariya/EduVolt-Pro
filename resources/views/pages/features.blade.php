@@ -12,8 +12,8 @@
                 Comprehensive Features for <span class="text-primary-600">Modern Schools</span>
             </h1>
             <p class="text-body max-w-3xl mx-auto mb-8">
-                EduVault Pro offers a complete suite of features designed to streamline every aspect of school management,
-                from admission to graduation.
+                EduVault Pro offers a complete suite of features designed to streamline every aspect of school management.
+                Built with Laravel & Filament, all features are included in our one-time purchase with no additional costs.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#student-management" class="btn-primary">Student Management</a>

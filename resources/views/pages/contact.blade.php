@@ -12,8 +12,8 @@
                 Get in <span class="text-primary-600">Touch</span> with Us
             </h1>
             <p class="text-body max-w-3xl mx-auto mb-8">
-                Ready to transform your school with EduVault Pro? Contact our team for a personalized demo, pricing
-                information, or any questions about our comprehensive school management solution.
+                Ready to invest in EduVault Pro for your school? Contact our team for product information,
+                installation assistance, or to purchase your lifetime license for just ₹40,000.
             </p>
         </div>
     </section>
@@ -27,6 +27,7 @@
                     <h2 class="heading-2 mb-6">Send us a Message</h2>
                     <p class="text-body mb-8">
                         Fill out the form below and our team will get back to you within 24 hours.
+                        We're here to help you get started with EduVault Pro.
                     </p>
 
                     @if(session('success'))

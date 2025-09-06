@@ -1,12 +1,24 @@
-# EduVault Pro - AI Copilot Development Instructions
+# EduVolt Pro - AI Copilot Development Instructions
 
 ## 🎯 Project Overview & Context
 
-You are developing **EduVault Pro v1.0**, an advanced school management system using Laravel 11 and Filament v3. This is a comprehensive educational platform with role-based access for administrators, faculty, students, and parents.
+You are developing **EduVolt Pro v1.0**, an advanced school management system using Laravel 11 and Filament v3. This is a comprehensive educational platform with role-based access for administrators, faculty, students, and parents.
 
 **Critical Version Constraints:**
 - **v1.0 Features**: Cash payments, SMTP email, push notifications, English only
 - **v2.0 Features** (DO NOT IMPLEMENT): SMS/WhatsApp, payment gateways, multilingual support, transport management
+
+## 🏛️ Multi-Panel Architecture Overview
+
+EduVolt Pro uses a sophisticated **5-panel Filament architecture** for role-based access:
+
+1. **Admin Panel** (`/admin`) - Super admins, multi-school management
+2. **School Panel** (`/school`) - School-specific administration  
+3. **Faculty Panel** (`/faculty`) - Teachers, staff, librarians
+4. **Student Panel** (`/student`) - Student dashboard and services
+5. **Parent Panel** (`/parent`) - Parent monitoring and communication
+
+**Panel Isolation**: Each panel has independent authentication, middleware, resources, and navigation. Users can only access panels appropriate to their role.
 
 ## 🏗️ Architecture & Technology Stack
 
@@ -45,56 +57,71 @@ routes/
 └── docs.php (Documentation routes)
 ```
 
-## 🔐 Security & Authentication Rules
+## 🔐 Security & Authentication Architecture
 
-### **User Roles & Permissions**
-- **super_admin**: Full system access
-- **school_admin**: School administration
-- **principal**: Academic oversight  
-- **teacher**: Teaching staff
-- **accountant**: Financial management
-- **librarian**: Library management
-- **student**: Student access
-- **parent**: Parent portal access
-
-### **Security Implementation Requirements**
-1. **ALWAYS** use Spatie Laravel Permission for role management
-2. **ALWAYS** validate user input with Laravel Form Requests
-3. **ALWAYS** implement authorization policies for each model
-4. **NEVER** expose sensitive data in responses
-5. **ALWAYS** use CSRF protection for forms
-6. **ALWAYS** encrypt sensitive database fields
-
-## 🎨 Filament Development Guidelines
-
-### **Multi-Panel Strategy**
-- **Admin Panel** (`/admin`): Super admin, admin, principal access
-- **Faculty Panel** (`/faculty`): Teachers, staff, librarian access  
-- **Student Panel** (`/student`): Student dashboard and features
-- **Parent Panel** (`/parent`): Parent portal and monitoring
-
-### **Filament Resource Standards**
+### **Role-Based Access Control (Spatie Laravel Permission)**
 ```php
-// ALWAYS include these features in resources:
-- Proper form validation rules
-- Role-based access control
-- Search functionality
-- Filters for common fields
-- Bulk actions where appropriate
-- Export functionality (built-in)
-- Proper table columns with sortable fields
-- Custom actions for specific workflows
+// 8 Core User Roles with specific school context isolation:
+'super_admin'   => 'Multi-school system management (no school_id)'
+'school_admin'  => 'Individual school administration'  
+'principal'     => 'Academic oversight within school'
+'teacher'       => 'Classroom management and instruction'
+'accountant'    => 'Financial operations within school'
+'librarian'     => 'Library management within school'
+'student'       => 'Personal academic portal'
+'parent'        => 'Multi-child monitoring'
 ```
 
-### **Filament Panel Configuration**
+### **Critical Security Patterns**
 ```php
-// Each panel MUST have:
-- Custom authentication guard
-- Role-based middleware
-- Panel-specific navigation
-- Dashboard widgets
-- Custom color scheme
-- Proper asset management
+// Panel Access Middleware - ALWAYS use custom middleware for each panel:
+StudentMiddleware::class     // ->authMiddleware() for student panel
+FacultyPanelAccess::class    // Role-based faculty access
+SchoolPanelAccess::class     // School context validation
+
+// School Context Isolation - CRITICAL for multi-school support:
+User::where('school_id', auth()->user()->school_id)
+// Super admins have school_id = null for cross-school access
+```
+
+## 🎨 Filament Development Patterns
+
+### **Resource Organization Strategy**
+```php
+// Follow this exact structure for ALL resources:
+app/Filament/{Panel}/Resources/{Module}/
+├── {Module}Resource.php           // Main resource class
+├── Pages/
+│   ├── List{Module}s.php         // Listing page
+│   ├── Create{Module}.php        // Creation page  
+│   ├── Edit{Module}.php          // Edit page
+│   └── View{Module}.php          // View page (optional)
+├── Schemas/
+│   └── {Module}Form.php          // Form schema (reusable)
+├── Tables/
+│   └── {Module}sTable.php        // Table configuration
+└── RelationManagers/
+    └── {Related}RelationManager.php
+
+// Example: app/Filament/Admin/Resources/Schools/SchoolResource.php
+```
+
+### **Panel-Specific Development Rules**
+```php
+// Admin Panel - Multi-school management focus
+->navigationGroups(['Multi-School Management', 'System Configuration'])
+->discoverResources(in: app_path('Filament/Admin/Resources'))
+
+// School Panel - Single school context, school-specific admin
+->navigationGroups(['School Management', 'User Management', 'Academic Management'])
+->authMiddleware(['school.panel.access']) // Custom middleware
+
+// Faculty Panel - Teacher workflow optimization  
+->navigationGroups(['My Classes', 'Students', 'Academic']) 
+// ALWAYS filter by teacher's assigned classes/subjects
+
+// Student/Parent Panels - Read-only focus with personal data
+// NO create/edit capabilities, only view personal information
 ```
 
 ## 🗄️ Database Design Principles
@@ -163,82 +190,79 @@ routes/
 - sendNotificationToParents() not notify()
 ```
 
-## 🧪 Testing Methodology
-
-### **Test-Driven Development (TDD)**
+### **Test Development Strategy**
 ```php
-// ALWAYS write tests alongside development:
-1. Write failing test first
-2. Implement minimum code to pass
-3. Refactor and improve
-4. Repeat for each feature
+// Run tests frequently but NEVER create test files via artisan:
+// Instead of: php artisan make:test StudentManagementTest
+// Do: Create manually in tests/Feature/{Panel}/
 
-// Test Categories (ALL REQUIRED):
-- Unit tests for models and services
-- Feature tests for user workflows  
-- Feature tests for all functionality
-- Browser tests for critical paths
-- Integration tests for external services
-```
-
-### **Testing Standards**
-```php
-// EVERY feature MUST have:
-- Model relationship tests
-- CRUD operation tests
-- Authorization tests
-- Validation tests
-- Business logic tests
-- Feature tests
-- Performance tests for critical operations
-```
-
-### **Test Structure**
-```php
+// Test structure mirrors panel structure:
 tests/
-├── Unit/
-│   ├── Models/ (Model tests)
-│   └── Services/ (Service tests)
 ├── Feature/
-│   ├── Admin/ (Admin panel tests)
-│   ├── Faculty/ (Faculty panel tests)  
-│   ├── Student/ (Student panel tests)
-│   └── Parent/ (Parent panel tests)
-├── Feature/ (Feature tests)
-└── Browser/ (Dusk browser tests)
+│   ├── Admin/           // Admin panel tests
+│   ├── School/          // School panel tests  
+│   ├── Faculty/         // Faculty panel tests
+│   ├── Student/         // Student panel tests
+│   └── Parent/          // Parent panel tests
+├── Unit/
+│   ├── Models/          // Model relationship tests
+│   └── Services/        // Business logic tests
+└── TestCase.php         // Base test class
+
+// ALWAYS test role-based access in each panel test
 ```
 
-## 📚 Documentation Requirements
+## 📋 Critical Business Rules
 
-### **Side-by-Side Documentation**
-```markdown
-// ALWAYS document while developing:
-1. Code comments for complex logic
-2. User documentation with examples
-3. User guides for each feature
-4. Technical documentation for developers
-5. Installation and setup guides
-6. Troubleshooting guides
+### **School Context Isolation**
+```php
+// CRITICAL: All school-scoped data MUST be filtered by school_id
+// Except super_admin users who have school_id = null
+
+// Example queries that follow the pattern:
+Student::where('school_id', auth()->user()->school_id)->get();
+Teacher::where('school_id', auth()->user()->school_id)->get();
+
+// Super admin exception:
+if (auth()->user()->hasRole('super_admin')) {
+    // Can access all schools
+    Student::all();
+} else {
+    // School-scoped access
+    Student::where('school_id', auth()->user()->school_id)->get();
+}
 ```
 
-### **Documentation Structure**
-```
-resources/views/docs/
-├──────── installation/ (Setup guides)
-├──────── user-guides/ (Role-specific guides)
-├──────── user-guides/ (User documentation)
-├──────── database/ (Schema documentation)
-├──────── deployment/ (Production setup)
-├──────── testing/ (Testing procedures)
-└──────── troubleshooting/ (Common issues)
+## � Key Project Files & Conventions
+
+### **Configuration Files (Reference Only)**
+```php
+config/permission.php          // Spatie permission configuration  
+config/filament.php           // Filament global settings
+database/seeders/RolePermissionSeeder.php  // 88 permissions, 8 roles
+TESTING-GUIDE.md              // Comprehensive testing instructions
+DEV.md                        // High-level development roadmap
 ```
 
-### **Documentation Standards**
-- Use clear, concise language
-- Include code examples
-- Provide step-by-step instructions
-- Include validation steps
-- Document error scenarios
+### **Middleware Files (Critical for Panel Access)**
+```php
+app/Http/Middleware/
+├── StudentMiddleware.php          // Student panel access control
+├── EnsureFacultyPanelAccess.php  // Faculty role validation  
+├── EnsureSchoolPanelAccess.php   // School admin validation
+├── EnsureAdminPanelAccess.php    // Admin/super admin validation
+└── EnsureParentPanelAccess.php   // Parent role validation
+```
+
+### **Panel Provider Configuration**
+```php
+// Each panel has specific color scheme and middleware:
+AdminPanelProvider    => Color::Blue    + admin.panel.access
+SchoolPanelProvider   => Color::Orange  + school.panel.access  
+FacultyPanelProvider  => Color::Green   + faculty.panel.access
+StudentPanelProvider  => Color::Purple  + StudentMiddleware
+ParentPanelProvider   => Color::Orange  + parent.panel.access
+```
 
 ## 🌱 Seeder Development Strategy
 
@@ -284,18 +308,39 @@ resources/views/docs/
 - Queue jobs for heavy operations
 ```
 
-##  Payment System (v1.0 Constraints)
-
-### **Cash-Only Implementation**
+### **Faculty Access Control (Critical Pattern)**
 ```php
-// v1.0 Payment Rules:
-- ONLY cash payment collection
-- Generate cash receipts with QR codes
-- Track payment history
-- Calculate late fees automatically
-- NO online payment gateways
-- NO credit card processing
-- Show "Visit School Office" for online payments
+// Teachers can ONLY access students from their assigned classes
+// Example in Faculty Panel StudentResource:
+
+public static function getEloquentQuery(): Builder
+{
+    $query = parent::getEloquentQuery();
+    
+    if (!auth()->user()->hasRole(['principal', 'school_admin'])) {
+        // Teacher can only see students from assigned classes
+        $teacherClassIds = TeacherClass::where('teacher_id', auth()->id())
+            ->pluck('class_id');
+        $query->whereIn('class_id', $teacherClassIds);
+    }
+    
+    return $query;
+}
+
+// This pattern applies to ALL faculty resources: attendance, assignments, etc.
+```
+
+### **Payment System (v1.0 Cash-Only)**
+```php
+// NEVER implement online payment gateways in v1.0
+// Show this message for online payment attempts:
+"Online payments will be available in v2.0. Please visit the school office for cash payment."
+
+// Fee collection workflow:
+1. Generate cash receipt with QR code
+2. Track payment in cash_payments table  
+3. Update student fee status
+4. Send receipt to parent via email
 ```
 
 ## 📧 Communication System (v1.0 Features)
@@ -356,29 +401,42 @@ resources/views/docs/
 - Security incidents
 ```
 
-## 🔄 Development Workflow
+## � Development Workflow & Commands
 
-### **Phase Completion Checklist**
-```markdown
-For EACH phase completion:
-☐ All features implemented and tested
-☐ Tests written and passing (min 80% coverage)
-☐ Documentation updated
-☐ Seeders created for testing
-☐ Code reviewed and refactored
-☐ Performance optimized
-☐ Security validated
-☐ User acceptance testing completed
+### **DO NOT Run These Commands (User Manages)**
+```bash
+# NEVER run these - user handles server management:
+php artisan serve
+php artisan tinker  
+systemctl restart nginx
+sudo service apache2 restart
+
+# NEVER run filesystem commands - ask user instead:
+php artisan storage:link
+chmod 777 storage/
 ```
 
-### **Git Workflow**
-```bash
+### **File Creation Patterns (Manual Creation Required)**
+```php
+// NEVER use artisan make commands - create files manually:
+// Instead of: php artisan make:filament-resource StudentResource
+// Do: Create file manually in app/Filament/{Panel}/Resources/
 
-# Commit message format:
-feat: implement student attendance marking
-fix: resolve login redirect issue
-docs: update user documentation
-test: add attendance marking tests
+// Follow exact naming conventions:
+StudentResource.php           // PascalCase
+CreateStudent.php            // PascalCase + Action
+student_management_test.php  // snake_case for tests  
+2024_01_01_create_students_table.php // migration naming
+```
+
+### **Git Commands (ONLY Allowed Commands)**
+```bash
+# These are the ONLY commands you can run:
+git add .
+git commit -m "feat: implement student attendance marking"
+git push origin feature-branch
+git status
+git log --oneline
 ```
 
 ## ⚠️ Critical DO NOTs

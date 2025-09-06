@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class FeeInstallment extends Model
 {
@@ -210,8 +212,10 @@ class FeeInstallment extends Model
     public function sendReminder(string $type = 'email'): void
     {
         $reminderNumber = $this->feeReminders()->count() + 1;
+        $student = $this->studentFeeAssignment->student;
+        $school = $this->studentFeeAssignment->feeStructure->school;
 
-        $this->feeReminders()->create([
+        $reminder = $this->feeReminders()->create([
             'student_id' => $this->studentFeeAssignment->student_id,
             'reminder_type' => $type,
             'reminder_number' => $reminderNumber,
@@ -220,6 +224,81 @@ class FeeInstallment extends Model
             'status' => 'pending',
         ]);
 
-        // TODO: Implement actual reminder sending logic
+        try {
+            if ($type === 'email') {
+                $this->sendEmailReminder($student, $school, $reminder);
+            } elseif ($type === 'sms') {
+                $this->sendSMSReminder($student, $school, $reminder);
+            }
+
+            $reminder->update(['status' => 'sent']);
+        } catch (\Exception $e) {
+            $reminder->update([
+                'status' => 'failed',
+                'notes' => 'Failed to send: ' . $e->getMessage()
+            ]);
+
+            // Log the error
+            Log::error('Fee reminder sending failed', [
+                'installment_id' => $this->id,
+                'student_id' => $student->id,
+                'type' => $type,
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    private function sendEmailReminder($student, $school, $reminder): void
+    {
+        $emailContent = $this->generateEmailContent($student, $school);
+
+        // Send email using Laravel's mail system
+        Mail::send('emails.fee-reminder', [
+            'student' => $student,
+            'school' => $school,
+            'installment' => $this,
+            'reminder' => $reminder,
+            'content' => $emailContent
+        ], function ($message) use ($student, $school) {
+            $message->to($student->email, $student->name)
+                ->subject("Fee Payment Reminder - {$school->name}")
+                ->from($school->email, $school->name);
+        });
+    }
+
+    private function sendSMSReminder($student, $school, $reminder): void
+    {
+        $smsContent = $this->generateSMSContent($student, $school);
+
+        // SMS sending logic would depend on your SMS provider
+        // For now, we'll log it as a placeholder
+        Log::info('SMS Reminder', [
+            'to' => $student->phone,
+            'content' => $smsContent,
+            'student_id' => $student->id,
+            'installment_id' => $this->id
+        ]);
+    }
+
+    private function generateEmailContent($student, $school): array
+    {
+        return [
+            'greeting' => "Dear {$student->name},",
+            'subject' => 'Fee Payment Reminder',
+            'body' => "This is a friendly reminder that your fee payment for {$this->installment_name} is due on {$this->due_date->format('d M Y')}.",
+            'amount' => "Amount Due: {$this->formatted_balance_amount}",
+            'late_fee' => $this->late_fee_amount > 0 ? "Late Fee: ₹" . number_format($this->late_fee_amount, 2) : null,
+            'instructions' => 'Please make the payment at your earliest convenience to avoid any late fees.',
+            'contact' => "For any queries, please contact us at {$school->phone} or {$school->email}.",
+            'closing' => "Thank you,\n{$school->name}"
+        ];
+    }
+
+    private function generateSMSContent($student, $school): string
+    {
+        $amount = $this->formatted_balance_amount;
+        $dueDate = $this->due_date->format('d-M-Y');
+
+        return "Dear {$student->name}, Fee payment reminder: {$this->installment_name} - {$amount} due on {$dueDate}. Pay at school office. -{$school->name}";
     }
 }

@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('fee_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('school_id')->constrained()->onDelete('cascade');
-            $table->string('currency', 3)->default('USD'); // ISO currency code
-            $table->string('currency_symbol', 5)->default('$');
+            $table->string('currency', 3)->default('INR'); // ISO currency code
+            $table->string('currency_symbol', 5)->default('₹');
             $table->integer('decimal_places')->default(2);
             $table->string('receipt_prefix', 10)->default('REC');
             $table->integer('receipt_number_length')->default(6);

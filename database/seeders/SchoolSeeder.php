@@ -20,7 +20,7 @@ class SchoolSeeder extends Seeder
             'name' => 'EduVault Demo School',
             'code' => 'EVDS001',
             'address' => '123 Education Street, Learning City, State 12345',
-            'phone' => '+1-234-567-8900',
+            'phone' => '+91-9876-543-210',
             'email' => 'info@eduvaultdemo.edu',
             'website' => 'https://www.eduvaultdemo.edu',
             'established_date' => '2020-01-01',

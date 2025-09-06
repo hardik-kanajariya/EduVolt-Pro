@@ -21,7 +21,12 @@ class ViewFeePayment extends ViewRecord
                 ->color('info')
                 ->action(function () {
                     $this->record->markAsPrinted();
-                    // TODO: Generate and download PDF receipt
+                    // Generate and download PDF receipt
+                    return response()->streamDownload(function () {
+                        echo \App\Filament\Admin\Resources\FeePaymentResource::generateReceiptHTML($this->record);
+                    }, "receipt_{$this->record->receipt_number}.html", [
+                        'Content-Type' => 'text/html',
+                    ]);
                 }),
         ];
     }

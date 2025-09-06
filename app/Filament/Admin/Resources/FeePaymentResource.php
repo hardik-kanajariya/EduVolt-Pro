@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class FeePaymentResource extends Resource
 {
@@ -138,7 +139,7 @@ class FeePaymentResource extends Resource
                                     })->pluck('name', 'id'))
                                     ->required()
                                     ->searchable()
-                                    ->default(auth()->user()?->id),
+                                    ->default(Auth::id()),
                             ]),
 
                         Forms\Components\Grid::make(2)
@@ -307,7 +308,12 @@ class FeePaymentResource extends Resource
                     ->color('info')
                     ->action(function ($record) {
                         $record->markAsPrinted();
-                        // TODO: Generate and download PDF receipt
+                        // Generate and download PDF receipt
+                        return response()->streamDownload(function () use ($record) {
+                            echo static::generateReceiptHTML($record);
+                        }, "receipt_{$record->receipt_number}.html", [
+                            'Content-Type' => 'text/html',
+                        ]);
                     }),
                 Tables\Actions\Action::make('refund')
                     ->label('Refund')
@@ -321,6 +327,7 @@ class FeePaymentResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\BulkAction::make('markAsPrinted')
                         ->label('Mark as Printed')
                         ->icon('heroicon-o-printer')
@@ -331,6 +338,125 @@ class FeePaymentResource extends Resource
                 ]),
             ])
             ->defaultSort('payment_date', 'desc');
+    }
+
+    public static function generateReceiptHTML($payment): string
+    {
+        $student = $payment->feeInstallment->studentFeeAssignment->student;
+        $feeCategory = $payment->feeInstallment->studentFeeAssignment->feeStructure->feeCategory;
+        $installment = $payment->feeInstallment;
+
+        return "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='utf-8'>
+            <title>Fee Payment Receipt</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
+                .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+                .school-name { font-size: 24px; font-weight: bold; color: #2563eb; margin-bottom: 5px; }
+                .receipt-title { font-size: 18px; margin: 10px 0; }
+                .receipt-no { font-weight: bold; color: #dc2626; }
+                .content { margin: 20px 0; }
+                .info-row { display: flex; justify-content: space-between; margin: 8px 0; padding: 5px 0; border-bottom: 1px dotted #ccc; }
+                .label { font-weight: bold; color: #374151; }
+                .value { color: #1f2937; }
+                .amount-section { background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0; }
+                .total-amount { font-size: 20px; font-weight: bold; color: #059669; text-align: center; }
+                .footer { margin-top: 40px; text-align: center; font-size: 12px; color: #6b7280; }
+                .signature-section { margin-top: 30px; display: flex; justify-content: space-between; }
+                .signature-box { text-align: center; width: 200px; }
+                .signature-line { border-top: 1px solid #333; margin-top: 40px; padding-top: 5px; }
+            </style>
+        </head>
+        <body>
+            <div class='header'>
+                <div class='school-name'>{$student->school->name}</div>
+                <div>{$student->school->address}</div>
+                <div>Phone: {$student->school->phone} | Email: {$student->school->email}</div>
+                <div class='receipt-title'>FEE PAYMENT RECEIPT</div>
+                <div class='receipt-no'>Receipt No: {$payment->receipt_number}</div>
+            </div>
+            
+            <div class='content'>
+                <div class='info-row'>
+                    <span class='label'>Student Name:</span>
+                    <span class='value'>{$student->name}</span>
+                </div>
+                <div class='info-row'>
+                    <span class='label'>Admission Number:</span>
+                    <span class='value'>{$student->admission_number}</span>
+                </div>
+                <div class='info-row'>
+                    <span class='label'>Class:</span>
+                    <span class='value'>{$student->class_name}</span>
+                </div>
+                <div class='info-row'>
+                    <span class='label'>Fee Category:</span>
+                    <span class='value'>{$feeCategory->name}</span>
+                </div>
+                <div class='info-row'>
+                    <span class='label'>Installment:</span>
+                    <span class='value'>{$installment->installment_name}</span>
+                </div>
+                <div class='info-row'>
+                    <span class='label'>Payment Date:</span>
+                    <span class='value'>" . $payment->payment_date->format('d M Y') . "</span>
+                </div>
+                <div class='info-row'>
+                    <span class='label'>Payment Method:</span>
+                    <span class='value'>" . ucfirst(str_replace('_', ' ', $payment->payment_method)) . "</span>
+                </div>
+                
+                <div class='amount-section'>
+                    <div class='info-row'>
+                        <span class='label'>Fee Amount:</span>
+                        <span class='value'>{$payment->formatted_amount}</span>
+                    </div>
+                    <div class='info-row'>
+                        <span class='label'>Late Fee:</span>
+                        <span class='value'>₹" . number_format($payment->late_fee ?? 0, 2) . "</span>
+                    </div>
+                    <div class='info-row'>
+                        <span class='label'>Discount:</span>
+                        <span class='value'>₹" . number_format($payment->discount_amount ?? 0, 2) . "</span>
+                    </div>
+                    <div class='total-amount'>
+                        Total Amount Paid: {$payment->formatted_total_amount}
+                    </div>
+                </div>
+                
+                <div class='info-row'>
+                    <span class='label'>Collected By:</span>
+                    <span class='value'>{$payment->user->name}</span>
+                </div>
+                <div class='info-row'>
+                    <span class='label'>Reference Number:</span>
+                    <span class='value'>" . ($payment->reference_number ?? 'N/A') . "</span>
+                </div>
+                <div class='info-row'>
+                    <span class='label'>Payment Status:</span>
+                    <span class='value'>" . ucfirst($payment->status) . "</span>
+                </div>
+            </div>
+            
+            <div class='signature-section'>
+                <div class='signature-box'>
+                    <div class='signature-line'>Student/Parent Signature</div>
+                </div>
+                <div class='signature-box'>
+                    <div class='signature-line'>Cashier Signature</div>
+                </div>
+            </div>
+            
+            <div class='footer'>
+                <p><strong>Note:</strong> This is a computer generated receipt. Please keep this receipt for your records.</p>
+                <p>Receipt generated on: " . now()->format('d M Y H:i:s') . "</p>
+                <p>Thank you for your payment!</p>
+            </div>
+        </body>
+        </html>";
     }
 
     public static function getRelations(): array

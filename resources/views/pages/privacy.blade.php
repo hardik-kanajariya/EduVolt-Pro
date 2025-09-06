@@ -347,7 +347,7 @@
                                 <h3 class="font-semibold text-gray-900 mb-2">General Inquiries</h3>
                                 <p class="text-gray-700">
                                     Email: privacy@eduvaultpro.com<br>
-                                    Phone: +1 (555) 123-4567
+                                    Phone: +91 (555) 123-4567
                                 </p>
                             </div>
 

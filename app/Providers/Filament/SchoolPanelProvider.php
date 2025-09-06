@@ -58,7 +58,7 @@ class SchoolPanelProvider extends PanelProvider
                 'School Management',
                 'User Management',
                 'Academic Structure',
-                'Faculty Management', 
+                'Faculty Management',
                 'Student Management',
                 'Academic Operations',
                 'Library Operations',

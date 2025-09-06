@@ -119,7 +119,7 @@ class User extends Authenticatable
         if ($this->canAccessAllSchools()) {
             return School::all();
         }
-        
+
         return $this->school ? collect([$this->school]) : collect();
     }
 

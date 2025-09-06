@@ -15,9 +15,9 @@ class PermissionResource extends Resource
     protected static ?string $model = Permission::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-key';
-    
+
     protected static ?string $navigationGroup = 'User Management';
-    
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -32,7 +32,7 @@ class PermissionResource extends Resource
                             ->maxLength(255)
                             ->label('Permission Name')
                             ->helperText('Enter a unique permission name (e.g., view_students, create_users, etc.)'),
-                        
+
                         Forms\Components\TextInput::make('guard_name')
                             ->default('web')
                             ->required()
@@ -60,7 +60,7 @@ class PermissionResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->label('Permission Name'),
-                
+
                 Tables\Columns\TextColumn::make('guard_name')
                     ->searchable()
                     ->sortable()
@@ -87,7 +87,7 @@ class PermissionResource extends Resource
                         'web' => 'Web',
                         'api' => 'API',
                     ]),
-                
+
                 Tables\Filters\Filter::make('permission_group')
                     ->form([
                         Forms\Components\Select::make('group')
@@ -117,12 +117,21 @@ class PermissionResource extends Resource
                     ->before(function (Permission $record) {
                         // Get current permissions to prevent deletion of essential ones
                         $essentialPermissions = [
-                            'view_users', 'create_users', 'edit_users', 'delete_users',
-                            'view_students', 'create_students', 'edit_students', 'delete_students',
-                            'view_teachers', 'create_teachers', 'edit_teachers', 'delete_teachers',
+                            'view_users',
+                            'create_users',
+                            'edit_users',
+                            'delete_users',
+                            'view_students',
+                            'create_students',
+                            'edit_students',
+                            'delete_students',
+                            'view_teachers',
+                            'create_teachers',
+                            'edit_teachers',
+                            'delete_teachers',
                             'manage_roles_permissions',
                         ];
-                        
+
                         if (in_array($record->name, $essentialPermissions)) {
                             throw new \Exception('Cannot delete essential permission: ' . $record->name);
                         }
@@ -133,12 +142,21 @@ class PermissionResource extends Resource
                     Tables\Actions\DeleteBulkAction::make()
                         ->before(function ($records) {
                             $essentialPermissions = [
-                                'view_users', 'create_users', 'edit_users', 'delete_users',
-                                'view_students', 'create_students', 'edit_students', 'delete_students',
-                                'view_teachers', 'create_teachers', 'edit_teachers', 'delete_teachers',
+                                'view_users',
+                                'create_users',
+                                'edit_users',
+                                'delete_users',
+                                'view_students',
+                                'create_students',
+                                'edit_students',
+                                'delete_students',
+                                'view_teachers',
+                                'create_teachers',
+                                'edit_teachers',
+                                'delete_teachers',
                                 'manage_roles_permissions',
                             ];
-                            
+
                             foreach ($records as $record) {
                                 if (in_array($record->name, $essentialPermissions)) {
                                     throw new \Exception('Cannot delete essential permission: ' . $record->name);

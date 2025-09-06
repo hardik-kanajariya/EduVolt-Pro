@@ -16,9 +16,9 @@ class RoleResource extends Resource
     protected static ?string $model = Role::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
-    
+
     protected static ?string $navigationGroup = 'User Management';
-    
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -33,7 +33,7 @@ class RoleResource extends Resource
                             ->maxLength(255)
                             ->label('Role Name')
                             ->helperText('Enter a unique role name (e.g., school_admin, principal, etc.)'),
-                        
+
                         Forms\Components\TextInput::make('guard_name')
                             ->default('web')
                             ->required()
@@ -70,7 +70,7 @@ class RoleResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->label('Role Name'),
-                
+
                 Tables\Columns\TextColumn::make('guard_name')
                     ->searchable()
                     ->sortable()

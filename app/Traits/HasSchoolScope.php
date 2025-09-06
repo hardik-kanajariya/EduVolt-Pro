@@ -51,8 +51,8 @@ trait HasSchoolScope
      */
     public static function canAccessAllSchools(): bool
     {
-        return Auth::check() && 
-               Auth::user()->hasRole('super_admin') && 
-               is_null(Auth::user()->school_id);
+        return Auth::check() &&
+            Auth::user()->hasRole('super_admin') &&
+            is_null(Auth::user()->school_id);
     }
 }

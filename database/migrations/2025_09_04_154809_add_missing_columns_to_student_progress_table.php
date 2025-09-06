@@ -19,7 +19,7 @@ return new class extends Migration
 
             // Performance indicators
             if (!Schema::hasColumn('student_progress', 'previous_grade')) {
-                $table->decimal('previous_grade', 5, 2)->nullable();
+                $table->decimal('previous_grade', 5, 2)->nullable();    
                 $table->decimal('grade_change', 5, 2)->nullable();
             }
 

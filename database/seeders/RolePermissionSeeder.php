@@ -28,7 +28,7 @@ class RolePermissionSeeder extends Seeder
 
             // Role & Permission Management
             'view_roles',
-            'create_roles', 
+            'create_roles',
             'edit_roles',
             'delete_roles',
             'view_permissions',

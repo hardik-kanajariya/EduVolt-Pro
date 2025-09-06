@@ -20,9 +20,9 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    
+
     protected static ?string $navigationGroup = 'User Management';
-    
+
     protected static ?int $navigationSort = 1;
 
     public static function getEloquentQuery(): Builder
@@ -42,17 +42,17 @@ class UserResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        
+
                         Forms\Components\TextInput::make('email')
                             ->email()
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
-                        
+
                         Forms\Components\TextInput::make('phone')
                             ->tel()
                             ->maxLength(255),
-                        
+
                         Forms\Components\Textarea::make('address')
                             ->maxLength(500),
                     ])
@@ -61,14 +61,14 @@ class UserResource extends Resource
                 Forms\Components\Section::make('Personal Details')
                     ->schema([
                         Forms\Components\DatePicker::make('date_of_birth'),
-                        
+
                         Forms\Components\Select::make('gender')
                             ->options([
                                 'male' => 'Male',
                                 'female' => 'Female',
                                 'other' => 'Other',
                             ]),
-                        
+
                         Forms\Components\Toggle::make('status')
                             ->label('Active')
                             ->default(true),
@@ -79,10 +79,10 @@ class UserResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('password')
                             ->password()
-                            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-                            ->dehydrated(fn ($state) => filled($state))
-                            ->required(fn (string $context): bool => $context === 'create'),
-                        
+                            ->dehydrateStateUsing(fn($state) => Hash::make($state))
+                            ->dehydrated(fn($state) => filled($state))
+                            ->required(fn(string $context): bool => $context === 'create'),
+
                         Forms\Components\TextInput::make('password_confirmation')
                             ->password()
                             ->same('password')
@@ -100,7 +100,7 @@ class UserResource extends Resource
                             ->default(Auth::user()->school_id)
                             ->disabled()
                             ->dehydrated(),
-                        
+
                         Forms\Components\Select::make('roles')
                             ->relationship('roles', 'name')
                             ->options(function () {
@@ -124,19 +124,19 @@ class UserResource extends Resource
                     ->circular()
                     ->defaultImageUrl(fn($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name))
                     ->size(40),
-                
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                
+
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
-                
+
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable()
                     ->toggleable(),
-                
+
                 Tables\Columns\TextColumn::make('roles.name')
                     ->badge()
                     ->separator(',')
@@ -148,10 +148,10 @@ class UserResource extends Resource
                         'secondary' => 'student',
                         'danger' => 'parent',
                     ]),
-                
+
                 Tables\Columns\BooleanColumn::make('status')
                     ->label('Active'),
-                
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -163,7 +163,7 @@ class UserResource extends Resource
                         1 => 'Active',
                         0 => 'Inactive',
                     ]),
-                
+
                 Tables\Filters\SelectFilter::make('roles')
                     ->relationship('roles', 'name')
                     ->multiple()

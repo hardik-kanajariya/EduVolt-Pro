@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         // Get the first school for demo purposes
         $demoSchool = School::first();
-        
+
         // Create Super Admin User (no school association - can access all schools)
         $superAdmin = User::create([
             'name' => 'Super Administrator',

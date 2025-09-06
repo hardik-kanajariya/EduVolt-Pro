@@ -49,7 +49,7 @@ routes/
 
 ### **User Roles & Permissions**
 - **super_admin**: Full system access
-- **admin**: School administration
+- **school_admin**: School administration
 - **principal**: Academic oversight  
 - **teacher**: Teaching staff
 - **accountant**: Financial management
@@ -373,11 +373,6 @@ For EACH phase completion:
 
 ### **Git Workflow**
 ```bash
-# Branch naming convention:
-- feature/phase-1-foundation
-- feature/attendance-system
-- bugfix/login-issue
-- hotfix/security-patch
 
 # Commit message format:
 feat: implement student attendance marking
@@ -461,3 +456,26 @@ we are using filament v3 so do not use any code or function or anything from fil
 https://filamentphp.com/docs/4.x/introduction/overview
 
 the dev.md file is containes only higher level requirements, a list of features only, we have to identify and analyze each in depth and create proper system. we should go beyond the expectations. 
+
+Do not give me any prompt to run any commands, you are only allowed to run git commands if you want to commit only, no other even git commands.
+
+# Filament Instructions 
+
+## Filament Specific Instructions
+
+When working with Filament, adhere to the following guidelines to ensure consistency and maintainability across the project:
+
+1. **Resource Structure**: Each Filament resource should be organized within its respective panel directory (Admin, Faculty, Student, Parent) under `app/Filament/`. Ensure that resources are grouped logically based on their functionality and user roles.
+
+2. **Form and Table Definitions**: Use Filament's form and table components to define the schema for each resource. Ensure that forms include appropriate validation rules, and tables have sortable and searchable columns where applicable.
+
+3. **Navigation and Access Control**: Configure navigation items for each panel in the `getNavigationItems()` method of the respective panel service provider. Implement role-based access control using Spatie Laravel Permission to restrict access to resources based on user roles.
+
+4. **Custom Actions and Bulk Actions**: Leverage Filament's action and bulk action features to provide users with the ability to perform operations on individual records or multiple records simultaneously. Ensure that these actions are clearly labeled and include confirmation prompts for destructive actions.
+
+5. **Filters and Scopes**: Implement filters and scopes in Filament tables to allow users to easily narrow down records based on specific criteria. Use predefined scopes in Eloquent models to encapsulate common query logic.
+
+6. **Dashboard Widgets**: Create custom dashboard widgets for each panel to provide users with relevant insights and quick access to important information. Ensure that widgets are optimized for performance and do not overload the dashboard.
+
+7. **Theming and Customization**: Apply consistent theming across all Filament panels using Tailwind CSS. Customize the appearance of forms, tables, and other components to align with the overall design of the application.
+

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->json('breakdown')->nullable(); // Detailed breakdown
             $table->text('notes')->nullable();
             $table->timestamps();
-            
+
             $table->unique(['school_id', 'month_year']);
             $table->index(['month_year', 'school_id']);
         });

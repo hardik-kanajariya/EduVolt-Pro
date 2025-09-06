@@ -88,7 +88,7 @@ class GlobalSettingResource extends Resource
 
                 Tables\Columns\TextColumn::make('type')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'string' => 'primary',
                         'boolean' => 'success',
                         'integer' => 'info',

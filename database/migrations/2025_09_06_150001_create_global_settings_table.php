@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('type', ['string', 'boolean', 'integer', 'array', 'object'])->default('string');
             $table->boolean('is_public')->default(false);
             $table->timestamps();
-            
+
             $table->index(['key', 'is_public']);
         });
     }

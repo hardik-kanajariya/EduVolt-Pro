@@ -138,8 +138,8 @@ class School extends Model
      */
     public function hasActiveSubscription(): bool
     {
-        return $this->subscription_expires_at === null || 
-               $this->subscription_expires_at->isFuture();
+        return $this->subscription_expires_at === null ||
+            $this->subscription_expires_at->isFuture();
     }
 
     /**

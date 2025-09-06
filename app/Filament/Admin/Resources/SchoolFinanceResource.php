@@ -118,7 +118,7 @@ class SchoolFinanceResource extends Resource
                 Tables\Columns\TextColumn::make('profit_loss')
                     ->money('INR')
                     ->sortable()
-                    ->color(fn ($state) => $state >= 0 ? 'success' : 'danger'),
+                    ->color(fn($state) => $state >= 0 ? 'success' : 'danger'),
 
                 Tables\Columns\TextColumn::make('fee_collection')
                     ->money('INR')
@@ -152,19 +152,19 @@ class SchoolFinanceResource extends Resource
                         return $query
                             ->when(
                                 $data['from_month'],
-                                fn (Builder $query, $date): Builder => $query->where('month_year', '>=', Carbon::parse($date)->format('Y-m')),
+                                fn(Builder $query, $date): Builder => $query->where('month_year', '>=', Carbon::parse($date)->format('Y-m')),
                             )
                             ->when(
                                 $data['to_month'],
-                                fn (Builder $query, $date): Builder => $query->where('month_year', '<=', Carbon::parse($date)->format('Y-m')),
+                                fn(Builder $query, $date): Builder => $query->where('month_year', '<=', Carbon::parse($date)->format('Y-m')),
                             );
                     }),
 
                 Tables\Filters\Filter::make('profitable')
-                    ->query(fn (Builder $query): Builder => $query->where('profit_loss', '>', 0)),
+                    ->query(fn(Builder $query): Builder => $query->where('profit_loss', '>', 0)),
 
                 Tables\Filters\Filter::make('loss_making')
-                    ->query(fn (Builder $query): Builder => $query->where('profit_loss', '<', 0)),
+                    ->query(fn(Builder $query): Builder => $query->where('profit_loss', '<', 0)),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

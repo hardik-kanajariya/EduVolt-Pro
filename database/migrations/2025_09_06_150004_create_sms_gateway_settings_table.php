@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('daily_limit')->default(1000);
             $table->integer('monthly_limit')->default(10000);
             $table->timestamps();
-            
+
             $table->index(['school_id', 'is_active']);
             $table->index(['is_global', 'is_active']);
         });

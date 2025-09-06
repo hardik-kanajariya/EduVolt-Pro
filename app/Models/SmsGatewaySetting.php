@@ -48,12 +48,12 @@ class SmsGatewaySetting extends Model
             $gateway = static::where('school_id', $schoolId)
                 ->where('is_active', true)
                 ->first();
-            
+
             if ($gateway) {
                 return $gateway;
             }
         }
-        
+
         // Fall back to global active gateway
         return static::where('is_global', true)
             ->where('is_active', true)
@@ -66,16 +66,16 @@ class SmsGatewaySetting extends Model
     public static function getAvailableGateways(?int $schoolId = null): \Illuminate\Database\Eloquent\Collection
     {
         $query = static::where('is_active', true);
-        
+
         if ($schoolId) {
             $query->where(function ($q) use ($schoolId) {
                 $q->where('school_id', $schoolId)
-                  ->orWhere('is_global', true);
+                    ->orWhere('is_global', true);
             });
         } else {
             $query->where('is_global', true);
         }
-        
+
         return $query->get();
     }
 
@@ -97,7 +97,7 @@ class SmsGatewaySetting extends Model
         $config = $this->settings;
         $config['provider'] = $this->provider;
         $config['cost_per_sms'] = $this->cost_per_sms;
-        
+
         return $config;
     }
 

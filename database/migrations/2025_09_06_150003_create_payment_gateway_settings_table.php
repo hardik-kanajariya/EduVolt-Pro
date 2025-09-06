@@ -23,7 +23,7 @@ return new class extends Migration
             $table->decimal('transaction_fee_fixed', 10, 2)->default(0);
             $table->json('supported_currencies')->nullable();
             $table->timestamps();
-            
+
             $table->index(['school_id', 'is_active']);
             $table->index(['is_global', 'is_active']);
         });

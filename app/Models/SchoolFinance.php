@@ -45,7 +45,7 @@ class SchoolFinance extends Model
     public static function getOrCreateCurrentMonth(int $schoolId): static
     {
         $monthYear = Carbon::now()->format('Y-m');
-        
+
         return static::firstOrCreate(
             [
                 'school_id' => $schoolId,
@@ -69,7 +69,7 @@ class SchoolFinance extends Model
     {
         $this->profit_loss = (float)$this->revenue - (float)$this->expenses;
         $this->save();
-        
+
         return $this;
     }
 
@@ -79,13 +79,13 @@ class SchoolFinance extends Model
     public function addRevenue(float $amount, string $source = 'general'): self
     {
         $this->revenue = (float)$this->revenue + $amount;
-        
+
         $breakdown = $this->breakdown ?? [];
         $breakdown['revenue'][$source] = ($breakdown['revenue'][$source] ?? 0) + $amount;
         $this->breakdown = $breakdown;
-        
+
         $this->calculateProfitLoss();
-        
+
         return $this;
     }
 
@@ -95,13 +95,13 @@ class SchoolFinance extends Model
     public function addExpense(float $amount, string $category = 'general'): self
     {
         $this->expenses = (float)$this->expenses + $amount;
-        
+
         $breakdown = $this->breakdown ?? [];
         $breakdown['expenses'][$category] = ($breakdown['expenses'][$category] ?? 0) + $amount;
         $this->breakdown = $breakdown;
-        
+
         $this->calculateProfitLoss();
-        
+
         return $this;
     }
 
@@ -138,7 +138,7 @@ class SchoolFinance extends Model
     public static function getGlobalSummary(int $months = 12): array
     {
         $currentMonth = Carbon::now()->subMonths($months)->format('Y-m');
-        
+
         $finances = static::where('month_year', '>=', $currentMonth)
             ->with('school:id,name')
             ->get();

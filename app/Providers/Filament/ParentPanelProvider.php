@@ -18,6 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Http\Middleware\ParentMiddleware;
 
 class ParentPanelProvider extends PanelProvider
 {
@@ -53,7 +54,7 @@ class ParentPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                'parent.panel.access',
+                ParentMiddleware::class,
             ])
             ->navigationGroups([
                 'Child Progress',

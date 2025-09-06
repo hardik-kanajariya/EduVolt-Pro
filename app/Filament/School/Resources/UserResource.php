@@ -4,7 +4,6 @@ namespace App\Filament\School\Resources;
 
 use App\Filament\School\Resources\UserResource\Pages;
 use App\Models\User;
-use App\Models\School;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

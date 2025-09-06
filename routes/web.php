@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 
+// Include test email routes (remove in production)
+if (app()->environment(['local', 'development'])) {
+    require __DIR__ . '/test-email.php';
+}
+
 // Static Pages Routes
 Route::get('/', function () {
     return view('pages.home');

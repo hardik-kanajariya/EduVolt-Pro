@@ -53,6 +53,7 @@ class SchoolPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                'school.panel.access',
             ])
             ->navigationGroups([
                 'School Management',

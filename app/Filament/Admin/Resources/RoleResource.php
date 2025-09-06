@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -130,6 +131,43 @@ class RoleResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->can('view_roles');
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->can('create_roles');
+    }
+
+    public static function canView($record): bool
+    {
+        return Auth::user()->can('view_roles');
+    }
+
+    public static function canEdit($record): bool
+    {
+        // Prevent editing system roles
+        $systemRoles = ['super_admin', 'school_admin', 'principal', 'teacher', 'student', 'parent', 'accountant', 'librarian'];
+        if (in_array($record->name, $systemRoles)) {
+            return false;
+        }
+
+        return Auth::user()->can('edit_roles');
+    }
+
+    public static function canDelete($record): bool
+    {
+        // Prevent deleting system roles
+        $systemRoles = ['super_admin', 'school_admin', 'principal', 'teacher', 'student', 'parent', 'accountant', 'librarian'];
+        if (in_array($record->name, $systemRoles)) {
+            return false;
+        }
+
+        return Auth::user()->can('delete_roles');
     }
 
     public static function getPages(): array

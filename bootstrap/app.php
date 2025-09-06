@@ -6,12 +6,18 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'admin.panel.access' => \App\Http\Middleware\EnsureAdminPanelAccess::class,
+            'school.panel.access' => \App\Http\Middleware\EnsureSchoolPanelAccess::class,
+            'faculty.panel.access' => \App\Http\Middleware\EnsureFacultyPanelAccess::class,
+            'student.panel.access' => \App\Http\Middleware\EnsureStudentPanelAccess::class,
+            'parent.panel.access' => \App\Http\Middleware\EnsureParentPanelAccess::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -207,6 +207,36 @@ class UserResource extends Resource
         ];
     }
 
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->can('view_users');
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->can('create_users');
+    }
+
+    public static function canView($record): bool
+    {
+        return Auth::user()->can('view_users');
+    }
+
+    public static function canEdit($record): bool
+    {
+        return Auth::user()->can('edit_users');
+    }
+
+    public static function canDelete($record): bool
+    {
+        // Prevent deleting super admins and the current user
+        if ($record->isSuperAdmin() || $record->id === Auth::id()) {
+            return false;
+        }
+
+        return Auth::user()->can('delete_users');
+    }
+
     public static function getPages(): array
     {
         return [

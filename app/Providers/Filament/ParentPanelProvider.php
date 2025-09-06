@@ -39,7 +39,7 @@ class ParentPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Parent/Widgets'), for: 'App\Filament\Parent\Widgets')
-            ->widgets([ ])
+            ->widgets([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -53,6 +53,7 @@ class ParentPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                'parent.panel.access',
             ])
             ->navigationGroups([
                 'Child Progress',

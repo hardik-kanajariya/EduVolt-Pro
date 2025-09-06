@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 
 class PermissionResource extends Resource
@@ -172,6 +173,71 @@ class PermissionResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->can('view_permissions');
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->can('create_permissions');
+    }
+
+    public static function canView($record): bool
+    {
+        return Auth::user()->can('view_permissions');
+    }
+
+    public static function canEdit($record): bool
+    {
+        // Prevent editing essential permissions
+        $essentialPermissions = [
+            'create_roles',
+            'view_roles',
+            'edit_roles',
+            'delete_roles',
+            'create_permissions',
+            'view_permissions',
+            'edit_permissions',
+            'delete_permissions',
+            'create_users',
+            'view_users',
+            'edit_users',
+            'delete_users'
+        ];
+
+        if (in_array($record->name, $essentialPermissions)) {
+            return false;
+        }
+
+        return Auth::user()->can('edit_permissions');
+    }
+
+    public static function canDelete($record): bool
+    {
+        // Prevent deleting essential permissions
+        $essentialPermissions = [
+            'create_roles',
+            'view_roles',
+            'edit_roles',
+            'delete_roles',
+            'create_permissions',
+            'view_permissions',
+            'edit_permissions',
+            'delete_permissions',
+            'create_users',
+            'view_users',
+            'edit_users',
+            'delete_users'
+        ];
+
+        if (in_array($record->name, $essentialPermissions)) {
+            return false;
+        }
+
+        return Auth::user()->can('delete_permissions');
     }
 
     public static function getPages(): array

@@ -18,6 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Http\Middleware\StudentMiddleware;
 
 class StudentPanelProvider extends PanelProvider
 {
@@ -53,7 +54,7 @@ class StudentPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                'student.panel.access',
+                StudentMiddleware::class,
             ])
             ->navigationGroups([
                 'Academic',

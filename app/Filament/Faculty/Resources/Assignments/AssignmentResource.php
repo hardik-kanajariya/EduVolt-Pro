@@ -10,7 +10,6 @@ use App\Filament\Faculty\Resources\Assignments\Tables\AssignmentsTable;
 use App\Models\Assignment;
 use Filament\Resources\Resource;
 use Filament\Forms\Form;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;

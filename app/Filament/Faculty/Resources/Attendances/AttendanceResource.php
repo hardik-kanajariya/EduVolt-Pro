@@ -10,7 +10,6 @@ use App\Filament\Faculty\Resources\Attendances\Tables\AttendancesTable;
 use App\Models\Attendance;
 use Filament\Resources\Resource;
 use Filament\Forms\Form;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class AttendanceResource extends Resource

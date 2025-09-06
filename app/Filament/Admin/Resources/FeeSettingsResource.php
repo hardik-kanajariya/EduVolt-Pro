@@ -16,7 +16,7 @@ class FeeSettingsResource extends Resource
 {
     protected static ?string $model = FeeSettings::class;
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
-    protected static ?string $navigationGroup = 'Fee Management';
+    protected static ?string $navigationGroup = 'Financial Management';
     protected static ?int $navigationSort = 6;
     protected static ?string $navigationLabel = 'Fee Settings';
 

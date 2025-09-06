@@ -31,7 +31,7 @@ class StudentForm
                     ->helperText(' Link this student record to an existing user account')
                     ->columnSpan(2),
 
-                FileUpload::make('avatar')
+                FileUpload::make('user.avatar')
                     ->label('Student Photo')
                     ->image()
                     ->imageEditor()
@@ -103,7 +103,7 @@ class StudentForm
                     ->helperText('Current enrollment status')
                     ->columnSpan(1),
 
-                DatePicker::make('date_of_birth')
+                DatePicker::make('user.date_of_birth')
                     ->label('Date of Birth')
                     ->required()
                     ->native(false)
@@ -113,7 +113,7 @@ class StudentForm
                     ->maxDate(now()->subYears(3))
                     ->columnSpan(1),
 
-                Select::make('gender')
+                Select::make('user.gender')
                     ->label('Gender')
                     ->options([
                         'male' => ' Male',
@@ -149,7 +149,7 @@ class StudentForm
                     ->helperText(' Email for school communications')
                     ->columnSpan(1),
 
-                Textarea::make('address')
+                Textarea::make('user.address')
                     ->label('Home Address')
                     ->rows(3)
                     ->placeholder('Enter complete home address...')
@@ -230,10 +230,10 @@ class StudentForm
                 Placeholder::make('stats')
                     ->label('Quick Stats')
                     ->content(function ($record): string {
-                        if (!$record) return 'Stats will be available after creation';
+                        if (!$record || !$record->user) return 'Stats will be available after creation';
 
-                        $age = $record->date_of_birth ? \Carbon\Carbon::parse($record->date_of_birth)->age : 'N/A';
-                        $attendance = '95%'; // This would come from actual attendance records
+                        $age = $record->user->date_of_birth ? \Carbon\Carbon::parse($record->user->date_of_birth)->age : 'N/A';
+                        $attendance = $record->getAttendancePercentageAttribute() . '%';
 
                         return " Age: {$age} | Attendance: {$attendance}";
                     })

@@ -18,8 +18,8 @@ use Illuminate\Database\Eloquent\Builder;
 class FeeStructureResource extends Resource
 {
     protected static ?string $model = FeeStructure::class;
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationGroup = 'Fee Management';
+    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+    protected static ?string $navigationGroup = 'Financial Management';
     protected static ?int $navigationSort = 2;
     protected static ?string $navigationLabel = 'Fee Structure';
 

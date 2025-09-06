@@ -24,10 +24,10 @@ class StudentsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('avatar')
+                ImageColumn::make('user.avatar')
                     ->label('')
                     ->circular()
-                    ->defaultImageUrl(fn() => 'https://ui-avatars.com/api/?name=Student&color=7F9CF5&background=EBF4FF')
+                    ->defaultImageUrl(fn($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->user?->name ?? 'Student') . '&color=7F9CF5&background=EBF4FF')
                     ->size(40)
                     ->extraAttributes(['style' => 'border: 2px solid #e2e8f0;']),
 
@@ -79,8 +79,8 @@ class StudentsTable
                 TextColumn::make('age')
                     ->label('Age')
                     ->state(function ($record): string {
-                        if (!$record->date_of_birth) return 'N/A';
-                        return \Carbon\Carbon::parse($record->date_of_birth)->age . ' yrs';
+                        if (!$record->user?->date_of_birth) return 'N/A';
+                        return \Carbon\Carbon::parse($record->user->date_of_birth)->age . ' yrs';
                     })
                     ->alignCenter()
                     ->sortable()

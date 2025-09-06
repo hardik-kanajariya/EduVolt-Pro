@@ -16,7 +16,7 @@ class FeeCategoryResource extends Resource
 {
     protected static ?string $model = FeeCategory::class;
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
-    protected static ?string $navigationGroup = 'Fee Management';
+    protected static ?string $navigationGroup = 'Financial Management';
     protected static ?int $navigationSort = 1;
     protected static ?string $navigationLabel = 'Fee Categories';
 

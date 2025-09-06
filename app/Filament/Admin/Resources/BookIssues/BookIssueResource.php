@@ -16,7 +16,7 @@ class BookIssueResource extends Resource
 {
     protected static ?string $model = BookIssue::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-hand-raised';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-right-on-rectangle';
 
     protected static ?string $navigationGroup = 'Library Management';
 

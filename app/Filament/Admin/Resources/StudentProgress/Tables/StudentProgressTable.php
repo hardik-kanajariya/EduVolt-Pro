@@ -20,8 +20,9 @@ class StudentProgressTable
                     ->searchable(),
                 TextColumn::make('subject.name')
                     ->searchable(),
-                TextColumn::make('class_id')
-                    ->numeric()
+                TextColumn::make('schoolClass.name')
+                    ->label('Class')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('term')
                     ->searchable(),

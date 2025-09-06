@@ -29,6 +29,7 @@ class User extends Authenticatable
         'gender',
         'status',
         'school_id',
+        'last_panel_accessed',
     ];
 
     /**
@@ -127,5 +128,49 @@ class User extends Authenticatable
     public function children()
     {
         return $this->hasMany(Student::class, 'parent_email', 'email');
+    }
+
+    /**
+     * Update last accessed panel
+     */
+    public function updateLastAccessedPanel(string $panel): void
+    {
+        $this->update(['last_panel_accessed' => $panel]);
+    }
+
+    /**
+     * Get appropriate panel redirect based on user role
+     */
+    public function getPanelRedirect(): string
+    {
+        if ($this->isSuperAdmin()) {
+            return '/admin';
+        }
+
+        if ($this->hasAnyRole(['school_admin', 'principal'])) {
+            return '/school';
+        }
+
+        if ($this->hasAnyRole(['teacher', 'librarian', 'accountant'])) {
+            return '/faculty';
+        }
+
+        if ($this->isStudent()) {
+            return '/student';
+        }
+
+        if ($this->isParent()) {
+            return '/parent';
+        }
+
+        return '/admin'; // fallback
+    }
+
+    /**
+     * Check if user can manage multiple schools
+     */
+    public function canManageMultipleSchools(): bool
+    {
+        return $this->isSuperAdmin();
     }
 }

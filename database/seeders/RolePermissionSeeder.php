@@ -135,17 +135,31 @@ class RolePermissionSeeder extends Seeder
             'manage_academic_years',
             'backup_restore',
             'system_settings',
+
+            // Super Admin Specific Permissions
+            'manage_multiple_schools',
+            'view_global_finances',
+            'manage_global_finances',
+            'manage_payment_gateways',
+            'manage_sms_gateways',
+            'manage_global_settings',
+            'view_system_analytics',
+            'manage_subscriptions',
+            'manage_super_admins',
+            'view_all_schools_data',
+            'export_system_data',
+            'manage_system_templates',
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
         // Create Roles and assign permissions
 
         // Super Admin - Has all permissions (system-wide)
-        $superAdmin = Role::create(['name' => 'super_admin']);
-        $superAdmin->givePermissionTo(Permission::all());
+        $superAdmin = Role::firstOrCreate(['name' => 'super_admin']);
+        $superAdmin->syncPermissions(Permission::all());
 
         // School Admin - School-specific administration permissions
         $schoolAdmin = Role::create(['name' => 'school_admin']);

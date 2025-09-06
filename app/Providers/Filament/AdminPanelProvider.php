@@ -57,15 +57,12 @@ class AdminPanelProvider extends PanelProvider
                 'admin.panel.access',
             ])
             ->navigationGroups([
-                'Academic Structure',
-                'Student & Attendance',
-                'Academic Management',
-                'Library Management',
-                'Examination System',
+                'Multi-School Management',
+                'System Configuration',
+                'Financial Overview',
                 'User Management',
-                'Financial Management',
-                'Reports & Analytics',
-                'System Management',
+                'System Analytics',
+                'Template Management',
             ])
             ->sidebarCollapsibleOnDesktop()
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])

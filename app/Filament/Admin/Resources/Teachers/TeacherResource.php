@@ -19,9 +19,9 @@ class TeacherResource extends Resource
 {
     protected static ?string $model = Teacher::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationGroup = 'Academic Structure';
+    protected static ?string $navigationGroup = 'Faculty Management';
 
     protected static ?string $recordTitleAttribute = 'employee_id';
 

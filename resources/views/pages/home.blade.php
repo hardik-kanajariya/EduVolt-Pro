@@ -284,6 +284,9 @@
         </div>
     </section>
 
+    <!-- Demo Credentials Section -->
+    @include('components.demo-credentials')
+
     <!-- Panels Overview -->
     <section class="section-padding bg-gray-50">
         <div class="container-custom">

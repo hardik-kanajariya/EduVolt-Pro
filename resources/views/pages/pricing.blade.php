@@ -575,6 +575,9 @@
         </div>
     </section>
 
+    <!-- Demo Credentials Section -->
+    @include('components.demo-credentials')
+
     <!-- CTA Section -->
     <section class="section-padding bg-primary-600">
         <div class="container-custom text-center">

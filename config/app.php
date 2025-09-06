@@ -17,6 +17,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Demo Mode
+    |--------------------------------------------------------------------------
+    |
+    | This value determines if the application is running in demo mode.
+    | When enabled, login forms will be auto-filled with demo credentials.
+    |
+    */
+
+    'demo_mode' => env('DEMO_MODE', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |

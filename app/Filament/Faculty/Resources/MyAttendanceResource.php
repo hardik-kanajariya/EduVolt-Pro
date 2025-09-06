@@ -30,6 +30,7 @@ class MyAttendanceResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         return parent::getEloquentQuery()
@@ -42,7 +43,7 @@ class MyAttendanceResource extends Resource
                         $q->where('school_id', $user->school_id);
                     });
             })
-            ->when($user && $user->hasAnyRole(['school_admin', 'principal']), function (Builder $query) use ($user) {
+            ->when($user && ($user->isSchoolAdmin() || $user->isPrincipal()), function (Builder $query) use ($user) {
                 // School admins and principals can see all attendance in their school
                 $query->whereHas('schoolClass', function (Builder $q) use ($user) {
                     $q->where('school_id', $user->school_id);

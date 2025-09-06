@@ -43,7 +43,7 @@ class MyStudentsResource extends Resource
                 })
                     ->where('school_id', $user->school_id);
             })
-            ->when($user && $user->hasAnyRole(['school_admin', 'principal']), function (Builder $query) use ($user) {
+            ->when($user && ($user->isSchoolAdmin() || $user->isPrincipal()), function (Builder $query) use ($user) {
                 // School admins and principals can see all students in their school
                 $query->where('school_id', $user->school_id);
             })

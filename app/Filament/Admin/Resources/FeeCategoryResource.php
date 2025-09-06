@@ -24,7 +24,7 @@ class FeeCategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Basic Information')
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([
@@ -36,11 +36,13 @@ class FeeCategoryResource extends Resource
                                     ->searchable(),
 
                                 Forms\Components\TextInput::make('name')
+                                    ->label('Fee Category Name')
                                     ->required()
                                     ->maxLength(255)
                                     ->placeholder('e.g., Tuition Fee'),
 
                                 Forms\Components\TextInput::make('code')
+                                    ->label('Category Code')
                                     ->required()
                                     ->unique(ignoreRecord: true)
                                     ->maxLength(50)
@@ -48,6 +50,7 @@ class FeeCategoryResource extends Resource
                                     ->hint('Unique identifier for this fee category'),
 
                                 Forms\Components\Select::make('type')
+                                    ->label('Fee Type')
                                     ->options([
                                         'mandatory' => 'Mandatory',
                                         'optional' => 'Optional',
@@ -58,15 +61,17 @@ class FeeCategoryResource extends Resource
                             ]),
 
                         Forms\Components\Textarea::make('description')
+                            ->label('Description')
                             ->rows(3)
                             ->placeholder('Brief description of this fee category'),
                     ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Payment Configuration')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
                                 Forms\Components\Select::make('frequency')
+                                    ->label('Payment Frequency')
                                     ->options([
                                         'monthly' => 'Monthly',
                                         'quarterly' => 'Quarterly',
@@ -90,10 +95,9 @@ class FeeCategoryResource extends Resource
                                     ->default(true)
                                     ->hint('Whether this fee repeats based on frequency'),
                             ]),
-                    ])
-                    ->heading('Payment Schedule'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Late Fee Configuration')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
@@ -117,10 +121,9 @@ class FeeCategoryResource extends Resource
                                     ->default(7)
                                     ->hint('Days after due date before late fee applies'),
                             ]),
-                    ])
-                    ->heading('Late Fee Configuration'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Class Assignment')
                     ->schema([
                         Forms\Components\CheckboxList::make('applicable_classes')
                             ->label('Applicable to Classes')

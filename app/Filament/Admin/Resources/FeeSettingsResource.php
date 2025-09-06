@@ -24,17 +24,16 @@ class FeeSettingsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('School Selection')
                     ->schema([
                         Forms\Components\Select::make('school_id')
                             ->label('School')
                             ->options(School::active()->pluck('name', 'id'))
                             ->required()
                             ->searchable(),
-                    ])
-                    ->heading('School Selection'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Currency Settings')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
@@ -58,10 +57,9 @@ class FeeSettingsResource extends Resource
                                     ->maxValue(4)
                                     ->required(),
                             ]),
-                    ])
-                    ->heading('Currency Settings'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Receipt Settings')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
@@ -87,10 +85,9 @@ class FeeSettingsResource extends Resource
                                     ->disabled()
                                     ->hint('Auto-incremented'),
                             ]),
-                    ])
-                    ->heading('Receipt Configuration'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Installment Settings')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
@@ -115,10 +112,9 @@ class FeeSettingsResource extends Resource
                                     ->maxValue(30)
                                     ->hint('Days before late fee applies'),
                             ]),
-                    ])
-                    ->heading('Installment Settings'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Late Fee Settings')
                     ->schema([
                         Forms\Components\Grid::make(3)
                             ->schema([
@@ -148,20 +144,18 @@ class FeeSettingsResource extends Resource
                             ->label('Enable Advance Payments')
                             ->default(true)
                             ->hint('Allow payments before due date'),
-                    ])
-                    ->heading('Payment Settings'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Reminder Settings')
                     ->schema([
                         Forms\Components\TagsInput::make('reminder_schedule')
                             ->label('Reminder Schedule (Days)')
                             ->placeholder('Enter days before due date')
                             ->hint('e.g., 7, 3, 1 - sends reminders 7, 3, and 1 days before due date')
                             ->default(['7', '3', '1']),
-                    ])
-                    ->heading('Reminder Settings'),
+                    ]),
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('System Settings')
                     ->schema([
                         Forms\Components\KeyValue::make('receipt_template_settings')
                             ->label('Receipt Template Settings')
@@ -175,7 +169,6 @@ class FeeSettingsResource extends Resource
                             ->valueLabel('Value')
                             ->hint('Email and SMS notification configurations'),
                     ])
-                    ->heading('Advanced Settings')
                     ->collapsible(),
             ]);
     }

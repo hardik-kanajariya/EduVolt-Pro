@@ -201,10 +201,7 @@ class TimetableResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort([
-                ['day_of_week', 'asc'],
-                ['start_time', 'asc'],
-            ]);
+            ->defaultSort('day_of_week');
     }
 
     public static function getEloquentQuery(): Builder

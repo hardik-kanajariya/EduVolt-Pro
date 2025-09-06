@@ -7,8 +7,6 @@ use App\Filament\Admin\Resources\Exams\Pages\EditExam;
 use App\Filament\Admin\Resources\Exams\Pages\ListExams;
 use App\Filament\Admin\Resources\Exams\Pages\ViewExam;
 use App\Models\Exam;
-use App\Models\AcademicYear;
-use App\Models\School;
 use Filament\Resources\Resource;
 use Filament\Forms;
 use Filament\Forms\Form;

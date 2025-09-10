@@ -13,7 +13,7 @@ return new class extends Migration
     {
         // Add super admin fields to users table
         Schema::table('users', function (Blueprint $table) {
-            $table->string('last_panel_accessed', 50)->nullable()->after('is_super_admin');
+            $table->string('last_panel_accessed', 50)->nullable();
         });
 
     }

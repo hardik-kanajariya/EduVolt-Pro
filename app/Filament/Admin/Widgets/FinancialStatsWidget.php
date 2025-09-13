@@ -17,7 +17,7 @@ class FinancialStatsWidget extends BaseWidget
         $user = Auth::user();
         $schoolId = $user->school_id;
 
-        $monthlyCollection = FeePayment::whereHas('feeInstallment.studentFeeAssignment.student', function ($query) use ($schoolId) {
+        $monthlyCollection = FeePayment::whereHas('installments.studentFeeAssignment.student', function ($query) use ($schoolId) {
             $query->where('school_id', $schoolId);
         })
             ->whereMonth('payment_date', now()->month)
@@ -37,7 +37,7 @@ class FinancialStatsWidget extends BaseWidget
             ->distinct('student_fee_assignment_id')
             ->count();
 
-        $todayCollection = FeePayment::whereHas('feeInstallment.studentFeeAssignment.student', function ($query) use ($schoolId) {
+        $todayCollection = FeePayment::whereHas('installments.studentFeeAssignment.student', function ($query) use ($schoolId) {
             $query->where('school_id', $schoolId);
         })
             ->whereDate('payment_date', today())

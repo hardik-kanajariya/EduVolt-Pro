@@ -19,16 +19,16 @@ class Dashboard extends BaseDashboard
     public function getWidgets(): array
     {
         return [
-            SchoolSwitcher::class,
+            // SchoolSwitcher::class,
             StudentStatsWidget::class,
             FacultyStatsWidget::class,
-            FinancialStatsWidget::class,
+            // FinancialStatsWidget::class,
             AttendanceChartWidget::class,
-            FeeCollectionWidget::class,
+            // FeeCollectionWidget::class,
             LibraryStatsWidget::class,
-            AcademicPerformanceWidget::class,
+            // AcademicPerformanceWidget::class,
             RecentActivitiesWidget::class,
-            CommunicationWidget::class,
+            // CommunicationWidget::class,
         ];
     }
 

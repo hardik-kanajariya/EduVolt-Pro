@@ -25,7 +25,7 @@ class FeeCollectionWidget extends ChartWidget
             $date = Carbon::now()->subMonths($i);
             $labels[] = $date->format('M Y');
 
-            $collected = FeePayment::whereHas('feeInstallment.studentFeeAssignment.student', function ($query) use ($schoolId) {
+            $collected = FeePayment::whereHas('installments.studentFeeAssignment.student', function ($query) use ($schoolId) {
                 $query->where('school_id', $schoolId);
             })
                 ->whereYear('payment_date', $date->year)

@@ -29,6 +29,13 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'phone' => fake()->phoneNumber(),
+            'date_of_birth' => fake()->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d'),
+            'gender' => fake()->randomElement(['male', 'female', 'other']),
+            'address' => fake()->address(),
+            'avatar' => null,
+            'status' => fake()->randomElement(['active', 'inactive']),
+            'school_id' => 1, // Will be overridden when used
         ];
     }
 
@@ -43,38 +50,22 @@ class UserFactory extends Factory
     }
 
     /**
-     * Create an admin user.
+     * Indicate that the user is active.
      */
-    public function admin(): static
+    public function active(): static
     {
         return $this->state(fn(array $attributes) => [
-            'name' => 'Admin User',
-            'email' => 'admin@eduvaultpro.com',
-            'role' => 'admin',
+            'status' => 'active',
         ]);
     }
 
     /**
-     * Create a teacher user.
+     * Indicate that the user is inactive.
      */
-    public function teacher(): static
+    public function inactive(): static
     {
         return $this->state(fn(array $attributes) => [
-            'name' => 'Teacher User',
-            'email' => fake()->unique()->safeEmail(),
-            'role' => 'teacher',
-        ]);
-    }
-
-    /**
-     * Create a student user.
-     */
-    public function student(): static
-    {
-        return $this->state(fn(array $attributes) => [
-            'name' => 'Student User',
-            'email' => fake()->unique()->safeEmail(),
-            'role' => 'student',
+            'status' => 'inactive',
         ]);
     }
 }

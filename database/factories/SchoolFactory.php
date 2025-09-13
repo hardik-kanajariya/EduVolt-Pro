@@ -19,18 +19,21 @@ class SchoolFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->company() . ' School';
+
         return [
-            'name' => fake()->company() . ' School',
-            'code' => strtoupper(fake()->lexify('??###')),
+            'name' => $name,
+            'code' => strtoupper(fake()->unique()->lexify('SCH???')),
             'address' => fake()->address(),
             'phone' => fake()->phoneNumber(),
-            'email' => fake()->companyEmail(),
-            'website' => fake()->domainName(),
-            'established_date' => fake()->dateTimeBetween('-50 years', '-5 years'),
+            'email' => fake()->unique()->companyEmail(),
+            'website' => 'https://' . fake()->domainName(),
             'principal_name' => fake()->name(),
-            'description' => fake()->paragraph(),
-            'logo' => null,
+            'established_date' => fake()->dateTimeBetween('-50 years', '-5 years')->format('Y-m-d'),
+            'board_affiliation' => fake()->randomElement(['CBSE', 'ICSE', 'State Board', 'IB', 'Cambridge']),
             'status' => fake()->randomElement(['active', 'inactive']),
+            'logo' => null,
+            'description' => fake()->paragraph(),
         ];
     }
 

@@ -23,25 +23,20 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'school_id' => School::factory(),
-            'class_id' => SchoolClass::factory(),
-            'admission_number' => 'STU' . fake()->unique()->numberBetween(1000, 9999),
+            'user_id' => \App\Models\User::factory(),
+            'school_id' => \App\Models\School::factory(),
+            'class_id' => \App\Models\SchoolClass::factory(),
+            'admission_number' => fake()->unique()->numerify('STU######'),
             'roll_number' => fake()->numberBetween(1, 50),
-            'admission_date' => fake()->dateTimeBetween('-3 years', 'now'),
+            'admission_date' => fake()->dateTimeBetween('-3 years', 'now')->format('Y-m-d'),
             'parent_name' => fake()->name(),
             'parent_phone' => fake()->phoneNumber(),
             'parent_email' => fake()->email(),
-            'medical_info' => fake()->optional()->sentence(),
-            'transport_route' => fake()->optional()->streetName(),
-            'emergency_contacts' => [
-                [
-                    'name' => fake()->name(),
-                    'relationship' => fake()->randomElement(['Father', 'Mother', 'Guardian']),
-                    'phone' => fake()->phoneNumber(),
-                ]
-            ],
-            'status' => fake()->randomElement(['active', 'inactive', 'transferred']),
+            'emergency_contact' => fake()->phoneNumber(),
+            'medical_conditions' => fake()->optional()->sentence(),
+            'transport_required' => fake()->boolean(),
+            'bus_route' => fake()->optional()->streetName(),
+            'status' => fake()->randomElement(['active', 'inactive', 'transferred', 'graduated']),
         ];
     }
 

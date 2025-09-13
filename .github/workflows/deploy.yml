@@ -1,0 +1,129 @@
+name: Deploy EduVolt Pro to VPS
+
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install sshpass
+      run: sudo apt-get update && sudo apt-get install -y sshpass
+        
+    - name: Deploy to VPS
+      env:
+        VPS_HOST: ${{ secrets.VPS_HOST }}
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_PASSWORD: ${{ secrets.VPS_PASSWORD }}
+        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      run: |
+        sshpass -p "$VPS_PASSWORD" ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST << 'EOF'
+          set -e
+          
+          # Navigate to application directory
+          cd $DEPLOY_PATH
+          
+          # Stop existing containers
+          docker-compose down || true
+          
+          # Pull latest changes
+          git pull origin master
+          
+          # Remove existing .env file
+          rm -f .env
+          
+          # Create .env file line by line
+          echo 'APP_NAME="EduVault Pro"' >> .env
+          echo 'APP_ENV=production' >> .env
+          echo 'APP_KEY=${{ secrets.APP_KEY }}' >> .env
+          echo 'APP_DEBUG=false' >> .env
+          echo 'APP_URL=${{ secrets.APP_URL }}' >> .env
+          echo 'APP_TIMEZONE=Asia/Kolkata' >> .env
+          echo '' >> .env
+          echo 'APP_LOCALE=en' >> .env
+          echo 'APP_FALLBACK_LOCALE=en' >> .env
+          echo 'APP_FAKER_LOCALE=en_US' >> .env
+          echo '' >> .env
+          echo 'APP_MAINTENANCE_DRIVER=file' >> .env
+          echo '' >> .env
+          echo 'PHP_CLI_SERVER_WORKERS=4' >> .env
+          echo '' >> .env
+          echo 'BCRYPT_ROUNDS=12' >> .env
+          echo '' >> .env
+          echo 'LOG_CHANNEL=stack' >> .env
+          echo 'LOG_STACK=single' >> .env
+          echo 'LOG_DEPRECATIONS_CHANNEL=null' >> .env
+          echo 'LOG_LEVEL=error' >> .env
+          echo '' >> .env
+          echo 'DB_CONNECTION=mysql' >> .env
+          echo 'DB_HOST=${{ secrets.DB_HOST }}' >> .env
+          echo 'DB_PORT=${{ secrets.DB_PORT }}' >> .env
+          echo 'DB_DATABASE=${{ secrets.DB_DATABASE }}' >> .env
+          echo 'DB_USERNAME=${{ secrets.DB_USERNAME }}' >> .env
+          echo 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' >> .env
+          echo '' >> .env
+          echo 'SESSION_DRIVER=database' >> .env
+          echo 'SESSION_LIFETIME=120' >> .env
+          echo 'SESSION_ENCRYPT=false' >> .env
+          echo 'SESSION_PATH=/' >> .env
+          echo 'SESSION_DOMAIN=null' >> .env
+          echo '' >> .env
+          echo 'BROADCAST_CONNECTION=log' >> .env
+          echo 'FILESYSTEM_DISK=local' >> .env
+          echo 'QUEUE_CONNECTION=database' >> .env
+          echo '' >> .env
+          echo 'CACHE_STORE=database' >> .env
+          echo '' >> .env
+          echo 'MEMCACHED_HOST=127.0.0.1' >> .env
+          echo '' >> .env
+          echo 'REDIS_CLIENT=phpredis' >> .env
+          echo 'REDIS_HOST=127.0.0.1' >> .env
+          echo 'REDIS_PASSWORD=null' >> .env
+          echo 'REDIS_PORT=6379' >> .env
+          echo '' >> .env
+          echo 'MAIL_MAILER=${{ secrets.MAIL_MAILER }}' >> .env
+          echo 'MAIL_SCHEME=null' >> .env
+          echo 'MAIL_HOST=${{ secrets.MAIL_HOST }}' >> .env
+          echo 'MAIL_PORT=${{ secrets.MAIL_PORT }}' >> .env
+          echo 'MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}' >> .env
+          echo 'MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}' >> .env
+          echo 'MAIL_ENCRYPTION=${{ secrets.MAIL_ENCRYPTION }}' >> .env
+          echo 'MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}' >> .env
+          echo 'MAIL_FROM_NAME="${APP_NAME}"' >> .env
+          echo '' >> .env
+          echo 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' >> .env
+          echo 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' >> .env
+          echo 'AWS_DEFAULT_REGION=${{ secrets.AWS_DEFAULT_REGION }}' >> .env
+          echo 'AWS_BUCKET=${{ secrets.AWS_BUCKET }}' >> .env
+          echo 'AWS_USE_PATH_STYLE_ENDPOINT=false' >> .env
+          echo '' >> .env
+          echo 'VITE_APP_NAME="${APP_NAME}"' >> .env
+          
+          # Build and start containers
+          docker-compose up -d --build
+          
+          # Wait for containers to be ready
+          sleep 30
+          
+          # Run migrations and seed database
+          docker-compose exec -T app php artisan migrate --force
+          docker-compose exec -T app php artisan db:seed --force
+          
+          # Clear and cache config
+          docker-compose exec -T app php artisan config:clear
+          docker-compose exec -T app php artisan config:cache
+          docker-compose exec -T app php artisan route:cache
+          docker-compose exec -T app php artisan view:cache
+          
+          # Set proper permissions
+          docker-compose exec -T app chown -R www-data:www-data /var/www/html/storage
+          docker-compose exec -T app php artisan storage:link || true
+          
+          echo "Deployment completed successfully!"
+        EOF

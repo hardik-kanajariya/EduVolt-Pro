@@ -1,9 +1,9 @@
 # EduVolt Pro - AI Development Instructions
 
 ## 🎯 Project Context
-Advanced school management system using **Laravel 11** + **Filament v3** with role-based multi-panel architecture for educational institutions.
+Advanced school management system using **Laravel 12** + **Filament v3** with role-based multi-panel architecture for educational institutions.
 
-**v1.0 Scope**: Cash payments, SMTP email, push notifications, English only  
+**v1.0 Scope**: Cash payments, SMTP email, push notifications, English only, demo mode  
 **Prohibited**: SMS/WhatsApp, payment gateways, multilingual, transport (v2.0 features)
 
 ## 🏛️ Multi-Panel Architecture (Core Knowledge)
@@ -86,8 +86,42 @@ php artisan storage:link
 **Only Allowed Commands**:
 ```bash
 git add|commit|push|status|log
+# Demo mode management
+php artisan demo:toggle --enable|--disable
+php artisan demo:info
 # All other commands require user approval
 ```
+
+## 🎭 Demo Mode System (Production Feature)
+
+**Environment Control**:
+```bash
+# Enable demo mode (auto-fill login forms)
+php artisan demo:toggle --enable
+
+# Disable demo mode  
+php artisan demo:toggle --disable
+
+# Check current status and credentials
+php artisan demo:info
+```
+
+**Demo Mode Pattern** (5-panel auto-fill):
+```php
+// Service: app/Services/DemoCredentialsService.php
+DemoCredentialsService::getCredentials('admin') // Returns demo creds
+DemoCredentialsService::isDemoMode()           // Check if enabled
+
+// Provider: app/Providers/DemoModeServiceProvider.php  
+// Auto-fills login forms via Filament render hooks
+```
+
+**Demo Credentials** (when DEMO_MODE=true):
+- **Admin**: `admin@eduvaultpro.com` / `admin123`
+- **Faculty**: `teacher@eduvaultpro.com` / `teacher123`
+- **Student**: `student@eduvaultpro.com` / `student123`
+- **Parent**: `parent@eduvaultpro.com` / `parent123`
+- **School**: `schooladmin@eduvaultpro.com` / `admin123`
 
 ## 📁 Key Reference Files
 
@@ -96,6 +130,8 @@ git add|commit|push|status|log
 - `TESTING-GUIDE.md` - Comprehensive role-based testing
 - `app/Http/Middleware/` - Panel access control middleware
 - `config/permission.php` - Spatie permission config
+- `docs/DEMO-MODE-FEATURE.md` - Demo mode implementation guide
+- `docs/COMPREHENSIVE-AUDIT-COMPLETION-REPORT.md` - Latest system status
 
 **Panel Providers** (Color coding):
 - AdminPanelProvider → Blue + `admin.panel.access`
@@ -103,6 +139,12 @@ git add|commit|push|status|log
 - FacultyPanelProvider → Green + `faculty.panel.access`
 - StudentPanelProvider → Purple + `StudentMiddleware`
 - ParentPanelProvider → Orange + `parent.panel.access`
+
+**Key Services**:
+- `app/Services/DemoCredentialsService.php` - Demo mode credential management
+- `app/Providers/DemoModeServiceProvider.php` - Auto-fill login functionality
+- `app/Console/Commands/ToggleDemoMode.php` - Demo mode control
+- `app/Console/Commands/ShowDemoInfo.php` - Demo status display
 
 ## 💡 Business Logic Patterns
 
@@ -134,6 +176,42 @@ tests/Feature/{Admin,School,Faculty,Student,Parent}/
 tests/Unit/{Models,Services}/
 ```
 
+**Testing Environment** (CRITICAL):
+```php
+// .env.testing configuration pattern:
+DB_CONNECTION=sqlite
+DB_DATABASE=:memory:
+SESSION_DRIVER=array
+CACHE_STORE=array
+QUEUE_CONNECTION=sync
+MAIL_MAILER=array
+
+// TestCase.php pattern - setup testing environment
+protected function setupTestingEnvironment(): void {
+    $this->app['env'] = 'testing';
+    $this->artisan('config:clear');
+    date_default_timezone_set('Asia/Kolkata');
+}
+```
+
 **Always Test**: Role-based access, school context isolation, panel restrictions
+
+## 🚀 Deployment & Development Workflow
+
+**GitHub Actions Pipeline** (`.github/workflows/deploy.yml`):
+```bash
+# Automated deployment includes:
+docker-compose up -d --build
+php artisan migrate --force
+php artisan db:seed --force
+php artisan config:cache && route:cache && view:cache
+```
+
+**Development Phases** (Reference `DEV.md`):
+- Phase 1-2: Core Laravel + static pages
+- Phase 3-4: Filament panels + authentication  
+- Phase 5-6: Academic modules + library
+- Phase 7-8: Communication + fees
+- Phase 9-12: APIs + deployment
 
 Remember: This is a production educational system prioritizing security, performance, and role-based access control.
